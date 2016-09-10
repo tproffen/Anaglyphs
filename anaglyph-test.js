@@ -7,8 +7,6 @@ var drawingApp = (function () {
 		clearButton,
 		offsetSlider,
 		context,
-		canvasWidth,
-		canvasHeight,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
 		paint = false,
@@ -22,14 +20,15 @@ var drawingApp = (function () {
 
 		var press = function (e) {
 			
-			if (e.button != 2) {
-				var mouseX = e.pageX - this.offsetLeft;
-				var mouseY = e.pageY - this.offsetTop;
-  
-				paint = true;
-				addClick(mouseX, mouseY, false);
-				redraw();
+			if (e.button) {
+				if (e.button !=0) return;
 			}
+			var mouseX = e.pageX - this.offsetLeft;
+			var mouseY = e.pageY - this.offsetTop;
+  
+			paint = true;
+			addClick(mouseX, mouseY, false);
+			redraw();
 		},
 
 		drag = function (e) {
@@ -130,10 +129,8 @@ var drawingApp = (function () {
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
 		
-		canvasWidth  = window.innerWidth-20, 
-		canvasHeight = window.innerHeight-300,
-		canvas.height = canvasHeight;
-		canvas.width = canvasWidth;
+		canvas.height = window.innerWidth-20;
+		canvas.width = window.innerHeight-300;
 		redraw();
 	},
 	
