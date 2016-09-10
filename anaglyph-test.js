@@ -50,6 +50,7 @@ var drawingApp = (function () {
 		},
 		
 		clear = function () {
+			resizeCanvas();
 			clearCanvas();
 		},
 
@@ -129,8 +130,8 @@ var drawingApp = (function () {
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
 		
-		canvas.height = window.innerWidth-20;
-		canvas.width = window.innerHeight-300;
+		canvas.width = window.innerWidth-20;
+		canvas.height = window.innerHeight-300;
 		redraw();
 	},
 	
