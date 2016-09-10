@@ -1,0 +1,14 @@
+body {
+   font-family: Georgia, "Times New Roman", Times, serif;
+   font-size: 14px;
+   color: #FFFFFF;
+   background-color: #000000;
+}
+
+canvas {
+	background-color: #FFFFFF;
+}
+
+input[type=range] {
+  width: 50%;
+}

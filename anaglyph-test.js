@@ -7,8 +7,8 @@ var drawingApp = (function () {
 		clearButton,
 		offsetSlider,
 		context,
-		canvasWidth  = 0.95 * window.innerWidth, 
-		canvasHeight = 0.75 * window.innerHeight,
+		canvasWidth,
+		canvasHeight,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
 		paint = false,
@@ -22,12 +22,14 @@ var drawingApp = (function () {
 
 		var press = function (e) {
 			
-			var mouseX = e.pageX - this.offsetLeft;
-			var mouseY = e.pageY - this.offsetTop;
+			if (e.button == 0) {
+				var mouseX = e.pageX - this.offsetLeft;
+				var mouseY = e.pageY - this.offsetTop;
   
-			paint = true;
-			addClick(mouseX, mouseY, false);
-			redraw();
+				paint = true;
+				addClick(mouseX, mouseY, false);
+				redraw();
+			}
 		},
 
 		drag = function (e) {
@@ -76,6 +78,7 @@ var drawingApp = (function () {
 		
 		clearButton.addEventListener("click", clear, false);
 		offsetSlider.addEventListener("change", offsetValue, false);
+		window.addEventListener("resize", resizeCanvas, false);
 	},
 		
 	// Adds a point to the drawing array.
@@ -123,6 +126,16 @@ var drawingApp = (function () {
 			context.stroke();
 		}
 	},
+
+	// Resize canvas to fit screen
+	resizeCanvas = function () {
+		
+		canvasWidth  = window.innerWidth-20, 
+		canvasHeight = window.innerHeight-300,
+		canvas.height = canvasHeight;
+		canvas.width = canvasWidth;
+		redraw();
+	},
 	
 	// Clears the canvas.
 	clearCanvas = function () {
@@ -138,12 +151,11 @@ var drawingApp = (function () {
 		clearButton = document.getElementById('clearCanvas');
 		offsetSlider = document.getElementById('offsetSlider');
 		canvas = document.getElementById('canvas');
-		canvas.height = canvasHeight;
-		canvas.width = canvasWidth;
 		context = canvas.getContext("2d");
 		
 		createUserEvents();
 		offset=offsetSlider.valueAsNumber;
+		resizeCanvas();
 	};
 	
 	return {
