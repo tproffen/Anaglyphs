@@ -7,8 +7,8 @@ var drawingApp = (function () {
 		clearButton,
 		offsetSlider,
 		context,
-		canvasWidth = 800, 
-		canvasHeight = 600,
+		canvasWidth  = 0.95 * window.innerWidth, 
+		canvasHeight = 0.75 * window.innerHeight,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
 		paint = false,
@@ -138,6 +138,8 @@ var drawingApp = (function () {
 		clearButton = document.getElementById('clearCanvas');
 		offsetSlider = document.getElementById('offsetSlider');
 		canvas = document.getElementById('canvas');
+		canvas.height = canvasHeight;
+		canvas.width = canvasWidth;
 		context = canvas.getContext("2d");
 		
 		createUserEvents();
