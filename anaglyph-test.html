@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Anaglyph Drawing App</title>
+  </head>
+  <body>
+    <h1>Anaglyph Drawing Pad</h1>
+	<p>Use <a href="https://www.amazon.com/KLOUD-City%C2%AE-cardboard-Glasses-White/dp/B00R3TAGL4/ref=sr_1_6?ie=UTF8&qid=1473537123&sr=8-6&keywords=red+cyan+glasses">red-cyan glasses</a> 
+	to see your drawing in 3D. Right click on the image to save.</p>
+	   
+    <canvas id="canvas" width="800" height="500", style="border:1px solid #000000;">
+        Your browser does not support the HTML 5 Canvas. 
+    </canvas>
+	
+	<br clear="all">
+	<b>Depth:</b><br><input type="range" value="5" min="-15" max="15" id="offsetSlider">
+	<br><hr align="left" width="800px"><br>
+	<input type="button" value="Clear Drawing" id="clearCanvas">&nbsp;
+	
+    <script type="text/javascript" src="anaglyph-test.js"></script>
+    <script type="text/javascript">
+    	 drawingApp.init();
+	</script>
+
+  </body>
+</html>
