@@ -22,7 +22,7 @@ var drawingApp = (function () {
 
 		var press = function (e) {
 			
-			if (e.button == 0) {
+			if (e.button != 2) {
 				var mouseX = e.pageX - this.offsetLeft;
 				var mouseY = e.pageY - this.offsetTop;
   
