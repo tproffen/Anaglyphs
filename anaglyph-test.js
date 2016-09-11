@@ -15,6 +15,7 @@ var drawingApp = (function () {
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
 		colorWhite = "#ffffff",
+		colorBlack = "#000000",
 		paint = false,
 		erase = false,
 		offset, 
@@ -62,9 +63,11 @@ var drawingApp = (function () {
 			if (erase) {
 				erase=false;
 				eraserButton.style.backgroundColor=colorNormal;
+				eraserButton.style.color=colorBlack;	
 			} else {
 				erase=true;
-				eraserButton.style.backgroundColor=colorRed;
+				eraserButton.style.backgroundColor=colorBlack;
+				eraserButton.style.color=colorWhite;	
 			}
 		},
 		offsetValue = function () {
@@ -106,7 +109,7 @@ var drawingApp = (function () {
 		context.lineJoin = "round";
 
 		if (erase) {
-			context.lineWidth = width+offset;		
+			context.lineWidth = width+Math.abs(offset);		
 			context.globalCompositeOperation = "source-over";
 			drawLine(fromX,fromY,toX,toY,colorWhite);
 		} else {
