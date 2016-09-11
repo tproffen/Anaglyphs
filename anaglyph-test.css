@@ -1,21 +1,31 @@
 body {
    font-family: Arial, Helvetica, sans-serif;
-   font-size: 1.5vmin;
+   font-size: 2.0vmin;
    color: #FFFFFF;
    background-color: #000000;
 }
 
 table, th, td {
-	padding: 0px;
+	padding: 3px;
 }
 canvas {
 	background-color: #FFFFFF;
 }
 
 input[type=range] {
-  width: 75%;
+  width: 100%;
+}
+
+input[type=button] {
+	width: 8em;
+	height: 1.5em;
+	font-size: 1.5vmin;
 }
 
 .copyright {
 	font-size: 1.0vmin;
+}
+
+.header {
+	font-size: 3.0vmin;
 }

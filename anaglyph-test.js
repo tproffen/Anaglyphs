@@ -6,13 +6,17 @@ var drawingApp = (function () {
 	var canvas,
 		memCanvas,
 		clearButton,
+		eraserButton,
 		offsetInput,
 		widthInput,
 		context,
 		memContext,
+		colorNormal,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
+		colorWhite = "#ffffff",
 		paint = false,
+		erase = false,
 		offset, 
 		width,
 		oldX, oldY,
@@ -25,8 +29,8 @@ var drawingApp = (function () {
 			if (e.button) {
 				if (e.button !=0) return;
 			}
-			var mouseX = e.pageX - this.offsetLeft;
-			var mouseY = e.pageY - this.offsetTop;
+			var mouseX = e.pageX - canvas.offsetLeft;
+			var mouseY = e.pageY - canvas.offsetTop;
   
 			paint = true;
 			oldX=mouseX; oldY=mouseY;
@@ -35,8 +39,8 @@ var drawingApp = (function () {
 
 		drag = function (e) {
 				
-			var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - this.offsetLeft,
-				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
+			var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - canvas.offsetLeft,
+				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - canvas.offsetTop;
 			
 			if (paint) {
 				drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
@@ -52,9 +56,17 @@ var drawingApp = (function () {
 		
 		clear = function () {
 			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-			resizeCanvas();
 		},
 
+		toggleErase = function () {
+			if (erase) {
+				erase=false;
+				eraserButton.style.backgroundColor=colorNormal;
+			} else {
+				erase=true;
+				eraserButton.style.backgroundColor=colorRed;
+			}
+		},
 		offsetValue = function () {
 			offset=offsetInput.valueAsNumber;
 		},
@@ -82,6 +94,7 @@ var drawingApp = (function () {
 		// Add events to UI
 		
 		clearButton.addEventListener("click", clear, false);
+		eraserButton.addEventListener("click", toggleErase, false);
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
@@ -91,18 +104,24 @@ var drawingApp = (function () {
 	drawAnaglyphLine = function (fromX,fromY,toX,toY) {
 		
 		context.lineJoin = "round";
-		context.lineWidth = width;		
-		context.globalCompositeOperation = "multiply";
 
-		drawLine(fromX,fromY,toX,toY,colorRed);
-		drawLine(fromX+offset,fromY,toX+offset,toY,colorCyan);
+		if (erase) {
+			context.lineWidth = width+offset;		
+			context.globalCompositeOperation = "source-over";
+			drawLine(fromX,fromY,toX,toY,colorWhite);
+		} else {
+			context.lineWidth = width;		
+			context.globalCompositeOperation = "multiply";
+
+			drawLine(fromX,fromY,toX,toY,colorRed);
+			drawLine(fromX+offset,fromY,toX+offset,toY,colorCyan);
+		}
 	},
   
 	// Drawing lines
 	drawLine = function (fromX,fromY,toX,toY,Color) {
 		
 		context.strokeStyle = Color;
-		
 		context.beginPath();
 		context.moveTo(fromX, fromY);
 		context.lineTo(toX, toY);
@@ -117,8 +136,8 @@ var drawingApp = (function () {
 		memCanvas.height = canvas.height;
 		memContext.drawImage(canvas, 0, 0);
 
-		canvas.width  = 0.95*window.innerWidth;
-		canvas.height = 0.75*window.innerHeight;
+		canvas.width  = 0.98*window.innerWidth;
+		canvas.height = 0.70*window.innerHeight;
 		context.drawImage(memCanvas, 0, 0); 
 	},
 		
@@ -126,6 +145,7 @@ var drawingApp = (function () {
 	init = function () {
 		
 		clearButton = document.getElementById('clearCanvas');
+		eraserButton = document.getElementById('eraser');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
@@ -133,6 +153,7 @@ var drawingApp = (function () {
 		
 		memCanvas = document.createElement('canvas');
 		memContext = memCanvas.getContext('2d');
+		colorNormal = eraserButton.style.backgroundColor;
 		
 		createUserEvents();
 		offset=offsetInput.valueAsNumber;
