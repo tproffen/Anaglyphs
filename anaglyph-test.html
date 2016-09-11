@@ -5,19 +5,32 @@
 	<link href="anaglyph-test.css" rel="stylesheet"  type="text/css">
   </head>
   <body>
+    <center>
     <h1>Anaglyph Drawing Pad</h1>
 	<p>Use red-cyan glasses to see your drawing in 3D. Right click on the image to save.</p>
-	   
     <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas>
 	
-	<br clear="all">
-	<b>Depth:</b><br><input type="range" value="5" min="-15" max="15" id="offsetSlider">
-	<br><hr><br><input type="button" value="Clear Drawing" id="clearCanvas">
-	
+   <table width="95%">
+	<tr>
+	<td width="15%"><b>Depth:</b></td>	
+	<td><input type="range" value="5" min="-15" max="15" id="offset" oninput="offsetOutputId.value = offset.value"></td>
+	<td width="5%" align="center"><b><output name="offsetOutput" id="offsetOutputId">5</output></b></td>
+	</tr>
+
+	<tr>
+	<td width="15%"><b>Line width:</b></td>
+	<td><input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value"></td>
+	<td width="5%" align="center"><b><output name="lineWidthOutput" id="lineWidthOutputId">5</output></b></td>
+	</tr>
+	</tr></table>
+
+	<p><input type="button" value="Clear Drawing" id="clearCanvas"><br><div class="copyright">(c) Thomas Proffen, 2016</div></p>
+
     <script type="text/javascript" src="anaglyph-test.js"></script>
     <script type="text/javascript">
     	 drawingApp.init();
 	</script>
+	</center>
 
-  </body>
+	</body>
 </html>

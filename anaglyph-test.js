@@ -4,16 +4,18 @@ var drawingApp = (function () {
 	"use strict";
 
 	var canvas,
+		memCanvas,
 		clearButton,
-		offsetSlider,
+		offsetInput,
+		widthInput,
 		context,
+		memContext,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
 		paint = false,
-		offset,
-		clickXRed = [], clickXCyan = [],
-		clickYRed = [], clickYCyan = [],
-		clickDrag = [],
+		offset, 
+		width,
+		oldX, oldY,
 	   
 	// Add mouse and touch event listeners to the canvas
 	createUserEvents = function () {
@@ -27,8 +29,8 @@ var drawingApp = (function () {
 			var mouseY = e.pageY - this.offsetTop;
   
 			paint = true;
-			addClick(mouseX, mouseY, false);
-			redraw();
+			oldX=mouseX; oldY=mouseY;
+			drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
 		},
 
 		drag = function (e) {
@@ -37,8 +39,8 @@ var drawingApp = (function () {
 				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
 			
 			if (paint) {
-				addClick(mouseX, mouseY, true);
-				redraw();
+				drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
+				oldX=mouseX; oldY=mouseY;
 			}
 			// Prevent the whole page from dragging if on mobile
 			e.preventDefault();
@@ -46,16 +48,19 @@ var drawingApp = (function () {
 
 		release = function () {
 			paint = false;
-			redraw();
 		},
 		
 		clear = function () {
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 			resizeCanvas();
-			clearCanvas();
 		},
 
 		offsetValue = function () {
-			offset=offsetSlider.valueAsNumber;
+			offset=offsetInput.valueAsNumber;
+		},
+		
+		widthValue = function () {
+			width=widthInput.valueAsNumber;
 		},
 
 		cancel = function () {
@@ -77,82 +82,61 @@ var drawingApp = (function () {
 		// Add events to UI
 		
 		clearButton.addEventListener("click", clear, false);
-		offsetSlider.addEventListener("change", offsetValue, false);
+		offsetInput.addEventListener("change", offsetValue, false);
+		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
 	},
-		
-	// Adds a point to the drawing array.
-	// @param x
-	// @param y
-	// @param dragging
-	addClick = function (x, y, dragging) {
-
-		clickXRed.push(x);
-		clickYRed.push(y);
-		clickXCyan.push(x+offset);
-		clickYCyan.push(y);
-		clickDrag.push(dragging);
-	},
 	
-	// Redrawing canvas
-	redraw = function () {
+	// Drawing both lines for anaglyph
+	drawAnaglyphLine = function (fromX,fromY,toX,toY) {
 		
-		context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 		context.lineJoin = "round";
-		context.lineWidth = 5;
-		
-		drawLine(clickXRed,clickYRed,clickDrag,colorRed);
+		context.lineWidth = width;		
 		context.globalCompositeOperation = "multiply";
-		drawLine(clickXCyan,clickYCyan,clickDrag,colorCyan);
-		context.globalCompositeOperation = "source-over";
+
+		drawLine(fromX,fromY,toX,toY,colorRed);
+		drawLine(fromX+offset,fromY,toX+offset,toY,colorCyan);
 	},
   
 	// Drawing lines
-	drawLine = function (clickX,clickY,Drag,Color) {
+	drawLine = function (fromX,fromY,toX,toY,Color) {
 		
 		context.strokeStyle = Color;
 		
-		// Draw Red lines
-		
-		for(var i=0; i < clickX.length; i++) {		
-			context.beginPath();
-			if(clickDrag[i] && i){
-				context.moveTo(clickX[i-1], clickY[i-1]);
-			}else{
-				context.moveTo(clickX[i]-1, clickY[i]);
-			}
-			context.lineTo(clickX[i], clickY[i]);
-			context.closePath();
-			context.stroke();
-		}
+		context.beginPath();
+		context.moveTo(fromX, fromY);
+		context.lineTo(toX, toY);
+		context.closePath();
+		context.stroke();
 	},
 
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
 		
-		canvas.width = window.innerWidth-20;
-		canvas.height = window.innerHeight-300;
-		redraw();
-	},
-	
-	// Clears the canvas.
-	clearCanvas = function () {
-		clickXRed = []; clickXCyan = [];
-		clickYRed = []; clickYCyan = [];
-		clickDrag = [];
-		redraw();
+		memCanvas.width = canvas.width;
+		memCanvas.height = canvas.height;
+		memContext.drawImage(canvas, 0, 0);
+
+		canvas.width  = 0.95*window.innerWidth;
+		canvas.height = 0.75*window.innerHeight;
+		context.drawImage(memCanvas, 0, 0); 
 	},
 		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 		
 		clearButton = document.getElementById('clearCanvas');
-		offsetSlider = document.getElementById('offsetSlider');
+		offsetInput = document.getElementById('offset');
+		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext("2d");
 		
+		memCanvas = document.createElement('canvas');
+		memContext = memCanvas.getContext('2d');
+		
 		createUserEvents();
-		offset=offsetSlider.valueAsNumber;
+		offset=offsetInput.valueAsNumber;
+		width=widthInput.valueAsNumber;
 		resizeCanvas();
 	};
 	
