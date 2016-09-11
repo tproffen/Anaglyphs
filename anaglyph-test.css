@@ -1,6 +1,6 @@
 body {
    font-family: Arial, Helvetica, sans-serif;
-   font-size: 2.0vmin;
+   font-size: 18px;
    color: #FFFFFF;
    background-color: #000000;
 }
@@ -19,13 +19,9 @@ input[type=range] {
 input[type=button] {
 	width: 8em;
 	height: 1.5em;
-	font-size: 1.5vmin;
+	font-size: 100%;
 }
 
 .copyright {
-	font-size: 1.0vmin;
-}
-
-.header {
-	font-size: 3.0vmin;
+	font-size: 75%;
 }
