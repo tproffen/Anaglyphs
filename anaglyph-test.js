@@ -144,15 +144,12 @@ var drawingApp = (function () {
 		var footHeight = document.getElementById('footer').offsetHeight;
 		
 		canvas.width  = topWidth;
-		canvas.height = window.innerHeight-topHeight-footHeight-20;
+		canvas.height = window.innerHeight-topHeight-footHeight-25;
 		context.drawImage(memCanvas, 0, 0); 
 	},
 		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
-		if (/Mobi/i.test(navigator.userAgent)) {
-			document.body.style.fontSize="1.5em";
-		}
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
 		offsetInput = document.getElementById('offset');
@@ -163,11 +160,11 @@ var drawingApp = (function () {
 		memCanvas = document.createElement('canvas');
 		memContext = memCanvas.getContext('2d');
 		colorNormal = eraserButton.style.backgroundColor;
+		resizeCanvas();
 		
 		createUserEvents();
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
-		resizeCanvas();
 	};
 	
 	return {
