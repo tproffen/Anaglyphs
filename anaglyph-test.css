@@ -1,27 +1,29 @@
 body {
    font-family: Arial, Helvetica, sans-serif;
-   font-size: 18px;
+   font-size: 1.0em;
    color: #FFFFFF;
    background-color: #000000;
 }
 
 table, th, td {
-	padding: 3px;
+	padding: 1px;
 }
 canvas {
 	background-color: #FFFFFF;
 }
-
+h1 {
+	font-size: 1.75em;
+}
 input[type=range] {
   width: 100%;
 }
 
 input[type=button] {
-	width: 8em;
+	width: 6em;
 	height: 1.5em;
 	font-size: 100%;
 }
 
-.copyright {
+.footer {
 	font-size: 75%;
 }

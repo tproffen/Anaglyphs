@@ -139,8 +139,12 @@ var drawingApp = (function () {
 		memCanvas.height = canvas.height;
 		memContext.drawImage(canvas, 0, 0);
 
-		canvas.width  = 0.98*window.innerWidth;
-		canvas.height = 0.70*window.innerHeight;
+		var topHeight = document.getElementById('header').offsetHeight;
+		var topWidth = document.getElementById('header').offsetWidth;
+		var footHeight = document.getElementById('footer').offsetHeight;
+		
+		canvas.width  = topWidth;
+		canvas.height = window.innerHeight-topHeight-footHeight-20;
 		context.drawImage(memCanvas, 0, 0); 
 	},
 		
