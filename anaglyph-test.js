@@ -150,8 +150,8 @@ var drawingApp = (function () {
 		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
-		if (/Mobi/.test(navigator.userAgent)) {
-			document.body.style.fontSize="2em";
+		if (/Mobi/i.test(navigator.userAgent)) {
+			document.body.style.fontSize="1.5em";
 		}
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
