@@ -35,7 +35,6 @@ var drawingApp = (function () {
   
 			paint = true;
 			oldX=mouseX; oldY=mouseY;
-			drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
 		},
 
 		drag = function (e) {
