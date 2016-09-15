@@ -2,41 +2,38 @@
 <html>
   <head>
     <title>Anaglyph Drawing App</title>
-	<link href="anaglyph-test.css" rel="stylesheet"  type="text/css">
+	<link href="DrawingPad.css" rel="stylesheet"  type="text/css">
   </head>
   <body>
-   <div id="header">
-   <table width="100%">
-    <tr>
-	<td><h1>Anaglyph Drawing Pad</h1></td>
-	<td align="right" colspan="2">
-		<input type="button" value="Eraser" id="eraser">
-		<input type="button" value="Clear" id="clearCanvas">
-	</td>
-	</tr>
+  <table width="100%">
+  	<tr><th colspan="2"><h1>Anaglyph Drawing Pad</h1></th></tr>
+	<tr><td id="canvasArea" width="80%">
+	    <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas></td>
 	
-	<tr>
-	<td><input type="range" value="5" min="-15" max="15" id="offset" oninput="offsetOutputId.value = offset.value"></td>
-	<td width="20%" align="right">Depth:</td>	
-	<td width="10%" align="right"><output name="offsetOutput" id="offsetOutputId">5</output></td>
-	</tr>
+	    <td><input type="button" value="Clear" id="clearCanvas">
+			<input type="button" value="Eraser" id="eraser">
+	        <input type="button" value="Full Screen" id="fullScreen">
+			<br>&nbsp;<br>
+			
+			Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
+	        <input type="range" value="3" min="-10" max="10" id="offset" oninput="offsetOutputId.value = offset.value">
+	        Size: <output name="lineWidthOutput" id="lineWidthOutputId">5</output>
+	        <input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value">
 
-	<tr>
-	<td><input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value"></td>
-	<td align="right">Line width:</td>
-	<td align="right"><output name="lineWidthOutput" id="lineWidthOutputId">5</output></td>
-	</tr>
+			<br>&nbsp;<br>
+			<input type="text" id="stringValue"><br>
+	        <input type="button" value="Place text" id="placeText">
+
+			<br>&nbsp;<br>
+			<select id="stampValue">
+				<option name="stamps/tree.jpg">Tree</option>
+			</select>
+	        <input type="button" value="Place stamp" id="placeStamp">
+			
+			<p><font size="-1">Use red-cyan glasses to see your drawing in 3D. Right click on the image to save.</font></p>
+			</td></tr>			
 	</table>
-	</div>
-
-	<canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas>
-	
-	<div id="footer" class="footer">
-	Use red-cyan glasses to see your drawing in 3D. Right click on the image to save.
-    <br>(c) Thomas Proffen, 2016</div>
-    <script type="text/javascript" src="anaglyph-test.js"></script>
-    <script type="text/javascript">
-    	 drawingApp.init();
-	</script>
+    <script type="text/javascript" src="DrawingPad.js"></script>
+    <script type="text/javascript">drawingApp.init();</script>
 	</body>
 </html>

@@ -5,8 +5,10 @@ var drawingApp = (function () {
 
 	var canvas,
 		memCanvas,
+		rect,
 		clearButton,
 		eraserButton,
+		fullScreenButton,
 		offsetInput,
 		widthInput,
 		context,
@@ -30,8 +32,8 @@ var drawingApp = (function () {
 			if (e.button) {
 				if (e.button !=0) return;
 			}
-			var mouseX = e.pageX - canvas.offsetLeft;
-			var mouseY = e.pageY - canvas.offsetTop;
+			var mouseX = e.pageX - rect.left;
+			var mouseY = e.pageY - rect.top;
   
 			paint = true;
 			oldX=mouseX; oldY=mouseY;
@@ -39,8 +41,8 @@ var drawingApp = (function () {
 
 		drag = function (e) {
 				
-			var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - canvas.offsetLeft,
-				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - canvas.offsetTop;
+			var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - rect.left,
+				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - rect.top;
 			
 			if (paint) {
 				drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
@@ -77,6 +79,12 @@ var drawingApp = (function () {
 			width=widthInput.valueAsNumber;
 		},
 
+		fullScreen = function () {
+			var el = document.documentElement,
+			rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+			rfs.call(el);
+		},
+		
 		cancel = function () {
 			paint = false;
 		};
@@ -97,6 +105,7 @@ var drawingApp = (function () {
 		
 		clearButton.addEventListener("click", clear, false);
 		eraserButton.addEventListener("click", toggleErase, false);
+		fullScreenButton.addEventListener("click", fullScreen, false);
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
@@ -138,19 +147,21 @@ var drawingApp = (function () {
 		memCanvas.height = canvas.height;
 		memContext.drawImage(canvas, 0, 0);
 
-		var topHeight = document.getElementById('header').offsetHeight;
-		var topWidth = document.getElementById('header').offsetWidth;
-		var footHeight = document.getElementById('footer').offsetHeight;
+		var tdHeight = document.getElementById('canvasArea').clientHeight;
+		var tdWidth = document.getElementById('canvasArea').clientWidth;
 		
-		canvas.width  = topWidth;
-		canvas.height = window.innerHeight-topHeight-footHeight-25;
+		canvas.width  = tdWidth-11;
+		canvas.height = tdHeight-21;
 		context.drawImage(memCanvas, 0, 0); 
+		
+		rect = canvas.getBoundingClientRect();
 	},
 		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
+		fullScreenButton = document.getElementById('fullScreen');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
