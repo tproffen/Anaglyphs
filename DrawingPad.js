@@ -9,6 +9,7 @@ var drawingApp = (function () {
 		clearButton,
 		eraserButton,
 		fullScreenButton,
+		textButton,
 		offsetInput,
 		widthInput,
 		context,
@@ -20,6 +21,7 @@ var drawingApp = (function () {
 		colorBlack = "#000000",
 		paint = false,
 		erase = false,
+		drawText = false,
 		offset, 
 		width,
 		oldX, oldY,
@@ -50,6 +52,19 @@ var drawingApp = (function () {
 			}
 			// Prevent the whole page from dragging if on mobile
 			e.preventDefault();
+		},
+		
+		placeText = function (e) {
+			if (drawText) {
+				drawText=false;
+				textButton.style.backgroundColor=colorNormal;
+				textButton.style.color=colorBlack;	
+			} else {
+				drawText=true;
+				textButton.style.backgroundColor=colorBlack;
+				textButton.style.color=colorWhite;	
+			}
+			
 		},
 
 		release = function () {
@@ -106,6 +121,7 @@ var drawingApp = (function () {
 		clearButton.addEventListener("click", clear, false);
 		eraserButton.addEventListener("click", toggleErase, false);
 		fullScreenButton.addEventListener("click", fullScreen, false);
+		textButton.addEventListener("click", placeText, false);
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
@@ -162,6 +178,7 @@ var drawingApp = (function () {
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
 		fullScreenButton = document.getElementById('fullScreen');
+		textButton = document.getElementById('placeText');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
