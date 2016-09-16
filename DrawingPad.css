@@ -3,7 +3,9 @@ body {
    font-size: 14pt;
    background-color: #FFFFFF;
    margin:1px;
-   padding: 1px;
+   padding: 1px;    
+   position: fixed; 
+   overflow-y: scroll;
 }
 
 th {
