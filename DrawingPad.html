@@ -7,7 +7,7 @@
   <body>
   <table width="100%">
   	<tr><th colspan="2"><h1>Anaglyph Drawing Pad</h1></th></tr>
-	<tr><td id="canvasArea" width="80%">
+	<tr><td id="canvasArea">
 	    <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas></td>
 	
 	    <td><input type="button" value="Clear" id="clearCanvas">
@@ -23,17 +23,10 @@
 			<br>&nbsp;<br>
 			<input type="text" id="stringValue"><br>
 	        <input type="button" value="Place text" id="placeText">
-
-			<br>&nbsp;<br>
-			<select id="stampValue">
-				<option name="stamps/tree.jpg">Tree</option>
-			</select>
-	        <input type="button" value="Place stamp" id="placeStamp">
-			
-			<p><font size="-1">Use red-cyan glasses to see your drawing in 3D. Right click on the image to save.</font></p>
 			</td></tr>			
 	</table>
-    <script type="text/javascript" src="DrawingPad.js"></script>
+	<center><font size="-1">Use red-cyan glasses to see your drawing in 3D. Right click on the image to save.</font>
+    <script type="text/javascript" src="DrawingPad.js"></script></center>
     <script type="text/javascript">drawingApp.init();</script>
 	</body>
 </html>

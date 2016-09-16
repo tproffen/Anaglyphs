@@ -5,6 +5,7 @@ var drawingApp = (function () {
 
 	var canvas,
 		memCanvas,
+		oldCanvas,
 		rect,
 		clearButton,
 		eraserButton,
@@ -14,6 +15,7 @@ var drawingApp = (function () {
 		widthInput,
 		context,
 		memContext,
+		oldContext,
 		colorNormal,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
@@ -36,9 +38,20 @@ var drawingApp = (function () {
 			}
 			var mouseX = e.pageX - rect.left;
 			var mouseY = e.pageY - rect.top;
-  
-			paint = true;
-			oldX=mouseX; oldY=mouseY;
+
+			if (drawText) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawAnaglyphText(mouseX,mouseY);
+				
+				drawText=false;
+				textButton.style.backgroundColor=colorNormal;
+				textButton.style.color=colorBlack;	
+				document.getElementById("stringValue").value='';
+			} else {
+				paint = true;
+				oldX=mouseX; oldY=mouseY;
+			}
 		},
 
 		drag = function (e) {
@@ -46,10 +59,18 @@ var drawingApp = (function () {
 			var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - rect.left,
 				mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - rect.top;
 			
+			
 			if (paint) {
 				drawAnaglyphLine(oldX,oldY,mouseX,mouseY);
 				oldX=mouseX; oldY=mouseY;
 			}
+			
+			if (drawText) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawAnaglyphText(mouseX,mouseY);
+			}
+			
 			// Prevent the whole page from dragging if on mobile
 			e.preventDefault();
 		},
@@ -59,10 +80,16 @@ var drawingApp = (function () {
 				drawText=false;
 				textButton.style.backgroundColor=colorNormal;
 				textButton.style.color=colorBlack;	
+				document.getElementById("stringValue").value='';
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
 			} else {
 				drawText=true;
 				textButton.style.backgroundColor=colorBlack;
 				textButton.style.color=colorWhite;	
+				oldCanvas.width = canvas.width;
+				oldCanvas.height = canvas.height;
+				oldContext.drawImage(canvas, 0, 0);
 			}
 			
 		},
@@ -144,7 +171,18 @@ var drawingApp = (function () {
 			drawLine(fromX+offset,fromY,toX+offset,toY,colorCyan);
 		}
 	},
-  
+ 
+ 	// Drawing both strings for anaglyph
+	drawAnaglyphText = function (toX,toY) {
+		
+
+		context.lineWidth = width;		
+		context.globalCompositeOperation = "multiply";
+
+		drawString(toX,toY,colorRed);
+		drawString(toX+offset,toY,colorCyan);
+	},
+ 
 	// Drawing lines
 	drawLine = function (fromX,fromY,toX,toY,Color) {
 		
@@ -155,6 +193,16 @@ var drawingApp = (function () {
 		context.closePath();
 		context.stroke();
 	},
+	
+	// Drawing strings
+	drawString = function (toX,toY,Color) {
+		
+		context.fillStyle = Color;
+		context.font = width*6+"px sans";
+		context.fillText(document.getElementById("stringValue").value, toX, toY);
+		context.stroke();
+	},
+
 
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
@@ -162,12 +210,9 @@ var drawingApp = (function () {
 		memCanvas.width = canvas.width;
 		memCanvas.height = canvas.height;
 		memContext.drawImage(canvas, 0, 0);
-
-		var tdHeight = document.getElementById('canvasArea').clientHeight;
-		var tdWidth = document.getElementById('canvasArea').clientWidth;
 		
-		canvas.width  = tdWidth-11;
-		canvas.height = tdHeight-21;
+		canvas.width  = 0.80*window.innerWidth;
+		canvas.height = 0.80*window.innerHeight;
 		context.drawImage(memCanvas, 0, 0); 
 		
 		rect = canvas.getBoundingClientRect();
@@ -186,6 +231,8 @@ var drawingApp = (function () {
 		
 		memCanvas = document.createElement('canvas');
 		memContext = memCanvas.getContext('2d');
+		oldCanvas = document.createElement('canvas');
+		oldContext = oldCanvas.getContext('2d');
 		colorNormal = eraserButton.style.backgroundColor;
 		resizeCanvas();
 		
