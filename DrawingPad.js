@@ -213,9 +213,9 @@ var drawingApp = (function () {
 		
 		canvas.width  = 0.80*window.innerWidth;
 		canvas.height = 0.80*window.innerHeight;
-		context.drawImage(memCanvas, 0, 0); 
-		
 		rect = canvas.getBoundingClientRect();
+		
+		context.drawImage(memCanvas, 0, 0); 
 	},
 		
 	// Creates a canvas element and draws the canvas for the first time.
@@ -228,6 +228,7 @@ var drawingApp = (function () {
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext("2d");
+		context.opacity = 1.0;
 		
 		memCanvas = document.createElement('canvas');
 		memContext = memCanvas.getContext('2d');
