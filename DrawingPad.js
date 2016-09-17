@@ -207,6 +207,7 @@ var drawingApp = (function () {
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
 		
+		// Do not resize when text input is active (soft keyboards)
 		if(document.activeElement.type == 'text') {return;}
 		
 		memCanvas.width = canvas.width;
