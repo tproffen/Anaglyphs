@@ -99,7 +99,9 @@ var drawingApp = (function () {
 		},
 		
 		clear = function () {
-			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);		
+			context.fillStyle=colorWhite;
+			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 		},
 
 		toggleErase = function () {
@@ -126,7 +128,7 @@ var drawingApp = (function () {
 			rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
 			rfs.call(el);
 		},
-		
+				
 		cancel = function () {
 			paint = false;
 		};
@@ -149,6 +151,7 @@ var drawingApp = (function () {
 		eraserButton.addEventListener("click", toggleErase, false);
 		fullScreenButton.addEventListener("click", fullScreen, false);
 		textButton.addEventListener("click", placeText, false);
+		
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
@@ -216,13 +219,24 @@ var drawingApp = (function () {
 		
 		canvas.width  = 0.80*window.innerWidth;
 		canvas.height = 0.80*window.innerHeight;
+		context.clearRect(0, 0, context.canvas.width, context.canvas.height);		
+		context.fillStyle=colorWhite;
+		context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 		rect = canvas.getBoundingClientRect();
 		
 		context.drawImage(memCanvas, 0, 0); 
 	},
+	
+	// Save canvas to image file
+	downloadCanvas = function (link, canvasId, filename) {
+		link.href = document.getElementById(canvasId).toDataURL();
+		link.download = filename;
+	},
+
 		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
+						
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
 		fullScreenButton = document.getElementById('fullScreen');
@@ -240,7 +254,9 @@ var drawingApp = (function () {
 		colorNormal = eraserButton.style.backgroundColor;
 		resizeCanvas();
 		
+		document.getElementById('download').addEventListener('click',downloadCanvas(this, 'canvas', 'doodle.png'), false);
 		createUserEvents();
+
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
 	};
