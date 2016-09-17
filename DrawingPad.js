@@ -76,7 +76,6 @@ var drawingApp = (function () {
 		},
 		
 		placeText = function (e) {
-			resizeCanvas();
 			if (drawText) {
 				drawText=false;
 				textButton.style.backgroundColor=colorNormal;
@@ -152,7 +151,7 @@ var drawingApp = (function () {
 		textButton.addEventListener("click", placeText, false);
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
-		window.addEventListener("resize", resizeCanvas, false);
+//		window.addEventListener("resize", resizeCanvas, false);
 	},
 	
 	// Drawing both lines for anaglyph
