@@ -76,6 +76,7 @@ var drawingApp = (function () {
 		},
 		
 		placeText = function (e) {
+			resizeCanvas();
 			if (drawText) {
 				drawText=false;
 				textButton.style.backgroundColor=colorNormal;
