@@ -151,7 +151,7 @@ var drawingApp = (function () {
 		textButton.addEventListener("click", placeText, false);
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
-//		window.addEventListener("resize", resizeCanvas, false);
+		window.addEventListener("resize", resizeCanvas, false);
 	},
 	
 	// Drawing both lines for anaglyph
@@ -206,6 +206,8 @@ var drawingApp = (function () {
 
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
+		
+		if(document.activeElement.type == 'text') {return;}
 		
 		memCanvas.width = canvas.width;
 		memCanvas.height = canvas.height;
