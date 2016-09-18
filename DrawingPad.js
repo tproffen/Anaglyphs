@@ -10,6 +10,7 @@ var drawingApp = (function () {
 		clearButton,
 		eraserButton,
 		fullScreenButton,
+		downloadButton,
 		textButton,
 		offsetInput,
 		widthInput,
@@ -155,6 +156,8 @@ var drawingApp = (function () {
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
+		
+		downloadButton.addEventListener("click", downloadCanvas, false);
 	},
 	
 	// Drawing both lines for anaglyph
@@ -228,9 +231,9 @@ var drawingApp = (function () {
 	},
 	
 	// Save canvas to image file
-	downloadCanvas = function (link, canvasId, filename) {
-		link.href = document.getElementById(canvasId).toDataURL();
-		link.download = filename;
+	downloadCanvas = function () {
+		downloadButton.download = "image.png";
+		downloadButton.href = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 	},
 
 		
@@ -241,6 +244,7 @@ var drawingApp = (function () {
 		eraserButton = document.getElementById('eraser');
 		fullScreenButton = document.getElementById('fullScreen');
 		textButton = document.getElementById('placeText');
+		downloadButton = document.getElementById('downloader');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
@@ -254,7 +258,6 @@ var drawingApp = (function () {
 		colorNormal = eraserButton.style.backgroundColor;
 		resizeCanvas();
 		
-		document.getElementById('download').addEventListener('click',downloadCanvas(this, 'canvas', 'doodle.png'), false);
 		createUserEvents();
 
 		offset=offsetInput.valueAsNumber;
