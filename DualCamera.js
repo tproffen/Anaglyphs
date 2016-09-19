@@ -1,8 +1,9 @@
 'use strict';
 
-var videoElement = document.querySelector('video');
-var videoSelect = document.querySelector('select#videoSource');
-var selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+var videoElement = document.querySelector('video1');
+var videoSelect1 = document.querySelector('select#videoSource1');
+var videoSelect2 = document.querySelector('select#videoSource2');
+var selectors = [videoSelect1, videoSelect2];
 
 function gotDevices(deviceInfos) {
   // Handles being called several times to update labels. Preserve values.
