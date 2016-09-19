@@ -58,7 +58,8 @@ function start() {
       then(gotStream).then(gotDevices).catch(handleError);
 }
 
-videoSelect.onchange = start;
+videoSelect1.onchange = start;
+videoSelect2.onchange = start;
 
 start();
 
