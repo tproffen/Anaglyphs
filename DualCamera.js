@@ -65,7 +65,7 @@ function start() {
 	  
   var videoSource2 = videoSelect2.value;
   var constraints = {
-    video: {deviceId: videoSource2 ? {exact: videoSource} : undefined, width: {exact: 320}, height: {exact: 240}}
+    video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
       then(gotStream2).then(gotDevices).catch(handleError);
