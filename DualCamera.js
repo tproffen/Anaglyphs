@@ -52,14 +52,14 @@ function start() {
     video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
-      then(gotStream(videoElement1).then(gotDevices).catch(handleError);
+      then(gotStream(videoElement1)).then(gotDevices).catch(handleError);
 	  
   var videoSource2 = videoSelect2.value;
   var constraints = {
     video: {deviceId: videoSource2 ? {exact: videoSource} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
-      then(gotStream(videoElement2).then(gotDevices).catch(handleError);
+      then(gotStream(videoElement2)).then(gotDevices).catch(handleError);
 
 }
 
