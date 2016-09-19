@@ -1,6 +1,7 @@
 'use strict';
 
-var videoElement = document.querySelector('video1');
+var videoElement1 = document.querySelector('video1');
+var videoElement2 = document.querySelector('video2');
 var videoSelect1 = document.querySelector('select#videoSource1');
 var videoSelect2 = document.querySelector('select#videoSource2');
 var selectors = [videoSelect1, videoSelect2];
@@ -37,7 +38,7 @@ function gotDevices(deviceInfos) {
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
-function gotStream(stream) {
+function gotStream(stream,videoElement) {
   window.stream = stream; // make stream available to console
   videoElement.srcObject = stream;
   // Refresh button list in case labels have become available
@@ -45,17 +46,21 @@ function gotStream(stream) {
 }
 
 function start() {
-  if (window.stream) {
-    window.stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-  }
-  var videoSource = videoSelect.value;
+  
+  var videoSource1 = videoSelect1.value;
   var constraints = {
-    video: {deviceId: videoSource ? {exact: videoSource} : undefined, width: {exact: 320}, height: {exact: 240}}
+    video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
-      then(gotStream).then(gotDevices).catch(handleError);
+      then(gotStream(videoElement1).then(gotDevices).catch(handleError);
+	  
+  var videoSource2 = videoSelect2.value;
+  var constraints = {
+    video: {deviceId: videoSource2 ? {exact: videoSource} : undefined, width: {exact: 320}, height: {exact: 240}}
+  };
+  navigator.mediaDevices.getUserMedia(constraints).
+      then(gotStream(videoElement2).then(gotDevices).catch(handleError);
+
 }
 
 videoSelect1.onchange = start;
