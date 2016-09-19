@@ -21,8 +21,9 @@ function gotDevices(deviceInfos) {
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'videoinput') {
-      option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
+      option.text = deviceInfo.label || 'camera ' + (videoSelect1.length + 1);
       videoSelect1.appendChild(option);
+      option.text = deviceInfo.label || 'camera ' + (videoSelect2.length + 1);
       videoSelect2.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
