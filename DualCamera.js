@@ -22,7 +22,8 @@ function gotDevices(deviceInfos) {
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
-      videoSelect.appendChild(option);
+      videoSelect1.appendChild(option);
+      videoSelect2.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
@@ -38,9 +39,16 @@ function gotDevices(deviceInfos) {
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
-function gotStream(stream) {
+function gotStream1(stream) {
   window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
+  videoElement1.srcObject = stream;
+  // Refresh button list in case labels have become available
+  return navigator.mediaDevices.enumerateDevices();
+}
+
+function gotStream2(stream) {
+  window.stream = stream; // make stream available to console
+  videoElement2.srcObject = stream;
   // Refresh button list in case labels have become available
   return navigator.mediaDevices.enumerateDevices();
 }
@@ -52,14 +60,14 @@ function start() {
     video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
-      then(gotStream).then(gotDevices).catch(handleError);
+      then(gotStream1).then(gotDevices).catch(handleError);
 	  
   var videoSource2 = videoSelect2.value;
   var constraints = {
     video: {deviceId: videoSource2 ? {exact: videoSource} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
   navigator.mediaDevices.getUserMedia(constraints).
-      then(gotStream).then(gotDevices).catch(handleError);
+      then(gotStream2).then(gotDevices).catch(handleError);
 
 }
 
