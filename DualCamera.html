@@ -5,21 +5,17 @@
 
 <body>
 
-    <b>Select sources &amp; outputs</b>
-    <div class="select">
-      <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
-    </div>
+    <b>Select cameras</b>
 
     <div class="select">
-      <label for="audioOutput">Audio output destination: </label><select id="audioOutput"></select>
+      <label for="videoSource1">Video source 1: </label><select id="videoSource1"></select>
+      <label for="videoSource2">Video source 2: </label><select id="videoSource2"></select>
     </div>
 
-    <div class="select">
-      <label for="videoSource">Video source: </label><select id="videoSource"></select>
-    </div>
+    <video id="video1" autoplay></video>
+    <video id="video2" autoplay></video>
 
-    <video id="video" autoplay></video>
-
+	<p>
     <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/devices/input-output">View source on GitHub</a>
 
   <script src="Adapter.js"></script>
