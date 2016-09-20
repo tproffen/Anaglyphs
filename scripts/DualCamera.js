@@ -7,7 +7,6 @@ var videoSelect2 = document.getElementById('videoSource2');
 var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
-var contrast = document.getElementById('contrast');
 
 var context = canvas.getContext('2d');
 
@@ -37,12 +36,13 @@ function connectStream() {
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 640}, height: {exact: 480}}};
-	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
+	navigator.mediaDevices.getUserMedia(constraints)
+		.then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 640}, height: {exact: 480}}};
-	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
-	
+	navigator.mediaDevices.getUserMedia(constraints)
+		.then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 }
 
 function snapImage () {
@@ -56,28 +56,10 @@ function snapImage () {
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
-		var brightnessRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
-		var brightnessCyan = 0.34 * imageCyan.data[i] + 0.5 * imageCyan.data[i + 1] + 0.16 * imageCyan.data[i + 2];
-		imageCyan.data[i]     = brightnessRed;  // red
-		imageCyan.data[i + 1] = brightnessCyan; // green
-		imageCyan.data[i + 2] = brightnessCyan; // blue
-    }
+		imageCyan.data[i]     = imageRed[1];  // Just swap red channel
+    	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.putImageData(contrastImage(imageCyan,contrast.valueAsNumber), 0, 0);
 	context.putImageData(imageCyan, 0, 0);
-}
-
-function contrastImage(imageData, gammaCorrection) {
-
-    var data = imageData.data;
-
-    for(var i=0;i<data.length;i+=4)
-    {
-        data[i]   = Math.pow(255 * (data[i]  / 255), gammaCorrection);
-        data[i+1] = Math.pow(255 * (data[i+1]/ 255), gammaCorrection);
-        data[i+2] = Math.pow(255 * (data[i+2]/ 255), gammaCorrection);
-    }
-    return imageData;
 }
 
 function handleError(error) {
@@ -94,6 +76,6 @@ videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
 
 videoElement1.style.filter='grayscale(100%)';
-videoElement2.style.filter='sepia(100%)';
+videoElement2.style.filter='grayscale(100%)';
 
 
