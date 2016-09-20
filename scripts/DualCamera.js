@@ -8,6 +8,7 @@ var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 var contrast = document.getElementById('contrast');
+var imageOriginal;
 
 var context = canvas.getContext('2d');
 
@@ -58,12 +59,12 @@ function snapImage () {
 	for (var i = 0; i < imageRed.data.length; i += 4) {
 		var brightnessRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
 		var brightnessCyan = 0.34 * imageCyan.data[i] + 0.5 * imageCyan.data[i + 1] + 0.16 * imageCyan.data[i + 2];
-		imageCyan.data[i]     = brightnessRed;  // red
-		imageCyan.data[i + 1] = brightnessCyan; // green
-		imageCyan.data[i + 2] = brightnessCyan; // blue
+		imageOriginal.data[i]     = brightnessRed;  // red
+		imageOriginal.data[i + 1] = brightnessCyan; // green
+		imageOriginal.data[i + 2] = brightnessCyan; // blue
     }
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.putImageData(imageCyan, 0, 0);
+	context.putImageData(imageOriginal, 0, 0);
 }
 
 function contrastImage(imageData, contrast) {
@@ -81,7 +82,7 @@ function contrastImage(imageData, contrast) {
 }
 
 function changeContrast () {
-	var image=context.getImageData(0,0,canvas.width, canvas.height);
+	var image=imageOriginal;
 	contrastImage(image,contrast.valueAsNumber);
 	context.putImageData(image, 0, 0);
 }
