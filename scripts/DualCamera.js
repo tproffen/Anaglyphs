@@ -4,8 +4,11 @@ var videoElement1 = document.getElementById('video1');
 var videoElement2 = document.getElementById('video2');
 var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
+var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
+var contrast = document.getElementById('contrast');
+
 var context = canvas.getContext('2d');
 
 function gotDevices(deviceInfos) {
@@ -63,6 +66,26 @@ function snapImage () {
 	context.putImageData(imageCyan, 0, 0);
 }
 
+function contrastImage(imageData, contrast) {
+
+    var data = imageData.data;
+    var factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+    for(var i=0;i<data.length;i+=4)
+    {
+        data[i] = factor * (data[i] - 128) + 128;
+        data[i+1] = factor * (data[i+1] - 128) + 128;
+        data[i+2] = factor * (data[i+2] - 128) + 128;
+    }
+    return imageData;
+}
+
+function changeContrast () {
+	var image=context.getImageData(0,0,canvas.width, canvas.height);
+	contrastImage(image,contrast.valueAsNumber);
+	context.putImageData(image, 0, 0);
+}
+
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
@@ -75,5 +98,6 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
+contrast.addEventListener("change", changeContrast, false);
 
 
