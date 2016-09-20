@@ -8,7 +8,6 @@ var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 var contrast = document.getElementById('contrast');
-var imageOriginal;
 
 var context = canvas.getContext('2d');
 
@@ -64,8 +63,8 @@ function snapImage () {
 		imageCyan.data[i + 2] = brightnessCyan; // blue
     }
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.putImageData(contrastImage(imageCyan,contrast.valueAsNumber), 0, 0);
 	context.putImageData(imageCyan, 0, 0);
-	imageOriginal=imageCyan;
 }
 
 function contrastImage(imageData, contrast) {
@@ -83,11 +82,6 @@ function contrastImage(imageData, contrast) {
     return imageData;
 }
 
-function changeContrast () {
-	var image=imageOriginal;
-	context.putImageData(contrastImage(image,contrast.valueAsNumber), 0, 0);
-}
-
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
@@ -100,6 +94,5 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
-contrast.addEventListener("change", changeContrast, false);
 
 
