@@ -55,7 +55,11 @@ function gotStream2(stream) {
 }
 
 function start() {
-  
+    if (window.stream) {
+    window.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+  }
   var videoSource1 = videoSelect1.value;
   var constraints = {
     video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
