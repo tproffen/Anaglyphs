@@ -27,7 +27,7 @@ function gotDevices(deviceInfos) {
 function connectStream() {
   var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
   var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}};
-  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.src = window.URL.createObjectURL(mediaStream);}).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
 }
 
 function handleError(error) {
