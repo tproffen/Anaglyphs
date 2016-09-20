@@ -35,12 +35,12 @@ function connectStream() {
 	}
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {ideal: 1920}, height: {ideal: 1080}}};
+	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {ideal: 1280}, height: {ideal: 960}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {ideal: 1920}, height: {ideal: 1080}}};
+	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {ideal: 1280}, height: {ideal: 960}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 }
