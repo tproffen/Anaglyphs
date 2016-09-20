@@ -23,7 +23,6 @@ function gotDevices(deviceInfos) {
       var option = document.createElement('option');
       option.text = deviceInfo.label || 'camera ' + (videoSelect1.length + 1);
       videoSelect1.appendChild(option);
-      var option = document.createElement('option');
       option.text = deviceInfo.label || 'camera ' + (videoSelect2.length + 1);
       videoSelect2.appendChild(option);
     } else {
