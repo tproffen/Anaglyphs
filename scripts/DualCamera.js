@@ -13,7 +13,7 @@ var imageOriginal;
 var context = canvas.getContext('2d');
 
 function gotDevices(deviceInfos) {
- 
+
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     if (deviceInfo.kind === 'videoinput') {
