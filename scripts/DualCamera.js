@@ -10,6 +10,8 @@ var canvas = document.getElementById('canvas');
 
 var width=1280;
 var height=960;
+var width=320;
+var height=240;
 
 canvas.height=height;
 canvas.width=width;
