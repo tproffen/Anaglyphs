@@ -93,6 +93,6 @@ videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
 
-videoElement1.css=('-webkit-filter:', "grayscale(100%)");
+videoElement1.css=('webkit-filter', 'grayscale(100%)');
 
 
