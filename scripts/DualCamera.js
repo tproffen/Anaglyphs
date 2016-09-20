@@ -56,7 +56,11 @@ function snapImage () {
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
-		imageCyan.data[i]     = imageRed[1];  // Just swap red channel
+ 		var brightRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
+ 		var brightCyan = 0.34 * imageCyan.data[i] + 0.5 * imageCyan.data[i + 1] + 0.16 * imageCyan.data[i + 2];
+ 		imageCyan.data[i]   = brightRed;  // Just swap red channel
+ 		imageCyan.data[i+1] = brightCyan; 
+ 		imageCyan.data[i+2] = brightCyan;
     	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.putImageData(imageCyan, 0, 0);
@@ -74,8 +78,4 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
-
-videoElement1.style.filter='grayscale(100%)';
-videoElement2.style.filter='grayscale(100%)';
-
 
