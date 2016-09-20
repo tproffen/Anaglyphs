@@ -16,11 +16,11 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
+  var option = document.createElement('option');
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     if (deviceInfo.kind === 'videoinput') {
 	  console.log('Video device: ', deviceInfo);
-      var option = document.createElement('option');
 	  option.value = deviceInfo.deviceId;
       option.text = deviceInfo.label || 'camera ' + (videoSelect1.length + 1);
       videoSelect1.appendChild(option);
