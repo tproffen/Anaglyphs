@@ -94,5 +94,6 @@ videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
 
 videoElement1.style.filter='grayscale(100%)';
+videoElement2.style.filter='sepia(100%)';
 
 
