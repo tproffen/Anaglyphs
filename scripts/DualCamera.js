@@ -84,8 +84,7 @@ function contrastImage(imageData, contrast) {
 
 function changeContrast () {
 	var image=imageOriginal;
-	contrastImage(image,contrast.valueAsNumber);
-	context.putImageData(image, 0, 0);
+	context.putImageData(contrastImage(image,contrast.valueAsNumber), 0, 0);
 }
 
 function handleError(error) {
