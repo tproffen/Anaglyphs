@@ -62,7 +62,7 @@ function start() {
       track.stop();
     });
   }
-  var videoSource1 = videoSelect1.value;
+  var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;;
   var constraints = {
     video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
@@ -70,7 +70,7 @@ function start() {
   navigator.mediaDevices.getUserMedia(constraints).
       then(gotStream1).then(gotDevices).catch(handleError);
 	  
-  var videoSource2 = videoSelect2.value;
+  var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;;
   var constraints = {
     video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
