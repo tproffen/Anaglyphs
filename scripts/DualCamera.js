@@ -71,7 +71,6 @@ function contrastImage(imageData, contrast) {
 
     var data = imageData.data;
     var factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
-    factor=contrast/50.0;
 
     for(var i=0;i<data.length;i+=4)
     {
