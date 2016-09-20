@@ -2,8 +2,8 @@
 
 var videoElement1 = document.querySelector('video1');
 var videoElement2 = document.querySelector('video2');
-var videoSelect1 = document.querySelector('select#videoSource1');
-var videoSelect2 = document.querySelector('select#videoSource2');
+var videoSelect1 = document.querySelector('videoSource1');
+var videoSelect2 = document.querySelector('videoSource2');
 var selectors = [videoSelect1, videoSelect2];
 
 function gotDevices(deviceInfos) {
