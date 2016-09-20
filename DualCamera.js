@@ -24,20 +24,10 @@ function gotDevices(deviceInfos) {
   }
 }
 
-function gotStream(stream) {
-  window.stream = stream; // make stream available to console
-  videoElement2.srcObject = stream;
-  // Refresh button list in case labels have become available
-  return navigator.mediaDevices.enumerateDevices();
-}
-
 function connectStream() {
-  if (window.stream) {window.stream.getTracks().forEach(function(track) {track.stop();});}
-  
   var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
   var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}};
-  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
-		videoElement1.src = window.URL.createObjectURL(mediaStream);}).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.src = window.URL.createObjectURL(mediaStream);}).catch(handleError);
 }
 
 function handleError(error) {
@@ -48,5 +38,6 @@ function handleError(error) {
 
 navigator.mediaDevices.getUserMedia({video:true});
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+connectStream();
 
 
