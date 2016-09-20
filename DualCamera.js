@@ -55,7 +55,7 @@ function gotStream2(stream) {
 }
 
 function start() {
-    if (window.stream) {
+  if (window.stream) {
     window.stream.getTracks().forEach(function(track) {
       track.stop();
     });
