@@ -58,7 +58,7 @@ select {
 	font-size: 100%;
 }
 
-video {
+.video1 {
     -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
     filter: grayscale(100%);
 }
