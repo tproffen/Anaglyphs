@@ -6,6 +6,7 @@ var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
 var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
+var downloadButton = document.getElementById('downloader');
 var canvas = document.getElementById('canvas');
 
 var width=1280;
@@ -75,6 +76,12 @@ function snapImage () {
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.putImageData(imageCyan, 0, 0);
 }
+
+	function downloadCanvas () {
+		downloadButton.download = "selfie3D.png";
+		downloadButton.href = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+	}
+
 
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
