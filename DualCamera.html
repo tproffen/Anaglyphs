@@ -1,28 +1,29 @@
 <html>
 <head>
   <title>Anaglyph Camera</title>
+  <link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
 </head>
 
 <body>
-
-    <b>Select cameras</b>
-
-    <div class="select">
-      <label for="videoSource1">Video source 1: </label><select id="videoSource1"></select> - 
-      <label for="videoSource2">Video source 2: </label><select id="videoSource2"></select> -
-	  <input type="button" value="Snap" id="snap">
-	  
-    </div>
-	
-    <p>
-    <video id="video1" autoplay width="320" height="240"></video>
-    <video id="video2" autoplay width="320" height="240"></video>
-	
-	<p>
-	<canvas id="canvas" width="640" height="480">Canvas not supported</canvas>
-
+    <table width="100%">
+    <tr><th colspan="2"><h1>Anaglyph Webcam</h1></th></tr>
+    <tr>
+    	<td><canvas id="canvas" width="640" height="480">Canvas not supported</canvas></td>
+    	<td width="340px">
+    		<b>Left camera</b><br>
+    		<label for="videoSource1">Camera: </label><select id="videoSource1"></select><br>
+    		<video id="video1" autoplay width="320" height="240"></video>
+    		<p>
+    		<b>Right camera</b><br>
+    		<label for="videoSource1">Camera: </label><select id="videoSource2"></select><br>
+    		<video id="video2" autoplay width="320" height="240"></video>
+    		</p>
+    		<p align="center"><input type="button" value="Take picture" id="snap"></p>
+    	</td>
+    </tr>
+  </table>
+  
   <script src="scripts/Adapter.js"></script>
   <script src="scripts/DualCamera.js"></script>
-
 </body>
 </html>
