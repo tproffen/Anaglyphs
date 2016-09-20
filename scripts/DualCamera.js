@@ -48,11 +48,11 @@ function connectStream() {
 function snapImage () {
 	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement1, 0, 0, 640, 480);
+	context.drawImage(videoElement1, 0, 0, 800, 600);
 	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement2, 0, 0, 640, 480);
+	context.drawImage(videoElement2, 0, 0, 800, 600);
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
