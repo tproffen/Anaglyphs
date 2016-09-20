@@ -156,8 +156,6 @@ var drawingApp = (function () {
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
-		
-		downloadButton.addEventListener("click", downloadCanvas, false);
 	},
 	
 	// Drawing both lines for anaglyph
@@ -229,14 +227,7 @@ var drawingApp = (function () {
 		
 		context.drawImage(memCanvas, 0, 0); 
 	},
-	
-	// Save canvas to image file
-	downloadCanvas = function () {
-		downloadButton.download = "image.png";
-		downloadButton.href = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-	},
 
-		
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 						
