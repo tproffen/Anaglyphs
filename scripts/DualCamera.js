@@ -70,13 +70,13 @@ function snapImage () {
 function contrastImage(imageData, contrast) {
 
     var data = imageData.data;
-    var factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
-
+    var gammaCorrection = contrast/100.;
+    
     for(var i=0;i<data.length;i+=4)
     {
-        data[i] = factor * (data[i] - 128) + 128;
-        data[i+1] = factor * (data[i+1] - 128) + 128;
-        data[i+2] = factor * (data[i+2] - 128) + 128;
+        data[i]   = Math.pow(255 * (data[i]  / 255), gammaCorrection);
+        data[i+1] = Math.pow(255 * (data[i+1]/ 255), gammaCorrection);
+        data[i+2] = Math.pow(255 * (data[i+2]/ 255), gammaCorrection);
     }
     return imageData;
 }
