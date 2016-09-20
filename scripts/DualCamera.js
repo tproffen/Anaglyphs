@@ -33,7 +33,7 @@ function gotDevices(deviceInfos) {
 
 function connectStream() {
 	if (window.stream) {
-			window.stream.getTracks().forEach(function(track) {track.stop();});
+		window.stream.getTracks().forEach(function(track) {track.stop();});
 	}
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
@@ -55,6 +55,8 @@ function snapImage () {
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement2, 0, 0, 640, 480);
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
+	
+	imageOriginal=context.getImageData(0,0,canvas.width, canvas.height);
 
 	for (var i = 0; i < imageRed.data.length; i += 4) {
 		var brightnessRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
