@@ -18,9 +18,9 @@ function gotDevices(deviceInfos) {
   });
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
-    option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'videoinput') {
       var option = document.createElement('option');
+	  option.value = deviceInfo.deviceId;
       option.text = deviceInfo.label || 'camera ' + (videoSelect1.length + 1);
       videoSelect1.appendChild(option);
       option.text = deviceInfo.label || 'camera ' + (videoSelect2.length + 1);
