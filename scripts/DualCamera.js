@@ -65,7 +65,7 @@ function snapImage () {
     }
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.putImageData(imageCyan, 0, 0);
-	imageOriginal=context.getImageData(0,0,canvas.width, canvas.height);
+	imageOriginal=imageCyan;
 }
 
 function contrastImage(imageData, contrast) {
