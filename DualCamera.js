@@ -39,7 +39,7 @@ function connectStream() {
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 640}, height: {exact: 480}}};
 	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
-
+	
 }
 
 function snapImage () {
