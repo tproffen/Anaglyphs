@@ -58,7 +58,7 @@ select {
 	font-size: 100%;
 }
 
-.padded {
+#padded {
 	padding: 20px;
 	margin: 20px;
 }
