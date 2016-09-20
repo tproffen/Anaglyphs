@@ -46,13 +46,13 @@ function connectStream() {
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, 
-			   width: {ideal: width}, height: {ideal: height}}};
+			   width: {exact: width}, height: {exact: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, 
-			   width: {ideal: width}, height: {ideal: height}}};
+			   width: {exact: width}, height: {exact: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 }
