@@ -67,11 +67,10 @@ function snapImage () {
 	context.putImageData(imageCyan, 0, 0);
 }
 
-function contrastImage(imageData, contrast) {
+function contrastImage(imageData, gammaCorrection) {
 
     var data = imageData.data;
-    var gammaCorrection = contrast/100.;
-    
+
     for(var i=0;i<data.length;i+=4)
     {
         data[i]   = Math.pow(255 * (data[i]  / 255), gammaCorrection);
