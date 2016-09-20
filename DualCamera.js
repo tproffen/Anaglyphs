@@ -4,6 +4,9 @@ var videoElement1 = document.getElementById('video1');
 var videoElement2 = document.getElementById('video2');
 var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
+var snapButton = document.getElementById('snap');
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
 
 function gotDevices(deviceInfos) {
  
@@ -30,17 +33,36 @@ function connectStream() {
 	}
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}};
+	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 640}, height: {exact: 480}}};
 	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 320}, height: {exact: 240}}};
+	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 640}, height: {exact: 480}}};
 	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 
 }
 
+function snapImage () {
+	
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.drawImage(videoElement1, 0, 0, 640, 480);
+	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
+
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.drawImage(videoElement2, 0, 0, 640, 480);
+	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
+
+	for (var i = 0; i < imageRed.data.length; i += 4) {
+		imageCyan.data[i]     = imageRed.data[i]; // red
+		imageCyan.data[i + 1] = imageCyan.data[i + 1]; // green
+		imageCyan.data[i + 2] = imageCyan.data[i + 2]; // blue
+    }
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.putImageData(imageCyan, 0, 0);
+}
+
 function handleError(error) {
-  console.log('navigator.getUserMedia error: ', error);
+	console.log('navigator.getUserMedia error: ', error);
 }
 
 // Main routine
@@ -50,5 +72,6 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
+snapButton.addEventListener("click", snapImage, false);
 
 

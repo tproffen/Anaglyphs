@@ -8,15 +8,18 @@
     <b>Select cameras</b>
 
     <div class="select">
-      <label for="videoSource1">Video source 1: </label><select id="videoSource1"></select><br>
-      <label for="videoSource2">Video source 2: </label><select id="videoSource2"></select>
+      <label for="videoSource1">Video source 1: </label><select id="videoSource1"></select> - 
+      <label for="videoSource2">Video source 2: </label><select id="videoSource2"></select> -
+	  <input type="button" value="Snap" id="snap">
+	  
     </div>
-
-    <video id="video1" autoplay></video>
-    <video id="video2" autoplay></video>
-
+	
+    <p>
+    <video id="video1" autoplay width="320" height="240"></video>
+    <video id="video2" autoplay width="320" height="240"></video>
+	
 	<p>
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/devices/input-output">View source on GitHub</a>
+	<canvas id="canvas" width="640" height="480">Canvas not supported</canvas>
 
   <script src="Adapter.js"></script>
   <script src="DualCamera.js"></script>
