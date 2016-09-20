@@ -25,9 +25,18 @@ function gotDevices(deviceInfos) {
 }
 
 function connectStream() {
-  var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
-  var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}};
-  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
+	if (window.stream) {
+			window.stream.getTracks().forEach(function(track) {track.stop();});
+	}
+	
+	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
+	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}};
+	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
+  
+	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
+	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 320}, height: {exact: 240}}};
+	navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
+
 }
 
 function handleError(error) {
@@ -36,8 +45,10 @@ function handleError(error) {
 
 // Main routine
 
-//navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
-connectStream();
+navigator.mediaDevices.getUserMedia({video:true});
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).catch(handleError);
+
+videoSelect1.addEventListener("change", connectStream, false);
+videoSelect2.addEventListener("change", connectStream, false);
 
 
