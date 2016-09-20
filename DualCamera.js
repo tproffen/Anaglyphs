@@ -53,9 +53,11 @@ function snapImage () {
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 
 	for (var i = 0; i < imageRed.data.length; i += 4) {
-		imageCyan.data[i]     = imageRed.data[i]; // red
-		imageCyan.data[i + 1] = imageCyan.data[i + 1]; // green
-		imageCyan.data[i + 2] = imageCyan.data[i + 2]; // blue
+		var brightnessRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
+		var brightnessCyan = 0.34 * imageCyan.data[i] + 0.5 * imageCyan.data[i + 1] + 0.16 * imageCyan.data[i + 2];
+		imageCyan.data[i]     = brightnessRed;  // red
+		imageCyan.data[i + 1] = brightnessCyan; // green
+		imageCyan.data[i + 2] = brightnessCyan; // blue
     }
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.putImageData(imageCyan, 0, 0);
