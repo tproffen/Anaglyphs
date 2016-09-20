@@ -8,6 +8,14 @@ var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 
+var width=1280;
+var height=960;
+
+canvas.height=height;
+canvas.width=width;
+canvas.style.width=800;
+canvas.style.height=600;
+
 var context = canvas.getContext('2d');
 
 function gotDevices(deviceInfos) {
@@ -35,12 +43,14 @@ function connectStream() {
 	}
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {ideal: 1280}, height: {ideal: 960}}};
+	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, 
+			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
-	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {ideal: 1280}, height: {ideal: 960}}};
+	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, 
+			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 }
@@ -48,11 +58,11 @@ function connectStream() {
 function snapImage () {
 	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement1, 0, 0, 800, 600);
+	context.drawImage(videoElement1, 0, 0, width, height);
 	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement2, 0, 0, 800, 600);
+	context.drawImage(videoElement2, 0, 0, width, height);
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
