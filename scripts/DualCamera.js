@@ -10,8 +10,6 @@ var canvas = document.getElementById('canvas');
 
 var width=1280;
 var height=960;
-var width=320;
-var height=240;
 
 canvas.height=height;
 canvas.width=width;
@@ -46,13 +44,13 @@ function connectStream() {
 	
 	var videoSource1 = videoSelect1.options[videoSelect1.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, 
-			   width: {exact: width}, height: {exact: height}}};
+			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement1.srcObject = mediaStream;}).catch(handleError);
   
 	var videoSource2 = videoSelect2.options[videoSelect2.selectedIndex].value;
 	var constraints = {video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, 
-			   width: {exact: width}, height: {exact: height}}};
+			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement2.srcObject = mediaStream;}).catch(handleError);
 }
