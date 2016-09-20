@@ -66,7 +66,7 @@ function start() {
   var constraints = {
     video: {deviceId: videoSource1 ? {exact: videoSource1} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
-  console.log('Constraints1: ', constraints);
+  console.log('Constraints1: ', videoSource1);
   navigator.mediaDevices.getUserMedia(constraints).
       then(gotStream1).then(gotDevices).catch(handleError);
 	  
@@ -74,7 +74,7 @@ function start() {
   var constraints = {
     video: {deviceId: videoSource2 ? {exact: videoSource2} : undefined, width: {exact: 320}, height: {exact: 240}}
   };
-  console.log('Constraints2: ', constraints);
+  console.log('Constraints2: ', videoSource2);
   navigator.mediaDevices.getUserMedia(constraints).
       then(gotStream2).then(gotDevices).catch(handleError);
 
