@@ -84,7 +84,7 @@ function handleError(error) {
 
 // Main routine
 
-navigator.mediaDevices.getUserMedia({video:true});
+//navigator.mediaDevices.getUserMedia({video:true});
 navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).catch(handleError);
 
 videoSelect1.addEventListener("change", connectStream, false);
