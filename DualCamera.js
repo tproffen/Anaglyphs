@@ -36,7 +36,7 @@ function handleError(error) {
 
 // Main routine
 
-navigator.mediaDevices.getUserMedia({video:true});
+//navigator.mediaDevices.getUserMedia({video:true});
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 connectStream();
 
