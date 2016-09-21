@@ -8,6 +8,8 @@ var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 
+// This is the capture size of the camera
+
 var width=1280;
 var height=960;
 
@@ -76,16 +78,22 @@ function snapImage () {
 	context.putImageData(imageCyan, 0, 0);
 }
 
+function resize () {
+	
+}
+
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
 
 // Main routine
 
-//navigator.mediaDevices.getUserMedia({video:true});
+navigator.mediaDevices.getUserMedia({video:true});
 navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).catch(handleError);
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
+window.addEventListener("resize", resize, false);
 
+resize();
