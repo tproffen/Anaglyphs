@@ -82,17 +82,12 @@ function determineSizes () {
 	if (window.innerWidth>1000) {
 		var newWidth=window.innerWidth-360;
 		var newHeight=3*(newWidth/4);
-		canvas.style.width=newWidth + 'px !important';
-		canvas.style.height=newHeight + 'px !important';
+		canvas.style.width=newWidth + 'px';
+		canvas.style.height=newHeight + 'px';
 	} else {
-		canvas.style.width='800px !important';
-		canvas.style.height='600px !important';
+		canvas.style.width='320px';
+		canvas.style.height='240px';
 	}
-	
-	// Force redraw
-	
-	canvas.style.display='none';
-	canvas.style.display='block';
 }
 
 function handleError(error) {
