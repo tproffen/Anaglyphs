@@ -7,7 +7,7 @@ var videoSelect2 = document.getElementById('videoSource2');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 
-checkBrowser(document.getElementById('warning'));
+checkBrowser();
 
 // This is the capture size of the camera
 
