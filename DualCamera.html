@@ -7,15 +7,15 @@
 
 <body>
     <table width="100%">
-    <tr><th><h1>Anaglyph Webcam</h1></th>
-    	<td id="previewArea" width="320px" rowspan="2">
+    <tr><th colspan="2"><h1>Anaglyph Webcam</h1></th></tr>
+    <tr><td id="previewArea" width="240px">
     		<b>Left camera</b><br>
     		<select id="videoSource1"></select><br>
-    		<video id="video1" name="video1" autoplay width="320" height="240"></video>
+    		<video id="video1" name="video1" autoplay width="240" height="180"></video>
     		<br>
     		<b>Right camera</b><br>
     		<select id="videoSource2"></select><br>
-    		<video id="video2" name="video2" autoplay width="320" height="240"></video>
+    		<video id="video2" name="video2" autoplay width="240" height="180"></video>
     		<p><input type="button" value="Take picture" id="snap"></p>
     	</td></tr>
     	<tr><td id="canvasArea"><canvas id="canvas">Canvas not supported</canvas></td></tr>
