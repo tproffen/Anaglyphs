@@ -57,6 +57,7 @@ select {
 }
 
 #warning {
-	background-color: #FF00FF;
+	background-color: #FFFF00;
 	text-align: center;
+	padding: 5px;
 }
