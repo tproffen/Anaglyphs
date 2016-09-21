@@ -76,7 +76,7 @@ function snapImage () {
 	context.putImageData(imageCyan, 0, 0);
 }
 
-function resize () {
+function doResize () {
 	
 	if (window.innerWidth>1000) {
 		var newWidth=window.innerWidth-360;
@@ -102,6 +102,6 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
-window.addEventListener("resize", resize, false);
+window.addEventListener("resize", doResize, false);
 
-resize();
+doResize();
