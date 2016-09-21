@@ -78,11 +78,14 @@ function snapImage () {
 
 function determineSizes () {
 	
-	var newWidth=window.innerWidth-400;
+	var offsetX=300;
+	var offsetY=100;
+	
+	var newWidth=window.innerWidth-offsetX;
 	var newHeight=3*(newWidth/4);
 	
-	if (newHeight>(window.innerHeight-50)) {
-		newHeight=window.innerHeight-50;
+	if (newHeight>(window.innerHeight-offsetY)) {
+		newHeight=window.innerHeight-offsetY;
 		newWidth=4*(newHeight/3);
 	}
 	canvas.style.width=newWidth + 'px';
