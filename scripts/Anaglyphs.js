@@ -15,7 +15,7 @@ var isChromium = window.chrome,
   if(isIOSChrome){
      divId.innerHTML = warningText;
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-     divId.innerHTML = '';
+     divId.style.display = 'none';
   } else { 
      divId.innerHTML = warningText;
   }
