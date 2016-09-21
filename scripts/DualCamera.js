@@ -81,12 +81,12 @@ function doResize () {
 	if (window.innerWidth>1000) {
 		var newWidth=window.innerWidth-360;
 		var newHeight=3*(newwidth/4);
-		canvas.style.width=newWidth + 'px';
-		canvas.style.height=newHeight + 'px';
+		canvas.style.width=newWidth + 'px !important';
+		canvas.style.height=newHeight + 'px !important';
 		
 	} else {
-		canvas.style.width='800px';
-		canvas.style.height='600px';
+		canvas.style.width='800px !important';
+		canvas.style.height='600px !important';
 	}
 }
 
