@@ -10,7 +10,7 @@ var isChromium = window.chrome,
     isIOSChrome = winNav.userAgent.match("CriOS");
 
   if(isIOSChrome){
-     divId.innerHTML = 'These pages were developed for the Desktop version of Chrome and might not work on iOS.';
+     divId.innerHTML = 'These pages were developed for the Desktop version of <a href="https://www.google.com/chrome/">Google Chrome<a> and might not work on iOS.';
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
      divId.innerHTML = '';
   } else { 
