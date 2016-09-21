@@ -82,7 +82,7 @@ function doResize () {
 	
 	if (window.innerWidth>1000) {
 		var newWidth=window.innerWidth-360;
-		var newHeight=3*(newwidth/4);
+		var newHeight=3*(newWidth/4);
 		canvas.style.width=newWidth + 'px !important';
 		canvas.style.height=newHeight + 'px !important';
 		console.log('New size: ', newWidth);
