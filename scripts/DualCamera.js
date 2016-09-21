@@ -85,15 +85,15 @@ function doResize () {
 		var newHeight=3*(newWidth/4);
 		canvas.style.width=newWidth + 'px !important';
 		canvas.style.height=newHeight + 'px !important';
-		console.log('New size: ', newWidth);
-		canvas.style.width='1280px !important';
-		canvas.style.height='960px !important';
-
-		
 	} else {
 		canvas.style.width='800px !important';
 		canvas.style.height='600px !important';
 	}
+	
+	// Force redraw
+	
+	canvas.style.display='none';
+	canvas.style.display='block';
 }
 
 function handleError(error) {
