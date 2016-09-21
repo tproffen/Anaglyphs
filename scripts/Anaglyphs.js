@@ -15,9 +15,11 @@ var isChromium = window.chrome,
   
   if(isIOSChrome){
      divId.innerHTML = warningText;
+     divId.style.display = 'block';
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
      divId.style.display = 'none';
   } else { 
      divId.innerHTML = warningText;
+     divId.style.display = 'block';
   }
 }
