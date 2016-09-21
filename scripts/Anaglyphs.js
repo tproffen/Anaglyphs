@@ -11,7 +11,7 @@ var isChromium = window.chrome,
     
   var warningText='These pages were developed for the Desktop version of '+
                   '<a href="https://www.google.com/chrome/">Google Chrome<a> and might with other browsers.';
-  var divID = document.getElementById('warning');
+  var divId = document.getElementById('warning');
   
   if(isIOSChrome){
      divId.innerHTML = warningText;
