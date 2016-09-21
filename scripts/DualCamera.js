@@ -13,8 +13,8 @@ var height=960;
 
 canvas.height=height;
 canvas.width=width;
-canvas.style.width=800;
-canvas.style.height=600;
+canvas.style.width='800px';
+canvas.style.height='600px';
 
 var context = canvas.getContext('2d');
 
