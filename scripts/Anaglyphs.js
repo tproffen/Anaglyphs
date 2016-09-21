@@ -8,12 +8,15 @@ var isChromium = window.chrome,
     isOpera = winNav.userAgent.indexOf("OPR") > -1,
     isIEedge = winNav.userAgent.indexOf("Edge") > -1,
     isIOSChrome = winNav.userAgent.match("CriOS");
+    
+  var warningText='These pages were developed for the Desktop version of '+
+                  '<a href="https://www.google.com/chrome/">Google Chrome<a> and might with other browsers.';
 
   if(isIOSChrome){
-     divId.innerHTML = 'These pages were developed for the Desktop version of <a href="https://www.google.com/chrome/">Google Chrome<a> and might not work on iOS.';
+     divId.innerHTML = warningText;
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
      divId.innerHTML = '';
   } else { 
-    divId.innerHTML = 'These pages were developed for the Desktop version of <a href="https://www.google.com/chrome/">Google Chrome<a> and might not work on other browsers.';
+     divId.innerHTML = warningText;
   }
 }
