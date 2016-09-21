@@ -8,8 +8,6 @@ var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
 var canvas = document.getElementById('canvas');
 
-determineSizes();
-
 // This is the capture size of the camera
 
 var width=1280;
@@ -17,6 +15,7 @@ var height=960;
 
 canvas.height=height;
 canvas.width=width;
+determineSizes();
 
 var context = canvas.getContext('2d');
 
