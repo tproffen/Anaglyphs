@@ -1,6 +1,6 @@
 // Check if browser is Chrome - if not display warning
 
-function checkBrowser (divId) {
+function checkBrowser () {
 
 var isChromium = window.chrome,
     winNav = window.navigator,
@@ -11,7 +11,8 @@ var isChromium = window.chrome,
     
   var warningText='These pages were developed for the Desktop version of '+
                   '<a href="https://www.google.com/chrome/">Google Chrome<a> and might with other browsers.';
-
+  var divID = document.getElementById('warning');
+  
   if(isIOSChrome){
      divId.innerHTML = warningText;
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
