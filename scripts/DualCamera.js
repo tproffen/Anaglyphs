@@ -86,6 +86,9 @@ function doResize () {
 		canvas.style.width=newWidth + 'px !important';
 		canvas.style.height=newHeight + 'px !important';
 		console.log('New size: ', newWidth);
+		canvas.style.width='1280px !important';
+		canvas.style.height='960px !important';
+
 		
 	} else {
 		canvas.style.width='800px !important';
