@@ -15,8 +15,6 @@ var height=960;
 
 canvas.height=height;
 canvas.width=width;
-canvas.style.width='800px';
-canvas.style.height='600px';
 
 var context = canvas.getContext('2d');
 
@@ -80,6 +78,16 @@ function snapImage () {
 
 function resize () {
 	
+	if (window.innerWidth>1000) {
+		var newWidth=window.innerWidth-360;
+		var newHeight=3*(newwidth/4);
+		canvas.style.width=newWidth + 'px';
+		canvas.style.height=newHeight + 'px';
+		
+	} else {
+		canvas.style.width='800px';
+		canvas.style.height='600px';
+	}
 }
 
 function handleError(error) {
