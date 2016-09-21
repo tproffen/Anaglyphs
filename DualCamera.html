@@ -7,9 +7,8 @@
 
 <body>
     <table width="100%">
-    <tr><th colspan="2"><h1>Anaglyph Webcam</h1></th></tr>
-    	<tr><td id="canvasArea"><canvas id="canvas">Canvas not supported</canvas></td>
-    	<td id="previewArea" width="320px">
+    <tr><th colspan="2"><h1>Anaglyph Webcam</h1></th>
+    	<td id="previewArea" width="320px" rowspan="2">
     		<b>Left camera</b><br>
     		<select id="videoSource1"></select><br>
     		<video id="video1" name="video1" autoplay width="320" height="240"></video>
@@ -19,6 +18,7 @@
     		<video id="video2" name="video2" autoplay width="320" height="240"></video>
     		<p><input type="button" value="Take picture" id="snap"></p>
     	</td></tr>
+    	<tr><td id="canvasArea"><canvas id="canvas">Canvas not supported</canvas></td>
   </table>
   <center><font size="-1">Use red-cyan glasses to see your picture in 3D.</font></center>
 	        
