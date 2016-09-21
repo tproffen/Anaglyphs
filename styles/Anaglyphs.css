@@ -56,7 +56,7 @@ select {
 	font-size: 100%;
 }
 
-.warning {
+#warning {
 	background-color: #FF00FF;
 	text-align: center;
 }
