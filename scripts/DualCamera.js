@@ -79,7 +79,7 @@ function snapImage () {
 
 function determineSizes () {
 	
-	var newWidth=window.innerWidth-360;
+	var newWidth=window.innerWidth-400;
 	var newHeight=3*(newWidth/4);
 	
 	canvas.style.width=newWidth + 'px';
