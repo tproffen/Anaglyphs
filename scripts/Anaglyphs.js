@@ -10,10 +10,10 @@ var isChromium = window.chrome,
     isIOSChrome = winNav.userAgent.match("CriOS");
 
   if(isIOSChrome){
-     divID.innerHTML = 'These pages were developed for the Desktop version of Chrome and might not work on iOS.';
+     divId.innerHTML = 'These pages were developed for the Desktop version of Chrome and might not work on iOS.';
   } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-     divID.innerHTML = '';
+     divId.innerHTML = '';
   } else { 
-    divID.innerHTML = 'These pages were developed for the Desktop version of Chrome and might not work on other browsers.';
+    divId.innerHTML = 'These pages were developed for the Desktop version of Chrome and might not work on other browsers.';
   }
 }
