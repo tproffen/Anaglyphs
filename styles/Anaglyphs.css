@@ -6,6 +6,7 @@ body {
    	padding: 1px;    
 	position: fixed; 
 	overflow-y: scroll;
+	width: 100%;
 }
 
 tr, td, th {
