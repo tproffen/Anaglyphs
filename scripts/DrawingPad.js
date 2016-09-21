@@ -250,6 +250,7 @@ var drawingApp = (function () {
 		resizeCanvas();
 		
 		createUserEvents();
+		browserCheck(document.getElementById('warning'));
 
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
