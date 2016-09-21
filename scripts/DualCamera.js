@@ -4,8 +4,8 @@ var videoElement1 = document.getElementById('video1');
 var videoElement2 = document.getElementById('video2');
 var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
-var contrast = document.getElementById('contrast');
 var snapButton = document.getElementById('snap');
+var fullScreen = document.getElementById('fullScreen');
 var canvas = document.getElementById('canvas');
 
 // This is the capture size of the camera
@@ -86,6 +86,12 @@ function determineSizes () {
 	canvas.style.height=newHeight + 'px';
 }
 
+function fullScreen = () {
+	var el = document.documentElement,
+	rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+	rfs.call(el);
+}
+
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
@@ -98,3 +104,4 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
+fullScreen.addEventListener("click", fullScreen, false);
