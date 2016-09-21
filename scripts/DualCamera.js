@@ -79,15 +79,11 @@ function snapImage () {
 
 function determineSizes () {
 	
-	if (window.innerWidth>1000) {
-		var newWidth=window.innerWidth-360;
-		var newHeight=3*(newWidth/4);
-		canvas.style.width=newWidth + 'px';
-		canvas.style.height=newHeight + 'px';
-	} else {
-		canvas.style.width='320px';
-		canvas.style.height='240px';
-	}
+	var newWidth=window.innerWidth-360;
+	var newHeight=3*(newWidth/4);
+	
+	canvas.style.width=newWidth + 'px';
+	canvas.style.height=newHeight + 'px';
 }
 
 function handleError(error) {
@@ -102,4 +98,3 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
-window.addEventListener("resize", determineSizes, false);
