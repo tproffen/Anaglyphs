@@ -81,6 +81,10 @@ function determineSizes () {
 	var newWidth=window.innerWidth-400;
 	var newHeight=3*(newWidth/4);
 	
+	if (newHeight>(window.innerHeight-50)) {
+		newHeight=window.innerHeight-50;
+		newWidth=4*(newHeight/3);
+	}
 	canvas.style.width=newWidth + 'px';
 	canvas.style.height=newHeight + 'px';
 }
