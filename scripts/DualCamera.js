@@ -65,11 +65,11 @@ function snapImage () {
 	var offY= document.getElementById('yOffset').valueAsNumber * height;
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement1, 0, 0);
+	context.drawImage(videoElement1, 0, 0, width, height);
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement2, offX, offY);
+	context.drawImage(videoElement2, offX, offY, width, height);
 	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
