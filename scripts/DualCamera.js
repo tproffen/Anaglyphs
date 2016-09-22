@@ -70,7 +70,7 @@ function snapImage () {
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement2, offX, offY, width, height);
-	var imageRed = context.getImageData(0,0,canvas.width-offX, canvas.height-Math.abs(offY));
+	var imageRed = context.getImageData(0,0,canvas.width, canvas.height;
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
  		var brightRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
