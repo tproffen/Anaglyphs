@@ -19,6 +19,7 @@ var height=960;
 canvas.height=height;
 canvas.width=width;
 determineSizes();
+readValues();
 
 var context = canvas.getContext('2d');
 
@@ -81,6 +82,8 @@ function snapImage () {
     	}	
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
+	
+	writeValues();
 }
 
 function determineSizes () {
@@ -99,6 +102,21 @@ function determineSizes () {
 	canvas.style.height=newHeight + 'px';
 }
 
+function writeValues () {
+	
+	setCookie('xOffset',document.getElementById('xOffset').value)
+	setCookie('yOffset',document.getElementById('yOffset').value)
+}
+
+function readValues () {
+
+    var val;
+	
+	if (val=getCookie('xOffset')) {document.getElementById('xOffset').value = val}
+	console.log('Cookie: ', val);
+	if (val=getCookie('yOffset')) {document.getElementById('yOffset').value = val}
+}
+
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
@@ -114,3 +132,5 @@ snapButton.addEventListener("click", snapImage, false);
 xOffset.addEventListener("change", snapImage, false);
 yOffset.addEventListener("change", snapImage, false);
 window.addEventListener("resize", determineSizes, false);
+window.addEventListener("unload", writeValues, false);
+

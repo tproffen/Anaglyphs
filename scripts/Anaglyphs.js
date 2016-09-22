@@ -23,3 +23,28 @@ var isChromium = window.chrome,
      divId.style.display = 'block';
   }
 }
+
+// Cookie related routines
+
+function setCookie (name, value) {
+	
+	var today = new Date();
+	var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
