@@ -5,6 +5,8 @@ var videoElement2 = document.getElementById('video2');
 var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
 var snapButton = document.getElementById('snap');
+var xOffset = document.getElementById('xOffset');
+var yOffset = document.getElementById('yOffset');
 var canvas = document.getElementById('canvas');
 
 checkBrowser();
@@ -109,3 +111,5 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
+xOffset.addEventListener("change", snapImage, false);
+yOffset.addEventListener("change", snapImage, false);
