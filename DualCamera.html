@@ -24,10 +24,14 @@
     		<select id="videoSource1"></select><br>
     		<video id="video1" name="video1" autoplay width="240" height="180"></video></p>
     		
-    		<p></p><b>Right camera</b><br>
+    		<p><b>Right camera</b><br>
     		<select id="videoSource2"></select><br>
     		<video id="video2" name="video2" autoplay width="240" height="180"></video></p>
     		
+    		<p><b>Offsets</b><br>
+    		x: <output name="xOffsetOutput" id="xOffsetOutputId">0</output>
+	         <input type="range" value="0" min="-20" max="20" id="xOffset" oninput="xOffsetOutputId.value = xOffset.value">
+    		</p>
     		<p><input type="button" value="Take picture" id="snap"></p>
     	</td>
     </tr>
