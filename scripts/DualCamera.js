@@ -81,6 +81,9 @@ function snapImage () {
     	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.putImageData(imageCyan,0,0);
+	
+	context.fillStype="#FFFFFF";
+	context.fillRect(0,0,offX,context.canvas.height);
 }
 
 function determineSizes () {
