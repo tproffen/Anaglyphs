@@ -59,8 +59,8 @@ function connectStream() {
 
 function snapImage () {
 	
-	var offX= document.getElementById('xOffset').valueAsNumber;
-	var offY= document.getElementById('yOffset').valueAsNumber;
+	var offX= document.getElementById('xOffset').valueAsNumber * width;
+	var offY= document.getElementById('yOffset').valueAsNumber * height;
 	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement1, 0, 0, width, height);
