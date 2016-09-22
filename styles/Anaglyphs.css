@@ -4,8 +4,6 @@ body {
    	background-color: #FFFFFF;
 	margin:1px;
    	padding: 1px;    
-	position: fixed; 
-	overflow-y: scroll;
 	width: 100%;
 }
 
