@@ -113,3 +113,4 @@ videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
 xOffset.addEventListener("change", snapImage, false);
 yOffset.addEventListener("change", snapImage, false);
+window..addEventListener("resize", determineSizes, false);
