@@ -69,7 +69,7 @@ function snapImage () {
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement2, offX, offY, width-offX, height-offY);
+	context.drawImage(videoElement2, offX, offY, width, height);
 	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
@@ -80,7 +80,7 @@ function snapImage () {
  		imageCyan.data[i+2] = brightCyan;
     	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.putImageData(imageCyan, offX, offY);
+	context.putImageData(imageCyan,0,0);
 }
 
 function determineSizes () {
