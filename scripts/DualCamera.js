@@ -63,8 +63,7 @@ function snapImage () {
 	
 	var offX= document.getElementById('xOffset').valueAsNumber * width;
 	var offY= document.getElementById('yOffset').valueAsNumber * height;
-	console.log('Offsets applied: ', offX, offY);
-	
+
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement1, 0, 0, width, height);
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
@@ -81,7 +80,7 @@ function snapImage () {
  		imageCyan.data[i+2] = brightCyan;
     	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.putImageData(imageCyan, 0, 0);
+	context.putImageData(imageCyan, offX, offY);
 }
 
 function determineSizes () {
