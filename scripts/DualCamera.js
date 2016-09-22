@@ -79,7 +79,7 @@ function snapImage () {
  		imageCyan.data[i+1] = brightCyan; 
  		imageCyan.data[i+2] = brightCyan;
     	}	
-	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
 }
 
