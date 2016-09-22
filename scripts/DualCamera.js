@@ -80,10 +80,7 @@ function snapImage () {
  		imageCyan.data[i+2] = brightCyan;
     	}	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.putImageData(imageCyan,0,0);
-	
-	context.fillStyle="#FFFFFF";
-	context.fillRect(0,0,offX,context.canvas.height);
+	context.putImageData(imageCyan,offX/2,offY/2,width-offX,height-offY);
 }
 
 function determineSizes () {
