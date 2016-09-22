@@ -3,7 +3,6 @@
   <head>
     <title>Anaglyph Drawing App</title>
 	<link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
   </head>
   <body>
   <script>
@@ -19,27 +18,27 @@
   <script type="text/javascript" src="scripts/Anaglyphs.js"></script>
   <div id="warning" name="warning"></div>
   
-  <table width="100%">
+  <table>
   	<tr><th colspan="2"><h1>Anaglyph Drawing Pad</h1></th></tr>
 	<tr><td id="canvasArea">
 	    <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas></td>
 	
 	    <td><input type="button" value="Clear" id="clearCanvas">
-			<input type="button" value="Eraser" id="eraser">
-		    <input type="button" value="Full Screen" id="fullScreen">
-			<br>&nbsp;<br>
+		<input type="button" value="Eraser" id="eraser">
+		<input type="button" value="Full Screen" id="fullScreen">
+		<br>&nbsp;<br>
 			
-			Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
+		Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
 	        <input type="range" value="3" min="-10" max="10" id="offset" oninput="offsetOutputId.value = offset.value">
 	        Size: <output name="lineWidthOutput" id="lineWidthOutputId">5</output>
 	        <input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value">
 
-			<br>&nbsp;<br>
-			<input type="text" id="stringValue"><br>
+		<br>&nbsp;<br>
+		<input type="text" id="stringValue"><br>
 	        <input type="button" value="Place text" id="placeText">
-			</td></tr>			
-	</table>
+	</td></tr>			
+  </table>
 	<center><font size="-1">Use red-cyan glasses to see your drawing in 3D.</font></center>
-    <script type="text/javascript">drawingApp.init();</script>
-	</body>
+    	<script type="text/javascript">drawingApp.init();</script>
+</body>
 </html>
