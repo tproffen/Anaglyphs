@@ -7,9 +7,6 @@ body {
 	width: 100%;
 }
 
-table {
-	margin: 5px;
-}
 tr, td, th {
 	padding: 5px;
 	margin: 0px;
