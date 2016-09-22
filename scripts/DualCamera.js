@@ -64,11 +64,11 @@ function snapImage () {
 	
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement1, 0, 0, width, height);
-	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
+	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.drawImage(videoElement2, 0, 0, width, height);
-	var imageCyan = context.getImageData(offX,offY,canvas.width, canvas.height);
+	var imageRed = context.getImageData(offX,offY,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
  		var brightRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
