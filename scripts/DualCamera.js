@@ -69,7 +69,7 @@ function snapImage () {
 	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
 
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.drawImage(videoElement2, offX, offY, width, height);
+	context.drawImage(videoElement2, offX, offY, width-offX,height-Math.abs(offY));
 	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
