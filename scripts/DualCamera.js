@@ -85,7 +85,7 @@ function snapImage () {
 
 function determineSizes () {
 	
-	var offsetX=580;
+	var offsetX=590;
 	var offsetY=120;
 	
 	var newWidth=window.innerWidth-offsetX;
