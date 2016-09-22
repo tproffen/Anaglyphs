@@ -26,14 +26,18 @@ var isChromium = window.chrome,
 
 // Cookie related routines
 
-function setCookie (name, value) {
+function setCookie (cname, cvalue) {
 	
-	var today = new Date();
-	var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
-    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+    var d = new Date();
+    d.setTime(d.getTime() + (30*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ", " + expires;
+	
+	console.log('Cookies: ', document.cookie);
+	
 }
 
-function getCookie(cname) {
+function getCookie (cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {

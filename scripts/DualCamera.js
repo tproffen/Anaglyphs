@@ -113,7 +113,6 @@ function readValues () {
     var val;
 	
 	if (val=getCookie('xOffset')) {document.getElementById('xOffset').value = val}
-	console.log('Cookie: ', val);
 	if (val=getCookie('yOffset')) {document.getElementById('yOffset').value = val}
 }
 
