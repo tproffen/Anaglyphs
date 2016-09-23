@@ -36,9 +36,9 @@ var contextCyan = canvasCyan.getContext('2d');
 
 function drawWelcome () {
 	context.fillStyle = '#000000';
-	context.font = "96px sans";
+	context.font = "72px Arial, Helvetica, sans-serif";
 	context.textAlign="center";
-	context.fillText('Click Take Picture to start ..', width/2, height/2);
+	context.fillText('Click Take picture to start ..', width/2, height/2);
 	context.stroke();
 }
 
