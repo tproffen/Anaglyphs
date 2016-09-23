@@ -12,7 +12,7 @@ tr, td, th {
 	padding: 5px;
 	margin: 0px;
 	vertical-align: top;
-	horizontal-align: center;
+	text-align: center;
 	border: 1px solid #999;
 }
 
@@ -65,6 +65,6 @@ select {
 }
 
 .small {
-	horizontal-align: center !impoartant;
+	text-align: center !impoartant;
 	font-size: 10pt !important;
 }
