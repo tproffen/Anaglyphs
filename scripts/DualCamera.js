@@ -38,7 +38,7 @@ function drawWelcome () {
 	context.fillStyle = '#000000';
 	context.font = "64px Arial, Helvetica, sans-serif";
 	context.textAlign="center";
-	context.fillText('Click Take picture to start ..', width/2, height/2);
+	context.fillText('Ready', width/2, height/2);
 	context.stroke();
 }
 
