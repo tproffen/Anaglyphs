@@ -104,8 +104,8 @@ function compositeImage () {
 	imageRed = context.getImageData(0, 0, width, height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
- 		var brightRed = wr * imageRed.data[i] + wg * imageRed.data[i + 1] + wb * imageRed.data[i + 2];
- 		var brightCyan = wr * imageCyan.data[i] + wg * imageCyan.data[i + 1] + wb * imageCyan.data[i + 2];
+ 		var brightRed = wR * imageRed.data[i] + wG * imageRed.data[i + 1] + wB * imageRed.data[i + 2];
+ 		var brightCyan = wR * imageCyan.data[i] + wG * imageCyan.data[i + 1] + wB * imageCyan.data[i + 2];
  		imageCyan.data[i]   = brightRed;  // Just swap red channel
  		imageCyan.data[i+1] = brightCyan; 
  		imageCyan.data[i+2] = brightCyan;
