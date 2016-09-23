@@ -9,22 +9,22 @@ body {
 }
 
 a:link {
-    color: #00BFFF;
+    color: #00CED1;
     text-decoration: none;
 }
 
 a:visited {
-    color: #00BFFF;
+    color: #00CED1;
     text-decoration: none;
 }
 
 a:hover {
-    color: #00BFFF;
+    color: #00CED1;
     text-decoration: underline;
 }
 
 a:active {
-    color: #00BFFF;
+    color: #00CED1;
     text-decoration: underline;
 }
 
