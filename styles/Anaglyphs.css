@@ -65,6 +65,6 @@ select {
 }
 
 #small {
-	horizontal-align: center;
-	font-size: 10pt;
+	horizontal-align: center !impoartant;
+	font-size: 10pt !important;
 }
