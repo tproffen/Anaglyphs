@@ -12,7 +12,6 @@ var canvas = document.getElementById('canvas');
 var canvasRed = document.createElement('canvas');
 var canvasCyan = document.createElement('canvas');
 
-
 checkBrowser();
 
 // This is the capture size of the camera
@@ -28,7 +27,6 @@ canvasCyan.height=height;
 canvasCyan.width=width;
 
 determineSizes();
-readValues();
 
 var context = canvas.getContext('2d');
 var contextRed = canvasRed.getContext('2d');
@@ -145,7 +143,7 @@ function handleError(error) {
 // Main routine
 
 navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).catch(handleError);
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
