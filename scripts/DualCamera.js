@@ -9,6 +9,10 @@ var xOffset = document.getElementById('xOffset');
 var yOffset = document.getElementById('yOffset');
 var canvas = document.getElementById('canvas');
 
+var canvasRed = document.createElement('canvas');
+var canvasCyan = document.createElement('canvas');
+
+
 checkBrowser();
 
 // This is the capture size of the camera
@@ -16,12 +20,19 @@ checkBrowser();
 var width=1280;
 var height=960;
 
-canvas.height=height;
+canvas.height=height; 
 canvas.width=width;
+canvasRed.height=height; 
+canvasRed.width=width;
+canvasCyan.height=height; 
+canvasCyan.width=width;
+
 determineSizes();
 readValues();
 
 var context = canvas.getContext('2d');
+var contextRed = canvasRed.getContext('2d');
+var contextCyan = canvasCyan.getContext('2d');
 
 function gotDevices(deviceInfos) {
 
@@ -62,16 +73,25 @@ function connectStream() {
 
 function snapImage () {
 	
+	contextCyan.clearRect(0, 0, width, height);
+	contextCyan.drawImage(videoElement1, 0, 0, width, height);
+	contextRed.clearRect(0, 0, width, height);
+	contextRed.drawImage(videoElement2, 0, 0, width, height);
+
+	compositeImage();
+}
+
+function compositeImage () {
+	
 	var offX= document.getElementById('xOffset').valueAsNumber * width;
 	var offY= document.getElementById('yOffset').valueAsNumber * height;
 
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(videoElement1, 0, 0, width, height);
-	var imageCyan = context.getImageData(0,0,canvas.width, canvas.height);
-
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(videoElement2, offX, offY, width, height);
-	var imageRed = context.getImageData(0,0,canvas.width, canvas.height);
+	var imageCyan = contextCyan.getImageData(0, 0,width, height);
+	var imageRed = contextRed.getImageData(0, 0, width, height);
+	
+	context.clearRect(0, 0, width, height);
+	context.putImageData(imageRed, offX, offY);
+	imageRed = context.getImageData(0, 0, width, height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
  		var brightRed = 0.34 * imageRed.data[i] + 0.5 * imageRed.data[i + 1] + 0.16 * imageRed.data[i + 2];
@@ -80,7 +100,7 @@ function snapImage () {
  		imageCyan.data[i+1] = brightCyan; 
  		imageCyan.data[i+2] = brightCyan;
     	}	
-	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.clearRect(0, 0, width, height);
 	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
 }
 
@@ -130,7 +150,7 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).c
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
 snapButton.addEventListener("click", snapImage, false);
-xOffset.addEventListener("change", snapImage, false);
-yOffset.addEventListener("change", snapImage, false);
+xOffset.addEventListener("change", compositeImage, false);
+yOffset.addEventListener("change", compositeImage, false);
 window.addEventListener("resize", determineSizes, false);
 window.addEventListener("unload", writeValues, false);
