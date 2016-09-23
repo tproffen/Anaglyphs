@@ -93,7 +93,8 @@ function snapImage () {
 }
 
 function canvasDownload (canvas,download,name) {
-	document.getElementById(download).download="name";
+	
+	document.getElementById(download).download=name;
 	document.getElementById(download).href=canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 }
 
