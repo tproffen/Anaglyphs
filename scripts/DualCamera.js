@@ -134,4 +134,3 @@ xOffset.addEventListener("change", snapImage, false);
 yOffset.addEventListener("change", snapImage, false);
 window.addEventListener("resize", determineSizes, false);
 window.addEventListener("unload", writeValues, false);
-
