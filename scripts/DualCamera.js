@@ -29,8 +29,18 @@ canvasCyan.width=width;
 determineSizes();
 
 var context = canvas.getContext('2d');
+drawWelcome();
+
 var contextRed = canvasRed.getContext('2d');
 var contextCyan = canvasCyan.getContext('2d');
+
+function drawWelcome () {
+	context.fillStyle = '#000000';
+	context.font = "96px sans";
+	context.textAlign="center";
+	context.fillText('Click Take Picture to start ..', width/2, height/2);
+	context.stroke();
+}
 
 function gotDevices(deviceInfos) {
 
@@ -143,7 +153,7 @@ function handleError(error) {
 // Main routine
 
 navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).then(snapImage).catch(handleError);
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
