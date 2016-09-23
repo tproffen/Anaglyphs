@@ -35,14 +35,14 @@ var contextRed = canvasRed.getContext('2d');
 var contextCyan = canvasCyan.getContext('2d');
 
 function drawWelcome () {
+	context.fillStyle = '#000000';
+	context.fillRect(0, 0, width, height);	
+
 	context.fillStyle = '#FFFFFF';
 	context.font = "64px Arial, Helvetica, sans-serif";
 	context.textAlign="center";
 	context.fillText('Ready', width/2, height/2);
 	context.stroke();
-
-	context.fillStyle = '#000000';
-	context.fillRect(0, 0, width, height);	
 }
 
 function gotDevices(deviceInfos) {
