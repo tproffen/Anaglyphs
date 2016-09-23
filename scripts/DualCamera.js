@@ -116,14 +116,14 @@ function compositeImage () {
 
 function determineSizes () {
 	
-	var offsetX=595;
-	var offsetY=120;
+	var padW=595;
+	var padH=120;
 	
-	var newWidth=window.innerWidth-offsetX;
+	var newWidth=window.innerWidth-padW;
 	var newHeight=3*(newWidth/4);
 	
-	if (newHeight>(window.innerHeight-offsetY)) {
-		newHeight=window.innerHeight-offsetY;
+	if (newHeight>(window.innerHeight-padH)) {
+		newHeight=window.innerHeight-padH;
 		newWidth=4*(newHeight/3);
 	}
 	canvas.style.width=newWidth + 'px';
