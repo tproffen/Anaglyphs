@@ -63,3 +63,8 @@ select {
 	font-size: 10pt;
 	display: none;
 }
+
+#small {
+	horizontal-align: center;
+	font-size: 10pt;
+}
