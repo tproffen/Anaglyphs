@@ -65,4 +65,5 @@ select {
 
 .small {
 	font-size: 50%;
+	a:text-decoration: 'none';
 }
