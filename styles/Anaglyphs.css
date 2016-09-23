@@ -9,22 +9,22 @@ body {
 }
 
 a:link {
-    color: DeepSkyBlue;
+    color: white;
     text-decoration: none;
 }
 
 a:visited {
-    color: DeepSkyBlue;
+    color: white;
     text-decoration: none;
 }
 
 a:hover {
-    color: DeepSkyBlue;
+    color: white;
     text-decoration: underline;
 }
 
 a:active {
-    color: DeepSkyBlue;
+    color: white;
     text-decoration: underline;
 }
 
