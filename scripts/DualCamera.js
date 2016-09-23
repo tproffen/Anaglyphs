@@ -91,7 +91,7 @@ function snapImage () {
 
 function compositeImage () {
 	
-	var wR=0.2126, wG=0.7152, wB=0.0722, gamma=2.2;
+	var wR=0.2126, wG=0.7152, wB=0.0722, gamma=1.2;
 	
 	var offX= document.getElementById('xOffset').valueAsNumber * width;
 	var offY= document.getElementById('yOffset').valueAsNumber * height;
