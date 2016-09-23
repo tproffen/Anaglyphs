@@ -143,7 +143,7 @@ function handleError(error) {
 // Main routine
 
 navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).then(snapImage).catch(handleError);
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
