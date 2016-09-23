@@ -64,7 +64,7 @@ select {
 	display: none;
 }
 
-#small {
+.small {
 	horizontal-align: center !impoartant;
 	font-size: 10pt !important;
 }
