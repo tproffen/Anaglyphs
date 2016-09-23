@@ -86,12 +86,15 @@ function snapImage () {
 	contextRed.clearRect(0, 0, width, height);
 	contextRed.drawImage(videoElement2, 0, 0, width, height);
 
-	document.getElementById("download1").href=canvasRed.toDataURL("image/jpeg", 1.0)
-	                                    .replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-	document.getElementById("download2").href=canvasCyan.toDataURL("image/jpeg", 1.0)
-	                                    .replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+	canvasDownload(canvasRed,"download1","Left.png");
+	canvasDownload(canvasCyan,"download2","Right.png");
 	
 	compositeImage();
+}
+
+function canvasDownload (canvas,download,name) {
+	document.getElementById(download).download="name";
+	document.getElementById(download).href=canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 }
 
 function compositeImage () {
