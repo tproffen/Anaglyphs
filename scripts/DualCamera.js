@@ -104,8 +104,8 @@ function writeValues () {
 	
 	setCookie('xOffset',document.getElementById('xOffset').value)
 	setCookie('yOffset',document.getElementById('yOffset').value)
-	setCookie('videoSelect1, videoSelect1.selectedIndex)
-	setCookie('videoSelect2, videoSelect2.selectedIndex)
+	setCookie('videoSelect1', videoSelect1.selectedIndex)
+	setCookie('videoSelect2', videoSelect2.selectedIndex)
 }
 
 function readValues () {
