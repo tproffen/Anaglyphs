@@ -41,7 +41,7 @@ function drawWelcome () {
 	context.fillText('Ready', width/2, height/2);
 	context.stroke();
 
-	context.fillStyle = '#FFFFFF';
+	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);	
 }
 
