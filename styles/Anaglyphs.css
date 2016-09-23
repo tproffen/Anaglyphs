@@ -8,6 +8,26 @@ body {
 	width: 100%;
 }
 
+a:link {
+    color: DeepSkyBlue;
+    text-decoration: none;
+}
+
+a:visited {
+    color: DeepSkyBlue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: DeepSkyBlue;
+    text-decoration: underline;
+}
+
+a:active {
+    color: DeepSkyBlue;
+    text-decoration: underline;
+}
+
 .white {
 	background-color: #FFFFFF;
 }
