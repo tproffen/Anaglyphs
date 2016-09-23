@@ -86,6 +86,9 @@ function snapImage () {
 	contextRed.clearRect(0, 0, width, height);
 	contextRed.drawImage(videoElement2, 0, 0, width, height);
 
+	document.getElementById("download1").href=canvasRed.toDataURL();
+	document.getElementById("download2").href=canvasCyan.toDataURL();
+	
 	compositeImage();
 }
 
