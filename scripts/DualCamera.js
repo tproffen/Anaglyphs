@@ -91,7 +91,7 @@ function snapImage () {
 
 function compositeImage () {
 	
-	var wR=0.33, wG=0.33, wB=0.33;
+	var wR=0.2126, wG=0.7152, wB=0.0722, gamma=2.2;
 	
 	var offX= document.getElementById('xOffset').valueAsNumber * width;
 	var offY= document.getElementById('yOffset').valueAsNumber * height;
@@ -104,8 +104,8 @@ function compositeImage () {
 	imageRed = context.getImageData(0, 0, width, height);
 	
 	for (var i = 0; i < imageRed.data.length; i += 4) {
- 		var brightRed = wR * imageRed.data[i] + wG * imageRed.data[i + 1] + wB * imageRed.data[i + 2];
- 		var brightCyan = wR * imageCyan.data[i] + wG * imageCyan.data[i + 1] + wB * imageCyan.data[i + 2];
+ 		var brightRed = wR * imageRed.data[i]^gamma + wG * imageRed.data[i + 1]^gamma + wB * imageRed.data[i + 2]^gamma;
+ 		var brightCyan = wR * imageCyan.data[i]^gamma + wG * imageCyan.data[i + 1]^gamma + wB * imageCyan.data[i + 2]^gamma;
  		imageCyan.data[i]   = brightRed;  // Just swap red channel
  		imageCyan.data[i+1] = brightCyan; 
  		imageCyan.data[i+2] = brightCyan;
