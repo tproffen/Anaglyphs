@@ -33,8 +33,6 @@ function setCookie (cname, cvalue) {
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 	
-	console.log('Cookies: ', document.cookie);
-	
 }
 
 function getCookie (cname) {

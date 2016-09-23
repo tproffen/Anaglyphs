@@ -82,8 +82,6 @@ function snapImage () {
     	}	
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
-	
-	writeValues();
 }
 
 function determineSizes () {
@@ -106,6 +104,8 @@ function writeValues () {
 	
 	setCookie('xOffset',document.getElementById('xOffset').value)
 	setCookie('yOffset',document.getElementById('yOffset').value)
+	setCookie('videoSelect1, videoSelect1.selectedIndex)
+	setCookie('videoSelect2, videoSelect2.selectedIndex)
 }
 
 function readValues () {
@@ -114,6 +114,8 @@ function readValues () {
 	
 	if (val=getCookie('xOffset')) {document.getElementById('xOffset').value = val}
 	if (val=getCookie('yOffset')) {document.getElementById('yOffset').value = val}
+	if (val=getCookie('videoSelect1')) {videoSelect1.selectedIndex = val}
+	if (val=getCookie('videoSelect2')) {videoSelect2.selectedIndex = val}
 }
 
 function handleError(error) {
