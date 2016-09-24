@@ -7,6 +7,7 @@ var videoSelect2 = document.getElementById('videoSource2');
 var snapButton = document.getElementById('snap');
 var xOffset = document.getElementById('xOffset');
 var yOffset = document.getElementById('yOffset');
+var brightness = document.getElementById('brightness');
 var canvas = document.getElementById('canvas');
 
 var canvasRed = document.createElement('canvas');
@@ -105,8 +106,9 @@ function compositeImage () {
 	
 	var wR=0.21, wG=0.72, wB=0.07;
 	
-	var offX= document.getElementById('xOffset').valueAsNumber * width;
-	var offY= document.getElementById('yOffset').valueAsNumber * height;
+	var offX= xOffset.valueAsNumber * width;
+	var offY= yOffset.valueAsNumber * height;
+	var bright = brightness.valueAsNumber;
 
 	var imageCyan = contextCyan.getImageData(0, 0,width, height);
 	var imageRed = contextRed.getImageData(0, 0, width, height);
@@ -118,14 +120,15 @@ function compositeImage () {
 	for (var i = 0; i < imageRed.data.length; i += 4) {
  		var brightRed = wR * imageRed.data[i] + wG * imageRed.data[i + 1] + wB * imageRed.data[i + 2];
  		var brightCyan = wR * imageCyan.data[i] + wG * imageCyan.data[i + 1] + wB * imageCyan.data[i + 2];
- 		imageCyan.data[i]   = brightRed;  // Just swap red channel
- 		imageCyan.data[i+1] = brightCyan; 
- 		imageCyan.data[i+2] = brightCyan;
+ 		imageCyan.data[i]   = bright*brightRed;  // Just swap red channel
+ 		imageCyan.data[i+1] = bright*brightCyan; 
+ 		imageCyan.data[i+2] = imageCyan.data[i+1];
     	}	
 	
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
 	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
+
 }
 
 function determineSizes () {
@@ -173,8 +176,11 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then
 
 videoSelect1.addEventListener("change", connectStream, false);
 videoSelect2.addEventListener("change", connectStream, false);
+
 snapButton.addEventListener("click", snapImage, false);
 xOffset.addEventListener("change", compositeImage, false);
 yOffset.addEventListener("change", compositeImage, false);
+brightness.addEventListener("change", compositeImage, false);
+
 window.addEventListener("resize", determineSizes, false);
 window.addEventListener("unload", writeValues, false);
