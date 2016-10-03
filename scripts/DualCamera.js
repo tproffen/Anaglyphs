@@ -123,7 +123,9 @@ function compositeImage () {
 // 		imageCyan.data[i]   = bright*brightRed;  // Just swap red channel
 // 		imageCyan.data[i+1] = bright*brightCyan; 
 // 		imageCyan.data[i+2] = imageCyan.data[i+1];
- 		imageCyan.data[i]   = imageRed.data[i];  // Just swap red channel
+ 		imageCyan.data[i]   = bright*imageRed.data[i];  // Just swap red channel
+ 		imageCyan.data[i+1] = bright*imageCyan.data[i+1];
+ 		imageCyan.data[i+2] = bright*imageCyan.data[i+2];
     	}	
 	
 	context.fillStyle = '#000000';
