@@ -9,8 +9,8 @@ var isChromium = window.chrome,
     isIEedge = winNav.userAgent.indexOf("Edge") > -1,
     isIOSChrome = winNav.userAgent.match("CriOS");
     
-  var warningText='These pages were developed for the Desktop version of '+
-                  '<a href="https://www.google.com/chrome/">Google Chrome<a> and might <b>not</b> with other browsers.';
+  var warningText='These pages were tested with '+
+                  '<a href="https://www.google.com/chrome/">Google Chrome<a> and might <b>not</b> work correctly with other browsers.';
   var divId = document.getElementById('warning');
   
   if(isIOSChrome){

@@ -231,6 +231,8 @@ var drawingApp = (function () {
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 						
+		checkBrowser();
+
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
 		fullScreenButton = document.getElementById('fullScreen');
@@ -250,7 +252,6 @@ var drawingApp = (function () {
 		resizeCanvas();
 		
 		createUserEvents();
-		checkBrowser();
 
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
