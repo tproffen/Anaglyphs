@@ -9,9 +9,11 @@ var xOffset = document.getElementById('xOffset');
 var yOffset = document.getElementById('yOffset');
 var brightness = document.getElementById('brightness');
 var canvas = document.getElementById('canvas');
+var typeAna = document.getElementById('type_ana');
+var typeSbs = document.getElementById('type_sbs');
 
-var canvasRed = document.createElement('canvas');
-var canvasCyan = document.createElement('canvas');
+var canvasLeft = document.createElement('canvas');
+var canvasRight = document.createElement('canvas');
 
 checkBrowser();
 
@@ -20,20 +22,42 @@ checkBrowser();
 var width=1280;
 var height=960;
 
+var contextLeft = canvasLeft.getContext('2d');
+var contextRight = canvasRight.getContext('2d');
+var context = canvas.getContext('2d');
+
+navigator.mediaDevices.getUserMedia({video:true});
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
+
+//width=videoElement1.videoWidth;
+//height=videoElement1.videoHeight;
+
 canvas.height=height; 
 canvas.width=width;
-canvasRed.height=height; 
-canvasRed.width=width;
-canvasCyan.height=height; 
-canvasCyan.width=width;
+canvasLeft.height=height; 
+canvasLeft.width=width;
+canvasRight.height=height; 
+canvasRight.width=width;
 
 determineSizes();
-
-var context = canvas.getContext('2d');
 drawWelcome();
 
-var contextRed = canvasRed.getContext('2d');
-var contextCyan = canvasCyan.getContext('2d');
+videoSelect1.addEventListener("change", connectStream, false);
+videoSelect2.addEventListener("change", connectStream, false);
+
+snapButton.addEventListener("click", snapImage, false);
+xOffset.addEventListener("change", compositeImage, false);
+yOffset.addEventListener("change", compositeImage, false);
+brightness.addEventListener("change", compositeImage, false);
+typeAna.addEventListener("change", compositeImage, false);
+typeSbs.addEventListener("change", compositeImage, false);
+
+window.addEventListener("resize", determineSizes, false);
+window.addEventListener("unload", writeValues, false);
+
+//================================================================================
+// Functions below
+//================================================================================
 
 function drawWelcome () {
 	context.fillStyle = '#000000';
@@ -85,13 +109,13 @@ function connectStream() {
 
 function snapImage () {
 	
-	contextCyan.clearRect(0, 0, width, height);
-	contextCyan.drawImage(videoElement1, 0, 0, width, height);
-	contextRed.clearRect(0, 0, width, height);
-	contextRed.drawImage(videoElement2, 0, 0, width, height);
+	contextRight.clearRect(0, 0, width, height);
+	contextRight.drawImage(videoElement1, 0, 0, width, height);
+	contextLeft.clearRect(0, 0, width, height);
+	contextLeft.drawImage(videoElement2, 0, 0, width, height);
 
-	canvasDownload(canvasRed,"download1","Left.png");
-	canvasDownload(canvasCyan,"download2","Right.png");
+	canvasDownload(canvasLeft,"download1","Left.png");
+	canvasDownload(canvasRight,"download2","Right.png");
 	
 	compositeImage();
 }
@@ -104,30 +128,55 @@ function canvasDownload (canvas,download,name) {
 
 function compositeImage () {
 	
+	// Make Red-Cyan Anaglyph
+	
+	if (typeAna.checked) {
+		compositeImageAna();
+	}
+	
+	// Make side-by-side Image for VR viewers
+	
+	if (typeSbs.checked) {
+		compositeImageSbs();
+	}
+}
+
+function compositeImageSbs () {
+	
+	var bright = brightness.valueAsNumber;
+	
+	context.fillStyle = '#000000';
+	context.fillRect(0, 0, width, height);
+	context.drawImage(canvasLeft, width/4, 0, width/2, height, 0,       0, width/2, height);
+	context.drawImage(canvasRight, width/4, 0, width/2, height, width/2, 0, width/2, height);
+}
+
+function compositeImageAna () {
+	
 	var wR=0.21, wG=0.72, wB=0.07;
 	
 	var offX= xOffset.valueAsNumber * width;
 	var offY= yOffset.valueAsNumber * height;
 	var bright = brightness.valueAsNumber;
 
-	var imageCyan = contextCyan.getImageData(0, 0,width, height);
-	var imageRed = contextRed.getImageData(0, 0, width, height);
+	var imageRight = contextRight.getImageData(0, 0,width, height);
+	var imageLeft = contextLeft.getImageData(0, 0, width, height);
 	
 	context.clearRect(0, 0, width, height);
-	context.putImageData(imageRed, offX, offY);
-	imageRed = context.getImageData(0, 0, width, height);
+	context.putImageData(imageLeft, offX, offY);
+	imageLeft = context.getImageData(0, 0, width, height);
 	
-	for (var i = 0; i < imageRed.data.length; i += 4) {
- 		var brightRed = wR * imageRed.data[i] + wG * imageRed.data[i + 1] + wB * imageRed.data[i + 2];
- 		var brightCyan = wR * imageCyan.data[i] + wG * imageCyan.data[i + 1] + wB * imageCyan.data[i + 2];
- 		imageCyan.data[i]   = bright*brightRed;  // Just swap red channel
- 		imageCyan.data[i+1] = bright*brightCyan; 
- 		imageCyan.data[i+2] = imageCyan.data[i+1];
-    	}	
+	for (var i = 0; i < imageLeft.data.length; i += 4) {
+ 		var brightLeft = wR * imageLeft.data[i] + wG * imageLeft.data[i + 1] + wB * imageLeft.data[i + 2];
+ 		var brightRight = wR * imageRight.data[i] + wG * imageRight.data[i + 1] + wB * imageRight.data[i + 2];
+ 		imageRight.data[i]   = bright*brightLeft;  // Just swap red channel
+ 		imageRight.data[i+1] = bright*brightRight; 
+ 		imageRight.data[i+2] = imageRight.data[i+1];
+    }	
 	
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
-	context.putImageData(imageCyan,-offX/2, -offY/2, offX, offY, width, height);
+	context.putImageData(imageRight,-offX/2, -offY/2, offX, offY, width, height);
 
 }
 
@@ -153,6 +202,9 @@ function writeValues () {
 	setCookie('yOffset',document.getElementById('yOffset').value)
 	setCookie('videoSelect1', videoSelect1.selectedIndex)
 	setCookie('videoSelect2', videoSelect2.selectedIndex)
+	setCookie('typeSbs', typeSbs.checked)
+	setCookie('typeAna', typeAna.checked)
+	
 }
 
 function readValues () {
@@ -163,24 +215,11 @@ function readValues () {
 	if (val=getCookie('yOffset')) {document.getElementById('yOffset').value = val}
 	if (val=getCookie('videoSelect1')) {videoSelect1.selectedIndex = val}
 	if (val=getCookie('videoSelect2')) {videoSelect2.selectedIndex = val}
+	if (val=getCookie('typeAna')) {typeAna.checked = val}
+	if (val=getCookie('typeSbs')) {typeSbs.checked = val}
 }
 
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
 
-// Main routine
-
-navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
-
-videoSelect1.addEventListener("change", connectStream, false);
-videoSelect2.addEventListener("change", connectStream, false);
-
-snapButton.addEventListener("click", snapImage, false);
-xOffset.addEventListener("change", compositeImage, false);
-yOffset.addEventListener("change", compositeImage, false);
-brightness.addEventListener("change", compositeImage, false);
-
-window.addEventListener("resize", determineSizes, false);
-window.addEventListener("unload", writeValues, false);
