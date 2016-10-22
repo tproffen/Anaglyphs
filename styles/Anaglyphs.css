@@ -48,7 +48,17 @@ canvas {
 }
 h1 {
 	font-size: 150%;
-	margin: 2px;
+	text-align: center;
+	margin: 1px;
+}
+
+h2 {
+	font-size: 125%;
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #222222;
+	margin: 5px 1px 15px 1px;
+	padding: 5px;
 }
 
 input {
@@ -83,6 +93,10 @@ select {
 	padding: 5px;
 	font-size: 10pt;
 	display: none;
+}
+
+.controls {
+	padding: 10px;
 }
 
 .small {

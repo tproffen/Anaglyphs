@@ -8,7 +8,6 @@ var videoRes1 = document.getElementById('resolution1');
 var videoRes2 = document.getElementById('resolution2');
 var snapButton = document.getElementById('snap');
 var xOffset = document.getElementById('xOffset');
-var yOffset = document.getElementById('yOffset');
 var canvas = document.getElementById('canvas');
 var typeAna = document.getElementById('type_ana');
 var typeSbs = document.getElementById('type_sbs');
@@ -57,7 +56,6 @@ function setup () {
 
 	snapButton.addEventListener("click", snapImage, false);
 	xOffset.addEventListener("change", compositeImage, false);
-	yOffset.addEventListener("change", compositeImage, false);
 	typeAna.addEventListener("change", compositeImage, false);
 	typeSbs.addEventListener("change", compositeImage, false);
 	download.addEventListener("click", compositeImage, false);
@@ -131,10 +129,14 @@ function snapImage () {
 	contextLeft.clearRect(0, 0, width, height);
 	contextLeft.drawImage(videoElement2, 0, 0, width, height);
 
- 	canvasDownload(canvasLeft,"download1","Left.png");
-	canvasDownload(canvasRight,"download2","Right.png");
- 	
 	compositeImage();
+}
+
+function updateCanvasLinks () {
+	
+	canvasDownload(canvasLeft,"download1","Left.png");
+	canvasDownload(canvasRight,"download2","Right.png");
+ 	canvasDownload(canvas,"download","Image3D.png");	
 }
 
 function canvasDownload (canvas,download,name) {
@@ -155,14 +157,11 @@ function compositeImage (fcapture) {
 	if (typeSbs.checked) {
 		compositeImageSbs();
 	}
-	
-	canvasDownload(canvas,"download","Image3D.png");
 }
 
 function compositeImageSbs () {
 
 	var offX= xOffset.valueAsNumber * width;
-	var offY= yOffset.valueAsNumber * height;
     var k4=0.22;
 	var k2=0.51;
 	
@@ -188,6 +187,8 @@ function compositeImageSbs () {
 	context.lineTo(width/2, height-20);
 	context.closePath();
 	context.stroke();
+	
+	setTimeout(updateCanvasLinks, 100);
 }
 
 function compositeImageAna () {
@@ -195,13 +196,12 @@ function compositeImageAna () {
 	var wR=0.21, wG=0.72, wB=0.07;
 	
 	var offX= xOffset.valueAsNumber * width;
-	var offY= yOffset.valueAsNumber * height;
 
 	var imageRight = contextRight.getImageData(0, 0,width, height);
 	var imageLeft = contextLeft.getImageData(0, 0, width, height);
 	
 	context.clearRect(0, 0, width, height);
-	context.putImageData(imageLeft, offX, offY);
+	context.putImageData(imageLeft, offX, 0);
 	imageLeft = context.getImageData(0, 0, width, height);
 	
 	for (var i = 0; i < imageLeft.data.length; i += 4) {
@@ -214,7 +214,10 @@ function compositeImageAna () {
 	
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
-	context.putImageData(imageRight,-offX/2, -offY/2, offX, offY, width, height);
+	context.putImageData(imageRight,-offX/2, 0, offX, 0, width, height);
+
+	setTimeout(updateCanvasLinks, 100);
+
 }
 
 function determineSizes () {
@@ -236,7 +239,6 @@ function determineSizes () {
 function writeValues () {
 	
 	setCookie('xOffset',document.getElementById('xOffset').value)
-	setCookie('yOffset',document.getElementById('yOffset').value)
 	setCookie('videoSelect1', videoSelect1.selectedIndex)
 	setCookie('videoSelect2', videoSelect2.selectedIndex)
 	setCookie('typeSbs', typeSbs.checked)
@@ -249,7 +251,6 @@ function readValues () {
     var val;
 	
 	if (val=getCookie('xOffset')) {document.getElementById('xOffset').value = val}
-	if (val=getCookie('yOffset')) {document.getElementById('yOffset').value = val}
 	if (val=getCookie('videoSelect1')) {videoSelect1.selectedIndex = val}
 	if (val=getCookie('videoSelect2')) {videoSelect2.selectedIndex = val}
 	if (val=getCookie('typeAna')) {typeAna.checked = val}

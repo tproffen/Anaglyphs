@@ -38,21 +38,24 @@
     		<a href="#" id="download2">
     		<video id="video2" name="video2" autoplay width="240" height="180"></video></a></p>
     		<div class="small" align="center" id="resolution2"></div></td></tr>
-    	<tr><td colspan="2">	
+			
+    	<tr><td colspan="2">
+			<div class="controls">
     		<b>Camera separation:</b>
 	        <input type="range" value="0.1" min="0.0" max="0.4" step="0.001" id="xOffset">
-    		<b>Vertical offset:</b>
-	        <input type="range" value="0.0" min="-0.1" max="0.1" step="0.001" id="yOffset">
-			<br>&nbsp;<br>
-			<b>Image type:</b>&nbsp;&nbsp;
-			<div class="tooltip"><input type="radio" name="type" id="type_ana" value="ana" checked>Anaglyph
-			<span class="tooltiptext">For use with red-cyan glasses. To adjust move the sliders without wearing the glasses,
-			until the red and cyan images overlap for the main object in the picture.</span></div>
-			<div class="tooltip"><input type="radio" name="type" id="type_sbs" value="sbs">Side-by-Side
-			<span class="tooltiptext">For use with VR headsets. Adjust offsets as needed.</span></div>
-    		
+			</div>
+			
+			<div class="controls">
+			<b>3D image type:</b><br>&nbsp;<br>
+			<input type="radio" name="type" id="type_ana" value="ana" checked><div class="tooltip"> Anaglyph (red-cyan glasses)
+			<span class="tooltiptext">For use with red-cyan glasses. To adjust move the slider without wearing the glasses,
+			until the red and cyan images overlap for the main object in the picture.</span></div><br>
+			
+			<input type="radio" name="type" id="type_sbs" value="sbs"><div class="tooltip"> Side-by-Side (VR headsets)
+			<span class="tooltiptext">For use with VR headsets. Adjust offset as needed.</span></div>
+    		</div>
 			</td></tr>
-    	<tr><td colspan="2" valign="middle">
+    	<tr><td colspan="2" valign="middle" height="15%">
     		&nbsp;<br><input type="button" value="Take picture" id="snap"><br>&nbsp;<br>
 			<center><div class="small" id="wait">Be patient after clicking ..</div></center>
     	</td>
