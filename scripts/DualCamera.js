@@ -4,6 +4,8 @@ var videoElement1 = document.getElementById('video1');
 var videoElement2 = document.getElementById('video2');
 var videoSelect1 = document.getElementById('videoSource1');
 var videoSelect2 = document.getElementById('videoSource2');
+var videoRes1 = document.getElementById('resolution1');
+var videoRes2 = document.getElementById('resolution2');
 var snapButton = document.getElementById('snap');
 var xOffset = document.getElementById('xOffset');
 var yOffset = document.getElementById('yOffset');
@@ -13,47 +15,64 @@ var typeSbs = document.getElementById('type_sbs');
 
 var canvasLeft = document.createElement('canvas');
 var canvasRight = document.createElement('canvas');
+var canvasFish = document.createElement('canvas');
+
+var contextLeft = canvasLeft.getContext('2d');
+var contextRight = canvasRight.getContext('2d');
+var contextFish = canvasFish.getContext('2d');
+var context = canvas.getContext('2d');
 
 checkBrowser();
 
 // This is the capture size of the camera
 
-var width=1280;
-var height=960;
+var width=1920;
+var height=1080;
 
-navigator.mediaDevices.getUserMedia({video:true});
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).catch(handleError);
-
-canvas.height=height; 
-canvas.width=width;
-canvasLeft.height=height; 
-canvasLeft.width=width;
-canvasRight.height=height; 
-canvasRight.width=width;
-
-var contextLeft = canvasLeft.getContext('2d');
-var contextRight = canvasRight.getContext('2d');
-var context = canvas.getContext('2d');
-
-determineSizes();
-
-videoSelect1.addEventListener("change", connectStream, false);
-videoSelect2.addEventListener("change", connectStream, false);
-
-snapButton.addEventListener("click", snapImage, false);
-xOffset.addEventListener("change", compositeImage, false);
-yOffset.addEventListener("change", compositeImage, false);
-typeAna.addEventListener("change", compositeImage, false);
-typeSbs.addEventListener("change", compositeImage, false);
-
-window.addEventListener("resize", determineSizes, false);
-window.addEventListener("unload", writeValues, false);
-
-drawWelcome();
+navigator.mediaDevices.enumerateDevices().then(gotDevices)
+                                         .then(readValues)
+										 .then(connectStream)
+										 .then(setup)
+										 .catch(handleError);
 
 //================================================================================
 // Functions below
 //================================================================================
+
+function setup () {
+	
+	canvas.height=height; 
+	canvas.width=width;
+	canvasLeft.height=height; 
+	canvasLeft.width=width;
+	canvasRight.height=height; 
+	canvasRight.width=width;
+	canvasFish.height=height; 
+	canvasFish.width=width;
+
+	determineSizes();
+
+	videoSelect1.addEventListener("change", connectStream, false);
+	videoSelect2.addEventListener("change", connectStream, false);
+
+	snapButton.addEventListener("click", snapImage, false);
+	xOffset.addEventListener("change", compositeImage, false);
+	yOffset.addEventListener("change", compositeImage, false);
+	typeAna.addEventListener("change", compositeImage, false);
+	typeSbs.addEventListener("change", compositeImage, false);
+
+	window.addEventListener("resize", determineSizes, false);
+	window.addEventListener("unload", writeValues, false);
+
+	videoElement1.onloadedmetadata = function () {
+		videoRes1.innerHTML=videoElement1.videoWidth + "x" + videoElement1.videoHeight;
+	}
+	videoElement2.onloadedmetadata = function () {
+		videoRes2.innerHTML=videoElement2.videoWidth + "x" + videoElement2.videoHeight;
+	}
+	
+	drawWelcome();
+}
 
 function drawWelcome () {
 	
@@ -119,31 +138,49 @@ function snapImage () {
 
 function canvasDownload (canvas,download,name) {
 	
-	document.getElementById(download).download=name;
-	document.getElementById(download).href=canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+//	document.getElementById(download).download=name;
+	document.getElementById(download).href=canvas.toDataURL("image/png");
 }
 
-function compositeImage () {
-	
-	// Make Red-Cyan Anaglyph
-	
+function compositeImage (fcapture) {
+
 	if (typeAna.checked) {
 		compositeImageAna();
 	}
-	
-	// Make side-by-side Image for VR viewers
-	
 	if (typeSbs.checked) {
 		compositeImageSbs();
 	}
 }
 
 function compositeImageSbs () {
+
+	var offX= xOffset.valueAsNumber * width;
+	var offY= yOffset.valueAsNumber * height;
+    var k4=0.22;
+	var k2=0.51;
 	
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
-	context.drawImage(canvasLeft,  width/4, 0, width/2, height, 0,       0, width/2, height);
-	context.drawImage(canvasRight, width/4, 0, width/2, height, width/2, 0, width/2, height);
+		
+	var pixels = contextLeft.getImageData(width/4, 0, width/2, height);
+	pixels = barrelDistortion(pixels, k2, k4);
+	contextFish.putImageData(pixels, 0, 0);
+	context.drawImage(canvasFish,  0, 0, width/2, height, 0,       0, width/2, height);
+
+	pixels = contextRight.getImageData(width/4+offX, 0, width/2, height);
+	pixels = barrelDistortion(pixels, k2, k4);
+	contextFish.putImageData(pixels, 0, 0);
+	context.drawImage(canvasFish, 0, 0, width/2, height, width/2, 0, width/2, height);
+	
+	// middle line
+	
+	context.strokeStyle = '#dddddd';
+	context.lineWidth = 5.0;
+	context.beginPath();
+	context.moveTo(width/2, 20);
+	context.lineTo(width/2, height-20);
+	context.closePath();
+	context.stroke();
 }
 
 function compositeImageAna () {
@@ -179,11 +216,11 @@ function determineSizes () {
 	var padH=80;
 	
 	var newWidth=window.innerWidth-padW;
-	var newHeight=3*(newWidth/4)+1;
+	var newHeight=height*(newWidth/width)+1;
 	
 	if (newHeight>(window.innerHeight-padH)) {
 		newHeight=window.innerHeight-padH;
-		newWidth=4*(newHeight/3)+1;
+		newWidth=width*(newHeight/height)+1;
 	}
 	canvas.style.width=newWidth + 'px';
 	canvas.style.height=newHeight + 'px';
@@ -214,5 +251,60 @@ function readValues () {
 
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
+}
+
+function barrelDistortion(pixels,fa,fb) {
+	
+  var d = pixels.data;
+  var width = pixels.width;
+  var height = pixels.height;
+  var xmid = width/2;
+  var ymid = height/2;
+  var rMax = Math.sqrt(Math.pow(xmid,2)+Math.pow(ymid,2));
+
+  var pix2D = new Array(pixels.height);
+  for (var y = 0; y < pixels.height; y++) {
+    pix2D[y] = new Array(pixels.width);
+    for (var x = 0; x < pixels.width; x++) {
+      var i = x * 4 + y * 4 * pixels.width;
+      var r = pixels.data[i],
+          g = pixels.data[i + 1],
+          b = pixels.data[i + 2],
+          a = pixels.data[i + 3];
+          
+      var pr = Math.sqrt(Math.pow(xmid-x,2)+Math.pow(ymid-y,2)); //radius from pixel to pic mid
+      var sf = pr / rMax; //Scaling factor
+      var newR = pr*(fa*Math.pow(sf,4)+fb*Math.pow(sf,2)+1); //barrel distortion function
+      var alpha = Math.atan2(-(y-ymid),-(x-xmid)); //Get angle from pic mid to pixel vector
+      var newx = Math.abs(Math.cos(alpha)*newR-xmid); //get new x coord for this pixel
+      var newy = Math.abs(Math.sin(alpha)*newR-ymid); //get new y coord for this pixel
+      var gnRadius = Math.sqrt(Math.pow(xmid-newx,2)+Math.pow(ymid-newy,2)); //New radius (with new x - y values)
+      pix2D[y][x] = [r,g,b,a,newx,newy,newR, gnRadius]; //Make new y*x picture for reading pixels
+    }
+  }
+
+  //Build new picture out of pix2D data
+  var cnt = 0;
+  var inn = 0;
+  for (var y = 0; y < pix2D.length; y++) {
+    for (var x = 0; x < pix2D[y].length; x++) {
+      var tx = Math.round(pix2D[y][x][4]);
+      var ty = Math.round(pix2D[y][x][5]);
+      var newr = pix2D[y][x][6];
+      var gnRadius = pix2D[y][x][7];
+      if(Math.floor(newr) == Math.floor(gnRadius) && tx>=0 && tx <width && ty>=0 && ty <height) {   
+        pixels.data[cnt++] = pix2D[ty][tx][0];
+        pixels.data[cnt++] = pix2D[ty][tx][1];
+        pixels.data[cnt++] = pix2D[ty][tx][2];
+        pixels.data[cnt++] = 255;
+      } else {
+        pixels.data[cnt++] = 0;
+        pixels.data[cnt++] = 0;
+        pixels.data[cnt++] = 0;
+        pixels.data[cnt++] = 255;
+      }
+    }
+  }
+  return pixels;
 }
 

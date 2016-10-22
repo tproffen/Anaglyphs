@@ -1,7 +1,13 @@
+<!DOCTYPE HTML>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>3D Webcam</title>
   <link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
+  <script src="scripts/Anaglyphs.js"></script> 	        
+  <script src="scripts/Adapter.js"></script>
 </head>
 
 <body>
@@ -24,13 +30,13 @@
     		<select id="videoSource1"></select><br>
     		<a href="#" id="download1">
     		<video id="video1" name="video1" autoplay width="240" height="180"></video></a></p>
-    		<p name="small" align="center"></p></td>
+    		<div class="small" align="center" id="resolution1"></div></td>
     	<td id="previewArea" width="240px" height="240px">	
     		<p><b>Right camera</b><br>
     		<select id="videoSource2"></select><br>
     		<a href="#" id="download2">
     		<video id="video2" name="video2" autoplay width="240" height="180"></video></a></p>
-    		<p name="small" align="center"></p></td></tr>
+    		<div class="small" align="center" id="resolution2"></div></td></tr>
     	<tr><td colspan="2">	
     		<b>Camera separation:</b>
 	        <input type="range" value="0.1" min="0.0" max="0.4" step="0.001" id="xOffset">
@@ -45,14 +51,13 @@
 			<span class="tooltiptext">For use with VR headsets. Adjust offsets as needed.</span></div>
     		
 			</td></tr>
-    	<tr><td colspan="2">
-    		&nbsp;<br><input type="button" value="Take picture" id="snap"><br>&nbsp;
+    	<tr><td colspan="2" valign="middle">
+    		&nbsp;<br><input type="button" value="Take picture" id="snap"><br>&nbsp;<br>
+			<center><div class="small" id="wait">Be patient after clicking ..</div></center>
     	</td>
     </tr>
-  </table>
+  </table>  
   
-  <script src="scripts/Anaglyphs.js"></script> 	        
-  <script src="scripts/Adapter.js"></script>
   <script src="scripts/DualCamera.js"></script>
 </body>
 </html>

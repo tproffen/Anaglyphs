@@ -86,7 +86,7 @@ select {
 }
 
 .small {
-	font-size: 50%;
+	font-size: 10pt;
 	a:text-decoration: 'none';
 }
 
