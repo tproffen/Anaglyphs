@@ -60,7 +60,8 @@ function setup () {
 	yOffset.addEventListener("change", compositeImage, false);
 	typeAna.addEventListener("change", compositeImage, false);
 	typeSbs.addEventListener("change", compositeImage, false);
-
+	download.addEventListener("click", compositeImage, false);
+	
 	window.addEventListener("resize", determineSizes, false);
 	window.addEventListener("unload", writeValues, false);
 
@@ -130,17 +131,18 @@ function snapImage () {
 	contextLeft.clearRect(0, 0, width, height);
 	contextLeft.drawImage(videoElement2, 0, 0, width, height);
 
-	canvasDownload(canvasLeft,"download1","Left.png");
+ 	canvasDownload(canvasLeft,"download1","Left.png");
 	canvasDownload(canvasRight,"download2","Right.png");
-	
+ 	
 	compositeImage();
 }
 
 function canvasDownload (canvas,download,name) {
 	
 	canvas.toBlob(function(blob) {
+		var url=URL.createObjectURL(blob);
 		document.getElementById(download).download=name;
-		document.getElementById(download).href=URL.createObjectURL(blob);
+		document.getElementById(download).href=url;
 	}, "image/png");
 	
 }
@@ -153,6 +155,8 @@ function compositeImage (fcapture) {
 	if (typeSbs.checked) {
 		compositeImageSbs();
 	}
+	
+	canvasDownload(canvas,"download","Image3D.png");
 }
 
 function compositeImageSbs () {
