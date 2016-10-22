@@ -138,8 +138,11 @@ function snapImage () {
 
 function canvasDownload (canvas,download,name) {
 	
-//	document.getElementById(download).download=name;
-	document.getElementById(download).href=canvas.toDataURL("image/png");
+	canvas.toBlob(function(blob) {
+		document.getElementById(download).download=name;
+		document.getElementById(download).href=URL.createObjectURL(blob);
+	}, "image/png");
+	
 }
 
 function compositeImage (fcapture) {
