@@ -200,7 +200,8 @@ function compositeImageAna () {
 	for (var i = 0; i < imageLeft.data.length; i += 4) {
  		var brightLeft  = wR * imageLeft.data[i]  + wG * imageLeft.data[i + 1]  + wB * imageLeft.data[i + 2];
  		var brightRight = wR * imageRight.data[i] + wG * imageRight.data[i + 1] + wB * imageRight.data[i + 2];
- 		imageRight.data[i]   = brightLeft;  // Just swap red channel
+		
+ 		imageRight.data[i]   = brightLeft;  	// Just swap red channel
  		imageRight.data[i+1] = brightRight; 
  		imageRight.data[i+2] = brightRight;
     }	
@@ -229,11 +230,11 @@ function determineSizes () {
 
 function writeValues () {
 	
-	setCookie('xOffset',document.getElementById('xOffset').value)
-	setCookie('videoSelect1', videoSelect1.selectedIndex)
-	setCookie('videoSelect2', videoSelect2.selectedIndex)
-	setCookie('typeSbs', typeSbs.checked)
-	setCookie('typeAna', typeAna.checked)
+	setCookie('xOffset',document.getElementById('xOffset').value);
+	setCookie('videoSelect1', videoSelect1.selectedIndex);
+	setCookie('videoSelect2', videoSelect2.selectedIndex);
+	setCookie('typeSbs', typeSbs.checked);
+	setCookie('typeAna', typeAna.checked);
 	
 }
 
@@ -246,6 +247,7 @@ function readValues () {
 	if (val=getCookie('videoSelect2')) {videoSelect2.selectedIndex = val}
 	if (val=getCookie('typeAna')) {typeAna.checked = val}
 	if (val=getCookie('typeSbs')) {typeSbs.checked = val}
+	if (val=getCookie('autosave')) {autoSave.checked = val}
 }
 
 function handleError(error) {
