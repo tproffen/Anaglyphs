@@ -23,20 +23,17 @@
     <div id="warning" name="warning"></div>
     <table>
     <tr><th colspan="3"><h1>3D Webcam</h1></th></tr>
-    <tr><td rowspan="3" id="canvasArea" align="center">
-				<a href="#" id="download">
-    	        <canvas id="canvas">Canvas not supported</canvas></a></td>
+    <tr><td rowspan="3" id="canvasArea" class="canvas" align="center">
+    	        <canvas id="canvas">Canvas not supported</canvas></td>
     	<td id="previewArea" width="240px" height="240px">
-    		<p></p><b>Left camera</b><br>
+    		<b>Left camera</b><br>
     		<select id="videoSource1"></select><br>
-    		<a href="#" id="download1">
-    		<video id="video1" name="video1" autoplay width="240" height="180"></video></a></p>
+    		<video id="video1" name="video1" autoplay width="240" height="180"></video>
     		<div class="small" align="center" id="resolution1"></div></td>
     	<td id="previewArea" width="240px" height="240px">	
-    		<p><b>Right camera</b><br>
+    		<b>Right camera</b><br>
     		<select id="videoSource2"></select><br>
-    		<a href="#" id="download2">
-    		<video id="video2" name="video2" autoplay width="240" height="180"></video></a></p>
+    		<video id="video2" name="video2" autoplay width="240" height="180"></video>
     		<div class="small" align="center" id="resolution2"></div></td></tr>
 			
     	<tr><td colspan="2">
@@ -56,8 +53,8 @@
     		</div>
 			</td></tr>
     	<tr><td colspan="2" valign="middle" height="15%">
-    		&nbsp;<br><input type="button" value="Take picture" id="snap"><br>&nbsp;<br>
-			<center><div class="small" id="wait">Be patient after clicking ..</div></center>
+    		&nbsp;<br><input type="button" value="Take picture" id="snap">
+			<p><center><div id="download" class="small">&nbsp;</div></center></p>
     	</td>
     </tr>
   </table>  

@@ -58,7 +58,6 @@ function setup () {
 	xOffset.addEventListener("change", compositeImage, false);
 	typeAna.addEventListener("change", compositeImage, false);
 	typeSbs.addEventListener("change", compositeImage, false);
-	download.addEventListener("click", compositeImage, false);
 	
 	window.addEventListener("resize", determineSizes, false);
 	window.addEventListener("unload", writeValues, false);
@@ -132,31 +131,27 @@ function snapImage () {
 	compositeImage();
 }
 
-function updateCanvasLinks () {
-	
-	canvasDownload(canvasLeft,"download1","Left.png");
-	canvasDownload(canvasRight,"download2","Right.png");
- 	canvasDownload(canvas,"download","Image3D.png");	
-}
-
-function canvasDownload (canvas,download,name) {
+function canvasDownloadLink () {
 	
 	canvas.toBlob(function(blob) {
 		var url=URL.createObjectURL(blob);
-		document.getElementById(download).download=name;
-		document.getElementById(download).href=url;
+		if (typeAna.checked) {var name="Image3D_ana.png";}
+		if (typeSbs.checked) {var name="Image3D_sbs.png";}		
+		document.getElementById('download').innerHTML="<a href=\""+url+"\" download=\""+name+"\">Download image</a>";
 	}, "image/png");
 	
 }
 
-function compositeImage (fcapture) {
+function compositeImage () {
 
+	document.getElementById('download').innerHTML="Processing ..";
 	if (typeAna.checked) {
 		compositeImageAna();
 	}
 	if (typeSbs.checked) {
 		compositeImageSbs();
 	}
+	canvasDownloadLink();
 }
 
 function compositeImageSbs () {
@@ -187,8 +182,6 @@ function compositeImageSbs () {
 	context.lineTo(width/2, height-20);
 	context.closePath();
 	context.stroke();
-	
-	setTimeout(updateCanvasLinks, 100);
 }
 
 function compositeImageAna () {
@@ -216,14 +209,12 @@ function compositeImageAna () {
 	context.fillRect(0, 0, width, height);
 	context.putImageData(imageRight,-offX/2, 0, offX, 0, width, height);
 
-	setTimeout(updateCanvasLinks, 100);
-
 }
 
 function determineSizes () {
 	
-	var padW=595;
-	var padH=80;
+	var padW=550;
+	var padH=70;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
