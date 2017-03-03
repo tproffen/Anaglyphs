@@ -7,7 +7,6 @@ var folder = "https://github.com/tproffen/Anaglyphs/tree/gh-pages/images/";
 var prefix = "images/";
 
 $.ajax({
-  $("body").append( "Check ..<br>" );
     url : folder,
     success: function (data) {
         $(data).find("a").attr("href", function (i, val) {
