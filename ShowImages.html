@@ -1,12 +1,13 @@
 <html>
 <head>
 <title>ORCS Girls Image Server</title>
+  
 <script>
 var folder = "https://github.com/tproffen/Anaglyphs/tree/gh-pages/images/";
 var prefix = "images/";
 
 $.ajax({
-  $("body").append( "Cchek ..<br>" );
+  $("body").append( "Check ..<br>" );
     url : folder,
     success: function (data) {
         $(data).find("a").attr("href", function (i, val) {
@@ -19,7 +20,7 @@ $.ajax({
 </script>
 </head>
 
-  <body>
+<body>
 <h1><img with="200" src="images/unnamed.png">Image Server</h1>
 
 </body>
