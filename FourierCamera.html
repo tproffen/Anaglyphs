@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>3D Webcam</title>
+  <link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
+  <script src="scripts/Anaglyphs.js"></script> 	        
+  <script src="scripts/Adapter.js"></script>  
+  <script src="scripts/Fourier.js"></script>  
+</head>
+
+<body>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-34352220-8', 'auto');
+  ga('send', 'pageview');
+  </script>
+   
+    <div id="warning" name="warning"></div>
+    <table>
+    <tr><th colspan="2"><h1>FFT Webcam</h1></th></tr>
+    <tr><td rowspan="3" id="canvasArea" class="canvas" align="center">
+    	        <canvas id="canvas">Canvas not supported</canvas></td>
+    	<td id="previewArea" width="240px" height="240px">
+    		<b>Camera</b><br>
+    		<select id="videoSource"></select><br>
+    		<video id="video" name="video" autoplay width="240" height="180"></video>
+    		<div class="small" align="center" id="resolution"></div></td>
+     	<tr><td>
+			<div class="controls">
+			<b>3D image type:</b><br>&nbsp;<br>
+			<input type="radio" name="type" id="type_ana" value="ana" checked><div class="tooltip"> Anaglyph (red-cyan glasses)
+			<span class="tooltiptext">For use with red-cyan glasses. To adjust move the slider without wearing the glasses,
+			until the red and cyan images overlap for the main object in the picture.</span></div><br>
+    		</div>
+			</td></tr>
+    	<tr><td valign="middle" height="15%">
+    		&nbsp;<br><input type="button" value="Take picture" id="snap">
+			<p><center><div id="download" class="small">&nbsp;</div></center></p>
+    	</td>
+    </tr>
+  </table>  
+  
+  <script src="scripts/FourierCamera.js"></script>
+</body>
+</html>
