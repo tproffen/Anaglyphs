@@ -8,7 +8,7 @@
   <link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
   <script src="scripts/Anaglyphs.js"></script> 	        
   <script src="scripts/Adapter.js"></script>  
-  <script src="scripts/Fourier.js"></script>  
+  <script src="scripts/fft/fft.js"></script>  
 </head>
 
 <body>
@@ -24,25 +24,24 @@
     <div id="warning" name="warning"></div>
     <table>
     <tr><th colspan="2"><h1>FFT Webcam</h1></th></tr>
-    <tr><td rowspan="3" id="canvasArea" class="canvas" align="center">
-    	        <canvas id="canvas">Canvas not supported</canvas></td>
-    	<td id="previewArea" width="240px" height="240px">
-    		<b>Camera</b><br>
-    		<select id="videoSource"></select><br>
-    		<video id="video" name="video" autoplay width="240" height="180"></video>
+	<tr><td id="previewArea">
+    		<video id="video" name="video" autoplay width="128" height="128"></video>
     		<div class="small" align="center" id="resolution"></div></td>
-     	<tr><td>
-			<div class="controls">
-			<b>3D image type:</b><br>&nbsp;<br>
-			<input type="radio" name="type" id="type_ana" value="ana" checked><div class="tooltip"> Anaglyph (red-cyan glasses)
-			<span class="tooltiptext">For use with red-cyan glasses. To adjust move the slider without wearing the glasses,
-			until the red and cyan images overlap for the main object in the picture.</span></div><br>
-    		</div>
-			</td></tr>
-    	<tr><td valign="middle" height="15%">
-    		&nbsp;<br><input type="button" value="Take picture" id="snap">
-			<p><center><div id="download" class="small">&nbsp;</div></center></p>
+			
+     	<td><div class="controls">
+    		<b>Camera</b><br>
+    		<select id="videoSource"></select>
+			
+			<p><b>Fourier output:</b><br>
+			<input type="radio" name="type" id="ampl" value="1" checked>Amplitude
+			<input type="radio" name="type" id="real" value="2">Real
+			<input type="radio" name="type" id="imag" value="3">Imaginary
+			</p>
+			
+    		<p><input type="button" value="Calculate" id="snap"></p>
     	</td>
+    <tr><td colspan="2" id="canvasArea" class="canvas" align="center">
+    	        <canvas id="canvas">Canvas not supported</canvas></td>
     </tr>
   </table>  
   

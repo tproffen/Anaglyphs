@@ -4,6 +4,7 @@ var videoElement = document.getElementById('video');
 var videoSelect = document.getElementById('videoSource');
 var videoRes = document.getElementById('resolution');
 var snapButton = document.getElementById('snap');
+var typeField = document.getElementById('type');
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
@@ -13,10 +14,7 @@ checkBrowser();
 // This is the capture size of the camera
 
 var width=512;
-var height=512;
-
-var ampReal = new Array(width*height); 
-var ampImag = new Array(width*height); 
+var height=width;
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices)
                                          .then(readValues)
@@ -75,49 +73,33 @@ function connectStream() {
 
 function snapImage () {
 	
-	var wR=0.21;
-	var wG=0.72;
-	var	wB=0.07; 
-	var k=0;
-
 	context.drawImage(videoElement, 0, 0, width, height);
 	var img = context.getImageData(0, 0, width, height);
+	var i;
+	var ampReal =[];
+	var ampImag = [];
 	
-	for (var i = 0; i < img.data.length; i += 4) {
- 		var gray = wR * img.data[i]  + wG * img.data[i + 1]  + wB * img.data[i + 2];
- 		ampReal[k] = gray;
-		ampImag[k] = 0;
-		k++;
-    }	
-
-	transform(ampReal, ampImag); 
-	k=0;
-
-	for (var i = 0; i < img.data.length; i += 4) {
-		var value = Math.sqrt(ampReal[k]*ampReal[k] + ampImag[k]*ampImag[k]);
- 		img.data[i]   = value;
- 		img.data[i+1] = value; 
- 		img.data[i+2] = value;
-		k++;
-    }	
-
-	context.putImageData(img, 0, 0);
-}
-
-function canvasDownloadLink () {
+	FFT.init(width);
+	FrequencyFilter.init(width);
+	SpectrumViewer.init(context);
 	
-	canvas.toBlob(function(blob) {
-		var url=URL.createObjectURL(blob);
-		var name="FourierImage.png";		
-		document.getElementById('download').innerHTML="<a href=\""+url+"\" download=\""+name+"\">Download image</a>";
-	}, "image/png");
+	for(var y=0; y<height; y++) {
+		i = y*width;
+		for(var x=0; x<width; x++) {
+			ampReal[i + x] = img.data[(i << 2) + (x << 2)];
+			ampImag[i + x] = 0.0;
+		}
+	}
 	
+	FFT.fft2d(ampReal, ampImag); 
+    FrequencyFilter.swap(ampReal, ampImag);
+	SpectrumViewer.render(ampReal, ampImag, true);
 }
 
 function determineSizes () {
 	
-	var padW=275;
-	var padH=70;
+	var padW=10;
+	var padH=200;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
@@ -133,6 +115,9 @@ function determineSizes () {
 function writeValues () {
 	
 	setCookie('videoSelect', videoSelect.selectedIndex);
+	setCookie('ampl', ampl.checked);
+	setCookie('real', real.checked);
+	setCookie('imag', imag.checked);
 }
 
 function readValues () {
@@ -140,6 +125,9 @@ function readValues () {
     var val;
 	
 	if (val=getCookie('videoSelect')) {videoSelect.selectedIndex = val}
+	if (val=getCookie('ampl')) {ampl.checked = val}
+	if (val=getCookie('real')) {real.checked = val}
+	if (val=getCookie('imag')) {imag.checked = val}
 }
 
 function handleError(error) {
