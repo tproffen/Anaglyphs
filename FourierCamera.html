@@ -23,22 +23,13 @@
    
     <div id="warning" name="warning"></div>
     <table>
-    <tr><th colspan="2"><h1>FFT Webcam</h1></th></tr>
-	<tr><td id="previewArea">
-    		<video id="video" name="video" autoplay width="128" height="128"></video>
-    		<div class="small" align="center" id="resolution"></div></td>
+	<tr><td id="previewArea" align="center" width="50%">
+    		<video id="video" name="video" autoplay width="128" height="128"></video></td>
+     	<td align="center"><b>Fourier Cam<b><hr>
+			<div class="controls">
+    		<select id="videoSource"></select><br>&nbsp;<br>
 			
-     	<td><div class="controls">
-    		<b>Camera</b><br>
-    		<select id="videoSource"></select>
-			
-			<p><b>Fourier output:</b><br>
-			<input type="radio" name="type" id="ampl" value="1" checked>Amplitude
-			<input type="radio" name="type" id="real" value="2">Real
-			<input type="radio" name="type" id="imag" value="3">Imaginary
-			</p>
-			
-    		<p><input type="button" value="Calculate" id="snap"></p>
+    		<input type="button" value="Calculate" id="snap">
     	</td>
     <tr><td colspan="2" id="canvasArea" class="canvas" align="center">
     	        <canvas id="canvas">Canvas not supported</canvas></td>

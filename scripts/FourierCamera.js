@@ -4,7 +4,6 @@ var videoElement = document.getElementById('video');
 var videoSelect = document.getElementById('videoSource');
 var videoRes = document.getElementById('resolution');
 var snapButton = document.getElementById('snap');
-var typeField = document.getElementById('type');
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
@@ -38,10 +37,6 @@ function setup () {
 	
 	window.addEventListener("resize", determineSizes, false);
 	window.addEventListener("unload", writeValues, false);
-
-	videoElement.onloadedmetadata = function () {
-		videoRes.innerHTML=videoElement.videoWidth + "x" + videoElement.videoHeight;
-	}
 }
 
 
@@ -99,7 +94,7 @@ function snapImage () {
 function determineSizes () {
 	
 	var padW=10;
-	var padH=200;
+	var padH=180;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
@@ -115,19 +110,12 @@ function determineSizes () {
 function writeValues () {
 	
 	setCookie('videoSelect', videoSelect.selectedIndex);
-	setCookie('ampl', ampl.checked);
-	setCookie('real', real.checked);
-	setCookie('imag', imag.checked);
 }
 
 function readValues () {
 
     var val;
-	
 	if (val=getCookie('videoSelect')) {videoSelect.selectedIndex = val}
-	if (val=getCookie('ampl')) {ampl.checked = val}
-	if (val=getCookie('real')) {real.checked = val}
-	if (val=getCookie('imag')) {imag.checked = val}
 }
 
 function handleError(error) {
