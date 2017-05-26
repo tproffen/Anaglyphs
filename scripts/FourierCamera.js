@@ -71,7 +71,7 @@ function snapImage () {
 	context.drawImage(videoElement, 0, 0, width, height);
 	var img = context.getImageData(0, 0, width, height);
 	var i;
-	var ampReal =[];
+	var ampReal = [];
 	var ampImag = [];
 	
 	FFT.init(width);
