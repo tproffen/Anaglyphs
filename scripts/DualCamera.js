@@ -11,6 +11,7 @@ var xOffset = document.getElementById('xOffset');
 var canvas = document.getElementById('canvas');
 var typeAna = document.getElementById('type_ana');
 var typeSbs = document.getElementById('type_sbs');
+var title = document.getElementById("title");
 
 var canvasLeft = document.createElement('canvas');
 var canvasRight = document.createElement('canvas');
@@ -27,6 +28,17 @@ checkBrowser();
 
 var width=1920;
 var height=1080;
+
+// Some colors
+
+var	colorRed   = "#ff0000";
+var colorCyan  = "#00ffff";
+var colorBlack = "#000000";
+var colorWhite = "#ffffff";
+
+var titleFont = "bold 72pt Arial";
+var titleHeight = 150;
+var titleOffset = 15;
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices)
                                          .then(readValues)
@@ -58,6 +70,7 @@ function setup () {
 	xOffset.addEventListener("change", compositeImage, false);
 	typeAna.addEventListener("change", compositeImage, false);
 	typeSbs.addEventListener("change", compositeImage, false);
+	title.addEventListener("change", addTitle, false);
 	
 	window.addEventListener("resize", determineSizes, false);
 	window.addEventListener("unload", writeValues, false);
@@ -142,6 +155,28 @@ function canvasDownloadLink () {
 	
 }
 
+function drawString (toX,toY,Color) {
+		
+	context.fillStyle = Color;
+	context.font = titleFont;
+	context.textAlign = "center"; 
+	context.textBaseline = "middle";
+
+	context.fillText(title.value, toX, toY);
+	context.stroke();
+}
+
+function addTitle () {
+	
+	if (title.value) {
+		if (typeAna.checked) {
+			titleAna();
+		}
+		if (typeSbs.checked) {
+			titleSbs();
+		}
+	}
+}
 function compositeImage () {
 
 	document.getElementById('download').innerHTML="Processing ..";
@@ -151,6 +186,7 @@ function compositeImage () {
 	if (typeSbs.checked) {
 		compositeImageSbs();
 	}
+	addTitle();
 	canvasDownloadLink();
 }
 
@@ -181,7 +217,17 @@ function compositeImageSbs () {
 	context.moveTo(width/2, 20);
 	context.lineTo(width/2, height-20);
 	context.closePath();
-	context.stroke();
+	context.stroke();	
+}
+
+function titleSbs() {
+
+	var offX= xOffset.valueAsNumber * width;
+
+	context.globalCompositeOperation = "multiply";
+	drawString(width/4,height-titleHeight,colorBlack);
+	drawString(3*width/4+titleOffset,height-titleHeight,colorBlack);
+	context.globalCompositeOperation = "source-over";
 }
 
 function compositeImageAna () {
@@ -209,7 +255,20 @@ function compositeImageAna () {
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
 	context.putImageData(imageRight,-offX/2, 0, offX, 0, width, height);
+}
 
+function titleAna() {
+
+	var offX= xOffset.valueAsNumber * width;
+
+	context.lineWidth = 15.0;
+	context.fillStyle=colorWhite;
+	context.fillRect(offX/2, height-titleHeight, width-offX, titleHeight);
+
+	context.globalCompositeOperation = "multiply";
+	drawString(width/2,height-titleHeight/2,colorRed);
+	drawString(width/2+titleOffset,height-titleHeight/2,colorCyan);
+	context.globalCompositeOperation = "source-over";
 }
 
 function determineSizes () {
