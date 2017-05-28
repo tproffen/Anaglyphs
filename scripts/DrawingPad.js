@@ -6,6 +6,7 @@ var drawingApp = (function () {
 	var canvas,
 		memCanvas,
 		oldCanvas,
+		tmpCanvas,
 		rect,
 		clearButton,
 		eraserButton,
@@ -18,6 +19,11 @@ var drawingApp = (function () {
 		context,
 		memContext,
 		oldContext,
+		tmpContext,
+		stampImagesRed=[],
+		stampImagesCyan=[],
+		stamps,
+		stampButton,
 		colorNormal,
 		colorRed = "#ff0000",
 		colorCyan = "#00ffff",
@@ -26,6 +32,8 @@ var drawingApp = (function () {
 		paint = false,
 		erase = false,
 		drawText = false,
+		drawStamp = false,
+		first = true,
 		offset, 
 		width,
 		oldX, oldY,
@@ -40,6 +48,7 @@ var drawingApp = (function () {
 			}
 			var mouseX = e.pageX - rect.left;
 			var mouseY = e.pageY - rect.top;
+			if (first) {clear(); first=false;}
 
 			if (drawText) {
 				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -50,7 +59,16 @@ var drawingApp = (function () {
 				textButton.style.backgroundColor=colorNormal;
 				textButton.style.color=colorBlack;	
 				document.getElementById("stringValue").value='';
-			} else {
+			}
+			else if (drawStamp) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawAnaglyphStamp(mouseX,mouseY);
+				
+				drawStamp=false;
+				stampButton.style.backgroundColor=colorNormal;
+				stampButton.style.color=colorBlack;	} 
+			else {
 				paint = true;
 				oldX=mouseX; oldY=mouseY;
 			}
@@ -73,6 +91,12 @@ var drawingApp = (function () {
 				drawAnaglyphText(mouseX,mouseY);
 			}
 			
+			if (drawStamp) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawAnaglyphStamp(mouseX,mouseY);
+			}
+			
 			// Prevent the whole page from dragging if on mobile
 			e.preventDefault();
 		},
@@ -86,6 +110,7 @@ var drawingApp = (function () {
 				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 				context.drawImage(oldCanvas, 0, 0); 
 			} else {
+				if (first) {clear(); first=false;}
 				drawText=true;
 				textButton.style.backgroundColor=colorBlack;
 				textButton.style.color=colorWhite;	
@@ -94,6 +119,24 @@ var drawingApp = (function () {
 				oldContext.drawImage(canvas, 0, 0);
 			}
 			
+		},
+		
+		placeStamp = function () {
+			if (drawStamp) {
+				drawStamp=false;
+				stampButton.style.backgroundColor=colorNormal;
+				stampButton.style.color=colorBlack;	
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+			} else {
+				if (first) {clear(); first=false;}
+				drawStamp=true;
+				stampButton.style.backgroundColor=colorBlack;
+				stampButton.style.color=colorWhite;	
+				oldCanvas.width = canvas.width;
+				oldCanvas.height = canvas.height;
+				oldContext.drawImage(canvas, 0, 0);
+			}
 		},
 
 		uploadCanvas = function() {
@@ -153,6 +196,7 @@ var drawingApp = (function () {
 		eraserButton.addEventListener("click", toggleErase, false);
 		textButton.addEventListener("click", placeText, false);
 		gallery.addEventListener("click", uploadCanvas, false);
+		stampButton.addEventListener("click", placeStamp, false);
 		
 		
 		offsetInput.addEventListener("change", offsetValue, false);
@@ -189,6 +233,19 @@ var drawingApp = (function () {
 		drawString(toX+offset,toY,colorCyan);
 	},
  
+	// Drawing both stamps for anaglyph
+	drawAnaglyphStamp = function (toX,toY) {
+		
+		var stamp = stamps.options[stamps.selectedIndex].value;
+		var sx=stampImagesCyan[stamp].width*width/15.0;
+		var sy=stampImagesCyan[stamp].height*width/15.0;
+		
+		context.lineWidth = width;
+		context.globalCompositeOperation = "multiply";
+		context.drawImage(stampImagesRed[stamp],toX,toY,sx,sy);
+		context.drawImage(stampImagesCyan[stamp],toX+offset,toY,sx,sy);
+	},
+	
 	// Drawing lines
 	drawLine = function (fromX,fromY,toX,toY,Color) {
 		
@@ -209,7 +266,23 @@ var drawingApp = (function () {
 		context.stroke();
 	},
 
-
+	// Drawing start screen
+	startScreen = function () {
+		
+		var base_image = new Image();
+			base_image.src = 'images/DrawingPadStart.png';
+			base_image.onload = function(){	
+				var sw=base_image.width;
+				var sh=base_image.height;
+				if (sw>canvas.width) {
+					sh=sh*(canvas.width/sw);
+					sw=canvas.width;
+				}
+				context.drawImage(base_image, 0.5*(canvas.width-sw), 0.5*(canvas.height-sh), sw, sh);	
+				first=true;
+		}
+	},
+	
 	// Resize canvas to fit screen
 	resizeCanvas = function () {
 		
@@ -229,7 +302,37 @@ var drawingApp = (function () {
 		
 		context.drawImage(memCanvas, 0, 0); 
 	},
+	
+	// Loads stamp images 
+	loadStamps = function () {
+		
+		var path="images/Stamps/";
+		var stampUrlsRed = [path+"StormTrooperR.png",path+"3CPOR.png", path+"DarthVaderR.png", path+"DeathStarR.png",
+						    path+"MilleniumFalconR.png", path+"R2D2R.png"];
+		var stampUrlsCyan = [path+"StormTrooperGB.png",path+"3CPOGB.png", path+"DarthVaderGB.png", path+"DeathStarGB.png",
+							path+"MilleniumFalconGB.png", path+"R2D2GB.png"];
+		var stampLabs = ["Storm Trooper", "3-CPO", "Darth Vader", "Death Star", "Millenium Falcon", "R2D2"];
 
+		for (var i=0; i < stampUrlsRed.length; i++) {
+			var imgRed=new Image();
+			var imgCyan=new Image();
+
+			imgRed.src = stampUrlsRed[i];		
+			imgCyan.src = stampUrlsCyan[i];	
+			imgRed.setAttribute('crossOrigin', 'anonymous');
+			imgCyan.setAttribute('crossOrigin', 'anonymous');
+
+			stampImagesRed.push(imgRed);
+			stampImagesCyan.push(imgCyan);
+
+			var option = document.createElement('option');
+			option.value = i;
+			option.text = stampLabs[i];
+			stamps.add(option);
+		}
+	},
+	
+	
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 						
@@ -242,6 +345,9 @@ var drawingApp = (function () {
 		message = document.getElementById('message');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
+		stamps = document.getElementById('stamps');
+		stampButton = document.getElementById('placeStamp');
+		
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext("2d");
 		context.opacity = 1.0;
@@ -250,10 +356,16 @@ var drawingApp = (function () {
 		memContext = memCanvas.getContext('2d');
 		oldCanvas = document.createElement('canvas');
 		oldContext = oldCanvas.getContext('2d');
+		tmpCanvas = document.createElement('canvas');
+		tmpContext = tmpCanvas.getContext('2d');
+
 		colorNormal = eraserButton.style.backgroundColor;
-		resizeCanvas();
 		
+		resizeCanvas();
 		createUserEvents();
+		loadStamps();
+		//startScreen();
+		
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
 	};
