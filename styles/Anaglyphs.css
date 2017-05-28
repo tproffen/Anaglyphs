@@ -42,6 +42,7 @@ tr, td, th {
 th {
 	height: 5%;
 }
+
 canvas {
 	background-color: #FFFFFF;
 	margin: 0px;
@@ -58,6 +59,15 @@ h2 {
 	text-align: center;
 	color: #FFFFFF;
 	background-color: #222222;
+	margin: 5px 1px 15px 1px;
+	padding: 5px;
+}
+
+h3 {
+	font-size: 100%;
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #888888;
 	margin: 5px 1px 15px 1px;
 	padding: 5px;
 }
@@ -103,7 +113,7 @@ select {
 }
 
 .message a:link, a:visited, a:hover, a:active {
-	color: #000000;
+	color: #ffffff;
 }
 
 .canvas {

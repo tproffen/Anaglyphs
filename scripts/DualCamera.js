@@ -99,9 +99,9 @@ function updateMessage (what,par) {
 	}
 	
 	if (what=='Download') {
-		var name="Anaglyph"+Date.now()+".png";		
+		var name="Anaglyph"+Date.now()+".jpg";		
 		download.innerHTML="<a href=\""+par+"\" download=\""+name+"\" onclick=\"updateMessage('Ready');\">Download image</a>";
-		message.style.backgroundColor="yellow";
+		message.style.backgroundColor="red";
 	}
 }
 
@@ -157,8 +157,7 @@ function canvasDownloadLink () {
 	canvas.toBlob(function(blob) {
 		var url=URL.createObjectURL(blob);
 		updateMessage("Download",url);
-	}, "image/png");
-	
+	}, "image/jpg");
 }
 
 function drawString (toX,toY,Color) {

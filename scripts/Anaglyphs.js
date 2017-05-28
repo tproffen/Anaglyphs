@@ -50,3 +50,26 @@ function getCookie (cname) {
     return "";
 }
 
+// Date stuff
+
+function formatDate(date) {
+  var monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+    "Aug", "Sep", "Oct","Nov", "Dec"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  var hours = date.getHours();
+  var min = date.getMinutes();
+  var sec = date.getSeconds();
+  
+
+  return monthNames[monthIndex]+' '+str_pad(day)+', '+year+' at '+str_pad(hours)+':'+str_pad(min)+':'+str_pad(sec);
+}
+
+function str_pad(n) {
+    return String("00" + n).slice(-2);
+}
+

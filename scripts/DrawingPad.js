@@ -9,11 +9,12 @@ var drawingApp = (function () {
 		rect,
 		clearButton,
 		eraserButton,
-		fullScreenButton,
 		downloadButton,
 		textButton,
 		offsetInput,
 		widthInput,
+		message,
+		gallery,
 		context,
 		memContext,
 		oldContext,
@@ -95,6 +96,13 @@ var drawingApp = (function () {
 			
 		},
 
+		uploadCanvas = function() {
+			
+			message.innerHTML="Uploading ..";
+			setTimeout(imgurUpload(),500);
+		},
+		
+		
 		release = function () {
 			paint = false;
 		},
@@ -123,12 +131,6 @@ var drawingApp = (function () {
 		widthValue = function () {
 			width=widthInput.valueAsNumber;
 		},
-
-		fullScreen = function () {
-			var el = document.documentElement,
-			rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-			rfs.call(el);
-		},
 				
 		cancel = function () {
 			paint = false;
@@ -147,11 +149,11 @@ var drawingApp = (function () {
 		canvas.addEventListener("touchcancel", cancel, false);
 		
 		// Add events to UI
-		
 		clearButton.addEventListener("click", clear, false);
 		eraserButton.addEventListener("click", toggleErase, false);
-		fullScreenButton.addEventListener("click", fullScreen, false);
 		textButton.addEventListener("click", placeText, false);
+		gallery.addEventListener("click", uploadCanvas, false);
+		
 		
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
@@ -235,9 +237,9 @@ var drawingApp = (function () {
 
 		clearButton = document.getElementById('clearCanvas');
 		eraserButton = document.getElementById('eraser');
-		fullScreenButton = document.getElementById('fullScreen');
 		textButton = document.getElementById('placeText');
-		downloadButton = document.getElementById('downloader');
+		gallery = document.getElementById('gallery');
+		message = document.getElementById('message');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');
 		canvas = document.getElementById('canvas');
@@ -252,7 +254,6 @@ var drawingApp = (function () {
 		resizeCanvas();
 		
 		createUserEvents();
-
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
 	};

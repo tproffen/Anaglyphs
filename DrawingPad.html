@@ -14,6 +14,9 @@
   ga('send', 'pageview');
   </script>
   
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+  <script type="text/javascript" src="scripts/Imgur.js"></script>
   <script type="text/javascript" src="scripts/DrawingPad.js"></script>
   <script type="text/javascript" src="scripts/Anaglyphs.js"></script>
 
@@ -21,22 +24,25 @@
   	<tr><th colspan="2">
 	  <div id="warning" name="warning"></div>
 	  <h1>Anaglyph Drawing Pad</h1></th></tr>
-	<tr><td id="canvasArea">
+	<tr><td id="canvasArea" rowspan="2">
 	    <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas></td>
 	
-	    <td><input type="button" value="Clear" id="clearCanvas">
+	<td><input type="button" value="Clear" id="clearCanvas">
 		<input type="button" value="Eraser" id="eraser">
-		<input type="button" value="Full Screen" id="fullScreen">
 		<br>&nbsp;<br>
-			
-		Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
+		
+			Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
 	        <input type="range" value="3" min="-10" max="10" id="offset" oninput="offsetOutputId.value = offset.value">
 	        Size: <output name="lineWidthOutput" id="lineWidthOutputId">5</output>
 	        <input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value">
 
 		<br>&nbsp;<br>
-		<input type="text" id="stringValue"><br>
+			<input type="text" id="stringValue"><br>
 	        <input type="button" value="Place text" id="placeText">
+	</td></tr>
+	<tr><td height="15%">
+			<input type="button" value="Send to gallery" id="gallery"><br>&nbsp;<br>
+			<div align="center" id="message"><a onclick="window.open('DrawingGallery.html', '_blank');">View gallery</a></div>
 	</td></tr>			
   </table>
 	<center><font size="-1">Use red-cyan glasses to see your drawing in 3D.</font></center>
