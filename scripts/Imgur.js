@@ -53,8 +53,10 @@ $.ajax({
 			for(var i = response.data.images_count-1; i >=0 ; i--){		
 				var date= new Date(parseFloat(response.data.images[i].datetime)*1000);
 				var dateString=formatDate(date);
+				var link=response.data.images[i].link
+				var link= link.replace(/http/i, "https");
 				html+="<a href=\""+response.data.images[i].link+"\">";
-				html+="<img width=\""+imageWidth+"\" src=\""+response.data.images[i].link+"\"></a>";
+				html+="<img width=\""+imageWidth+"\" src=\""+link+"\"></a>";
 				html+="<h3><a href=\""+response.data.images[i].link+"\" download=\"Anaglyph3d.jpg\">Download</a>";
 				html+="	- Created "+dateString+"</h3>";	
 			}
