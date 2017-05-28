@@ -8,10 +8,12 @@ var videoRes1 = document.getElementById('resolution1');
 var videoRes2 = document.getElementById('resolution2');
 var snapButton = document.getElementById('snap');
 var xOffset = document.getElementById('xOffset');
+var contrast = document.getElementById('contrast');
 var canvas = document.getElementById('canvas');
-var typeAna = document.getElementById('type_ana');
-var typeSbs = document.getElementById('type_sbs');
 var title = document.getElementById("title");
+var download = document.getElementById("download");
+var message = document.getElementById("message");
+
 
 var canvasLeft = document.createElement('canvas');
 var canvasRight = document.createElement('canvas');
@@ -26,8 +28,8 @@ checkBrowser();
 
 // This is the capture size of the camera
 
-var width=1920;
-var height=1080;
+var width=1280;
+var height=720;
 
 // Some colors
 
@@ -36,9 +38,9 @@ var colorCyan  = "#00ffff";
 var colorBlack = "#000000";
 var colorWhite = "#ffffff";
 
-var titleFont = "bold 72pt Arial";
-var titleHeight = 150;
-var titleOffset = 15;
+var titleFont = "bold 48pt Arial";
+var titleHeight = 100;
+var titleOffset = 10;
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices)
                                          .then(readValues)
@@ -68,8 +70,7 @@ function setup () {
 
 	snapButton.addEventListener("click", snapImage, false);
 	xOffset.addEventListener("change", compositeImage, false);
-	typeAna.addEventListener("change", compositeImage, false);
-	typeSbs.addEventListener("change", compositeImage, false);
+	contrast.addEventListener("change", compositeImage, false);
 	title.addEventListener("change", addTitle, false);
 	
 	window.addEventListener("resize", determineSizes, false);
@@ -82,19 +83,26 @@ function setup () {
 		videoRes2.innerHTML=videoElement2.videoWidth + "x" + videoElement2.videoHeight;
 	}
 	
-	drawWelcome();
+	updateMessage("Ready");
 }
 
-function drawWelcome () {
+function updateMessage (what,par) {
 	
-	context.fillStyle = '#000000';
-	context.fillRect(0, 0, width, height);	
+	if (what=='Ready') {
+		download.innerHTML="<b>READY</b>";
+		message.style.backgroundColor="green";
+	}
 
-	context.fillStyle = '#FFFFFF';
-	context.font = "64px Arial, Helvetica, sans-serif";
-	context.textAlign="center";
-	context.fillText('Ready', width/2, height/2);
-	context.stroke();
+	if (what=='Updating') {
+		download.innerHTML="<b>Updating ..</b>";
+		message.style.backgroundColor="red";
+	}
+	
+	if (what=='Download') {
+		var name="Anaglyph"+Date.now()+".png";		
+		download.innerHTML="<a href=\""+par+"\" download=\""+name+"\" onclick=\"updateMessage('Ready');\">Download image</a>";
+		message.style.backgroundColor="yellow";
+	}
 }
 
 function gotDevices(deviceInfos) {
@@ -148,9 +156,7 @@ function canvasDownloadLink () {
 	
 	canvas.toBlob(function(blob) {
 		var url=URL.createObjectURL(blob);
-		if (typeAna.checked) {var name="Image3D_ana.png";}
-		if (typeSbs.checked) {var name="Image3D_sbs.png";}		
-		document.getElementById('download').innerHTML="<a href=\""+url+"\" download=\""+name+"\">Download image</a>";
+		updateMessage("Download",url);
 	}, "image/png");
 	
 }
@@ -166,76 +172,17 @@ function drawString (toX,toY,Color) {
 	context.stroke();
 }
 
-function addTitle () {
+function compositeImage() {
 	
-	if (title.value) {
-		if (typeAna.checked) {
-			titleAna();
-		}
-		if (typeSbs.checked) {
-			titleSbs();
-		}
-	}
-}
-function compositeImage () {
-
-	document.getElementById('download').innerHTML="Processing ..";
-	if (typeAna.checked) {
-		compositeImageAna();
-	}
-	if (typeSbs.checked) {
-		compositeImageSbs();
-	}
-	addTitle();
-	canvasDownloadLink();
+	updateMessage("Updating");
+	doComposeImage();
 }
 
-function compositeImageSbs () {
-
+function doComposeImage() {
+	
+	var wR=0.21, wG=0.72, wB=0.07, caddLeft=0.0, caddRight=0.0;
 	var offX= xOffset.valueAsNumber * width;
-    var k4=0.22;
-	var k2=0.51;
 	
-	context.fillStyle = '#000000';
-	context.fillRect(0, 0, width, height);
-		
-	var pixels = contextLeft.getImageData(width/4, 0, width/2, height);
-	pixels = barrelDistortion(pixels, k2, k4);
-	contextFish.putImageData(pixels, 0, 0);
-	context.drawImage(canvasFish,  0, 0, width/2, height, 0,       0, width/2, height);
-
-	pixels = contextRight.getImageData(width/4+offX, 0, width/2, height);
-	pixels = barrelDistortion(pixels, k2, k4);
-	contextFish.putImageData(pixels, 0, 0);
-	context.drawImage(canvasFish, 0, 0, width/2, height, width/2, 0, width/2, height);
-	
-	// middle line
-	
-	context.strokeStyle = '#dddddd';
-	context.lineWidth = 5.0;
-	context.beginPath();
-	context.moveTo(width/2, 20);
-	context.lineTo(width/2, height-20);
-	context.closePath();
-	context.stroke();	
-}
-
-function titleSbs() {
-
-	var offX= xOffset.valueAsNumber * width;
-
-	context.globalCompositeOperation = "multiply";
-	drawString(width/4,height-titleHeight,colorBlack);
-	drawString(3*width/4+titleOffset,height-titleHeight,colorBlack);
-	context.globalCompositeOperation = "source-over";
-}
-
-function compositeImageAna () {
-	
-	var wR=0.21, wG=0.72, wB=0.07;
-	
-	var offX= xOffset.valueAsNumber * width;
-
 	var imageRight = contextRight.getImageData(0, 0,width, height);
 	var imageLeft = contextLeft.getImageData(0, 0, width, height);
 	
@@ -246,29 +193,44 @@ function compositeImageAna () {
 	for (var i = 0; i < imageLeft.data.length; i += 4) {
  		var brightLeft  = wR * imageLeft.data[i]  + wG * imageLeft.data[i + 1]  + wB * imageLeft.data[i + 2];
  		var brightRight = wR * imageRight.data[i] + wG * imageRight.data[i + 1] + wB * imageRight.data[i + 2];
-		
- 		imageRight.data[i]   = brightLeft;  	// Just swap red channel
- 		imageRight.data[i+1] = brightRight; 
- 		imageRight.data[i+2] = brightRight;
+		if (contrast.valueAsNumber > 0) 
+		{
+			caddLeft=(255-brightLeft)*contrast.valueAsNumber;
+			caddRight=(255-brightRight)*contrast.valueAsNumber;
+		}
+		if (contrast.valueAsNumber < 0) 
+		{
+			caddLeft=brightLeft*contrast.valueAsNumber;
+			caddRight=brightRight*contrast.valueAsNumber;
+		}
+ 		imageRight.data[i]   = brightLeft  + caddLeft;  	// Just swap red channel
+ 		imageRight.data[i+1] = brightRight + caddRight; 
+ 		imageRight.data[i+2] = brightRight + caddRight;
     }	
 	
 	context.fillStyle = '#000000';
 	context.fillRect(0, 0, width, height);
 	context.putImageData(imageRight,-offX/2, 0, offX, 0, width, height);
+	
+	addTitle(); // This also updated the download link
 }
 
-function titleAna() {
+function addTitle() {
 
 	var offX= xOffset.valueAsNumber * width;
 
-	context.lineWidth = 15.0;
-	context.fillStyle=colorWhite;
-	context.fillRect(offX/2, height-titleHeight, width-offX, titleHeight);
+	if (title.value) {
+		context.lineWidth = 15.0;
+		context.fillStyle=colorWhite;
+		context.fillRect(offX/2, height-titleHeight, width-offX, titleHeight);
 
-	context.globalCompositeOperation = "multiply";
-	drawString(width/2,height-titleHeight/2,colorRed);
-	drawString(width/2+titleOffset,height-titleHeight/2,colorCyan);
-	context.globalCompositeOperation = "source-over";
+		context.globalCompositeOperation = "multiply";
+		drawString(width/2,height-titleHeight/2,colorRed);
+		drawString(width/2+titleOffset,height-titleHeight/2,colorCyan);
+		context.globalCompositeOperation = "source-over";
+	}
+	
+	canvasDownloadLink();
 }
 
 function determineSizes () {
@@ -289,82 +251,23 @@ function determineSizes () {
 
 function writeValues () {
 	
-	setCookie('xOffset',document.getElementById('xOffset').value);
+	setCookie('xOffset', xOffset.value);
+	setCookie('contrast', contrast.value);
 	setCookie('videoSelect1', videoSelect1.selectedIndex);
-	setCookie('videoSelect2', videoSelect2.selectedIndex);
-	setCookie('typeSbs', typeSbs.checked);
-	setCookie('typeAna', typeAna.checked);
-	
+	setCookie('videoSelect2', videoSelect2.selectedIndex);	
 }
 
 function readValues () {
 
     var val;
 	
-	if (val=getCookie('xOffset')) {document.getElementById('xOffset').value = val}
+	if (val=getCookie('xOffset')) {xOffset.value = val}
+	if (val=getCookie('contrast')) {contrast.value = val}
 	if (val=getCookie('videoSelect1')) {videoSelect1.selectedIndex = val}
 	if (val=getCookie('videoSelect2')) {videoSelect2.selectedIndex = val}
-	if (val=getCookie('typeAna')) {typeAna.checked = val}
-	if (val=getCookie('typeSbs')) {typeSbs.checked = val}
 	if (val=getCookie('autosave')) {autoSave.checked = val}
 }
 
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
-
-function barrelDistortion(pixels,fa,fb) {
-	
-  var d = pixels.data;
-  var width = pixels.width;
-  var height = pixels.height;
-  var xmid = width/2;
-  var ymid = height/2;
-  var rMax = Math.sqrt(Math.pow(xmid,2)+Math.pow(ymid,2));
-
-  var pix2D = new Array(pixels.height);
-  for (var y = 0; y < pixels.height; y++) {
-    pix2D[y] = new Array(pixels.width);
-    for (var x = 0; x < pixels.width; x++) {
-      var i = x * 4 + y * 4 * pixels.width;
-      var r = pixels.data[i],
-          g = pixels.data[i + 1],
-          b = pixels.data[i + 2],
-          a = pixels.data[i + 3];
-          
-      var pr = Math.sqrt(Math.pow(xmid-x,2)+Math.pow(ymid-y,2)); //radius from pixel to pic mid
-      var sf = pr / rMax; //Scaling factor
-      var newR = pr*(fa*Math.pow(sf,4)+fb*Math.pow(sf,2)+1); //barrel distortion function
-      var alpha = Math.atan2(-(y-ymid),-(x-xmid)); //Get angle from pic mid to pixel vector
-      var newx = Math.abs(Math.cos(alpha)*newR-xmid); //get new x coord for this pixel
-      var newy = Math.abs(Math.sin(alpha)*newR-ymid); //get new y coord for this pixel
-      var gnRadius = Math.sqrt(Math.pow(xmid-newx,2)+Math.pow(ymid-newy,2)); //New radius (with new x - y values)
-      pix2D[y][x] = [r,g,b,a,newx,newy,newR, gnRadius]; //Make new y*x picture for reading pixels
-    }
-  }
-
-  //Build new picture out of pix2D data
-  var cnt = 0;
-  var inn = 0;
-  for (var y = 0; y < pix2D.length; y++) {
-    for (var x = 0; x < pix2D[y].length; x++) {
-      var tx = Math.round(pix2D[y][x][4]);
-      var ty = Math.round(pix2D[y][x][5]);
-      var newr = pix2D[y][x][6];
-      var gnRadius = pix2D[y][x][7];
-      if(Math.floor(newr) == Math.floor(gnRadius) && tx>=0 && tx <width && ty>=0 && ty <height) {   
-        pixels.data[cnt++] = pix2D[ty][tx][0];
-        pixels.data[cnt++] = pix2D[ty][tx][1];
-        pixels.data[cnt++] = pix2D[ty][tx][2];
-        pixels.data[cnt++] = 255;
-      } else {
-        pixels.data[cnt++] = 0;
-        pixels.data[cnt++] = 0;
-        pixels.data[cnt++] = 0;
-        pixels.data[cnt++] = 255;
-      }
-    }
-  }
-  return pixels;
-}
-

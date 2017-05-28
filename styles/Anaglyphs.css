@@ -96,6 +96,16 @@ select {
 	display: none;
 }
 
+.message {
+	font-size: 150%;
+	color: #ffffff;
+	vertical-align: middle;
+}
+
+.message a:link, a:visited, a:hover, a:active {
+	color: #000000;
+}
+
 .canvas {
 	vertical-align: middle;
 }
