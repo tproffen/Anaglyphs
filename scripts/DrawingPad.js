@@ -306,7 +306,7 @@ var drawingApp = (function () {
 	// Loads stamp images 
 	loadStamps = function () {
 		
-		var path="images/Stamps/";
+		var path="https://tproffen.github.io/Anaglyphs/images/Stamps/";
 		var stampUrlsRed = [path+"StormTrooperR.png",path+"3CPOR.png", path+"DarthVaderR.png", path+"DeathStarR.png",
 						    path+"MilleniumFalconR.png", path+"R2D2R.png"];
 		var stampUrlsCyan = [path+"StormTrooperGB.png",path+"3CPOGB.png", path+"DarthVaderGB.png", path+"DeathStarGB.png",
