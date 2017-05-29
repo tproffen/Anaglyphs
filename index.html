@@ -15,55 +15,37 @@
   </script>
     
     <div id="warning" name="warning"></div>
-    <center><table width="950px" cellpadding="10">
-    	<tr><th><h1>Anaglyph Online Tools</h1>
-                <a href="https://github.com/tproffen/Anaglyphs">Code on GitHub</a></th></tr>
-    
-    	<tr><td><img src="images/Thomas3D.png" align="right" width="250" height="235">
-	<h2>What are anaglyphs?</h2>
-        
-        <p>We see the world in 3D, because each eye sees a slightly different picture. The two images 
-        are then processed by our brain to produce our 3D view of the world.</p>
-        
-        <p><a href="https://en.wikipedia.org/wiki/Anaglyph_3D">Anaglyphs</a> use filters, to separate two different 
-        images encoded in a picture or movie to create the same 3D effect. 
-        Glasses like the ones shown on the right, allow separating the two parts of an stereoscopic image by color in a 
-        <font color="#FF0000">red</font> and <font color="#00FFFF">cyan</font> part for 
-        each eye. Try the tools below to draw in 3D or take pictures in 3D right using two webcams right from the
-        browser.</p>
+    <center><table width="100%" cellpadding="10">
+	<tr>
+	<td>
+		<h2>Anaglyphs</h2>
 		
-	<p>Looking for 3D glasses? Check 
-	<a href="https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=cyan+red+glasses">Amazon.com</a>.</p>
-    	</td></tr>
-        
-    	<tr><td>
-	<h2>Drawing Pad</h2>
-        
-        <p>Click the <b>Start</b> button below to open a window running the drawing program. Use the 
-        mouse to draw lines. Explore the <b>depth slider</b>, and see how the lines appear above or below the plane of the 
-        computer screen. Look at the image with and without the glasses. What changes as you change the depth?
-        Once done, right click on the image to save it. Share with your friends or post on social 
-        media like any other image.</p>&nbsp;<br>
+		<a href="" onclick="window.open('images/Thomas3D.png', '_blank');">
+		<img src="images/Thomas3D.png" align="right" width="125" height="117"></a>
 		
-        <input type="button" value="Start" onclick="window.open('DrawingPad.html');">&nbsp;<br>
-	</td></tr>
+		<p><a href="https://en.wikipedia.org/wiki/Anaglyph_3D">Anaglyphs</a> are images or movies that use filters, to 
+			separate the two encoded images encoded to create a 3D effect. The tools here require 
+			<font color="#FF0000">red</font> / <font color="#00FFFF">cyan</font> glasses found e.g. 
+			<a href="https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=cyan+red+glasses">here</a>.
+			Enjoy and feel free to <a href="mailto:thomasproffen@gmail.com">contact me</a> with comments or questions.
+		</p><br clear="all">
 		
-        <tr><td>
-	<h2>Anaglyph Webcam</h2>
-    
-        <p>Taking a picture in 3D requires two webcams attached to the computer. Click the <b>Start</b> button 
-        below to open a window running the program. The webcams should be separated by a typical eye separation distance
-        and point in the same direction. Some adjustment to the camera position might be needed for best results.
-        Click <b>Take picture</b> to snap a photo. Once done, right click on the image to save it.</p>&nbsp;<br>
-        
-	<input type="button" value="Start" onclick="window.open('DualCamera.html');">&nbsp;<br>
-  </td></tr>
- 
-  <tr><td class="small" align="right"><p>(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2017.</p>
-      <p><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a 
-      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 
-	  International License</a></p></td></tr>
-   </table>
+		<h2>Tools and code</h2>
+		<p align="center"><a href="" onclick="window.open('DrawingPad.html');"><b>Anaglyph Drawing Pad</b></a> - Draw in 3D</p>
+		<p align="center"><a href="" onclick="window.open('DualCamera.html');"><b>Anaglyph Camera</b></a> - 3D Pictures from two cameras</p>
+		<p align="center"><a href="" onclick="window.open('FourierCamera.html');"><b>Fourier Camera</b></a> - Explore Fourier Transforms</p>
+		<p align="center"><a href="" onclick="window.open('https://github.com/tproffen/Anaglyphs');"><b>Code on Github</b></a></p>
+		
+		<h2>&nbsp;</h2>
+		<p align="left">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2017.
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
+			style="border-width:0" align="right" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
+		</p>
+
+		</td>
+	</td></tr>	
+	</table></center>
+
   <script src="scripts/Anaglyphs.js"></script>
   <script type="text/javascript">checkBrowser();</script>
 </body>
