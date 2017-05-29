@@ -69,6 +69,7 @@ function connectStream() {
 function snapImage () {
 	
 	context.drawImage(videoElement, 0, 0, width, height);
+	videoElement.pause();
 	var img = context.getImageData(0, 0, width, height);
 	var i;
 	var ampReal = [];
@@ -81,20 +82,22 @@ function snapImage () {
 	for(var y=0; y<height; y++) {
 		i = y*width;
 		for(var x=0; x<width; x++) {
-			ampReal[i + x] = img.data[(i << 2) + (x << 2)];
+			ampReal[i + x] = Math.sqrt(img.data[(i << 2) + (x << 2)]);
 			ampImag[i + x] = 0.0;
 		}
 	}
 	
-	FFT.fft2d(ampReal, ampImag); 
-    FrequencyFilter.swap(ampReal, ampImag);
-	SpectrumViewer.render(ampReal, ampImag, true);
+	FFT.fft2d(ampReal, ampImag); 					// calculate the 2D FFT
+    FrequencyFilter.swap(ampReal, ampImag); 		// origin in the middle
+	SpectrumViewer.render(ampReal, ampImag, true);	// render the result
+	context.drawImage(videoElement, 0, 0, width/4, height/4);
+	videoElement.play();
 }
 
 function determineSizes () {
 	
 	var padW=10;
-	var padH=180;
+	var padH=200;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
