@@ -380,7 +380,7 @@
       _img = context.getImageData(0, 0, _n, _n);
       _data = _img.data;
     },
-    // renders FFT power spectrum on the canvas
+    // render FFT power spectrum on the Canvas
     render : function(re, im, islog) {
       var val = 0,
           i = 0,
@@ -388,14 +388,12 @@
           spectrum = [],
           max = 1.0,
           imax = 0.0,
-          n2 = _n*_n,
-          log = Math.log,
-          sqrt = Math.sqrt;
+          n2 = _n*_n;
       for(var i=0; i<n2; i++) {
         if(islog){
-          spectrum[i] = log(Math.sqrt(re[i]*re[i] + im[i]*im[i]));
+          spectrum[i] = Math.log(Math.sqrt(re[i]*re[i] + im[i]*im[i]));
         } else {
-          spectrum[i] = sqrt(re[i]*re[i] + im[i]*im[i]);
+          spectrum[i] = Math.sqrt(re[i]*re[i] + im[i]*im[i]);
         }
         if(spectrum[i] > max) {
           max = spectrum[i];

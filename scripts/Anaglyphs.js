@@ -1,27 +1,8 @@
-// Check if browser is Chrome - if not display warning
+// Check if we are on iOS
 
-function checkBrowser () {
-
-var isChromium = window.chrome,
-    winNav = window.navigator,
-    vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-    isIOSChrome = winNav.userAgent.match("CriOS");
-    
-  var warningText='These pages were tested with '+
-                  '<a href="https://www.google.com/chrome/">Google Chrome<a> and might <b>not</b> work correctly with other browsers.';
-  var divId = document.getElementById('warning');
-  
-  if(isIOSChrome){
-     divId.innerHTML = warningText;
-     divId.style.display = 'block';
-  } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-     divId.style.display = 'none';
-  } else { 
-     divId.innerHTML = warningText;
-     divId.style.display = 'block';
-  }
+function iOS () {
+	
+	return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
 
 // Cookie related routines

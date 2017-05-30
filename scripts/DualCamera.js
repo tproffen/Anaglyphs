@@ -24,8 +24,6 @@ var contextRight = canvasRight.getContext('2d');
 var contextFish = canvasFish.getContext('2d');
 var context = canvas.getContext('2d');
 
-checkBrowser();
-
 // This is the capture size of the camera
 
 var width=1280;
@@ -235,7 +233,7 @@ function addTitle() {
 function determineSizes () {
 	
 	var padW=550;
-	var padH=60;
+	var padH=125;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
