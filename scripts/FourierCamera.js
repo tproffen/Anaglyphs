@@ -21,6 +21,7 @@ if (iOS()) {
 	var videoElement = document.getElementById('video');
 	var videoSelect = document.getElementById('videoSource');
 	navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).then(setup).catch(handleError);	
+	videoSelect.addEventListener("change", connectStream, false);
 }
 
 //================================================================================
@@ -60,8 +61,6 @@ function connectStream() {
 			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement.srcObject = mediaStream;}).catch(handleError);
-	
-	videoSelect.addEventListener("change", connectStream, false);
 }
 
 function snapImage () {
