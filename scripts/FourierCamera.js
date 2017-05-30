@@ -20,7 +20,7 @@ if (iOS()) {
 } else {
 	var videoElement = document.getElementById('video');
 	var videoSelect = document.getElementById('videoSource');
-	navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).then(setup).catch(handleError);	
+	navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).then(setup).catch(handleError);	
 	videoSelect.addEventListener("change", connectStream, false);
 }
 
@@ -36,6 +36,7 @@ function setup () {
 
 	snapButton.addEventListener("click", snapImage, false);
 	window.addEventListener("resize", determineSizes, false);
+	window.addEventListener("unload", writeValues, false);
 }
 
 function gotDevices(deviceInfos) {
@@ -136,7 +137,18 @@ function determineSizes () {
 	canvas.style.width=newWidth + 'px';
 	canvas.style.height=newHeight + 'px';
 }
+
+function writeValues () {
 	
+	setCookie('videoSelect', videoSelect.selectedIndex);
+}
+
+function readValues () {
+
+    var val;
+	if (val=getCookie('videoSelect')) {videoSelect.selectedIndex = val}
+}
+
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
