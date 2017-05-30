@@ -1,25 +1,27 @@
 'use strict';
 
-var videoElement = document.getElementById('video');
-var videoSelect = document.getElementById('videoSource');
-var videoRes = document.getElementById('resolution');
 var snapButton = document.getElementById('snap');
-
+var saveLink = document.getElementById('saveImage');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-
-checkBrowser();
 
 // This is the capture size of the camera
 
 var width=512;
 var height=width;
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices)
-                                         .then(readValues)
-										 .then(connectStream)
-										 .then(setup)
-										 .catch(handleError);
+if (iOS()) {
+	var sourceSelect = document.getElementById('sourceSelect');
+	var imagePreview = document.getElementById('imagePreview');	
+	imagePreview.innerHTML="<img id=\"preview\" name=\"preview\" width=\"100\" height=\"100\">";
+	sourceSelect.innerHTML="<input type=\"file\" capture=\"camera\" accept=\"image/*\" id=\"cameraInput\" name=\"cameraInput\" onchange=\"snapImageiOS()\" style=\"display:none;\">";
+	var videoElement = document.getElementById('preview');
+	setup();
+} else {
+	var videoElement = document.getElementById('video');
+	var videoSelect = document.getElementById('videoSource');
+	navigator.mediaDevices.enumerateDevices().then(gotDevices).then(connectStream).then(setup).catch(handleError);	
+}
 
 //================================================================================
 // Functions below
@@ -29,23 +31,17 @@ function setup () {
 	
 	canvas.height=height; 
 	canvas.width=width;
-
 	determineSizes();
 
-	videoSelect.addEventListener("change", connectStream, false);
 	snapButton.addEventListener("click", snapImage, false);
-	
 	window.addEventListener("resize", determineSizes, false);
-	window.addEventListener("unload", writeValues, false);
 }
-
 
 function gotDevices(deviceInfos) {
 
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     if (deviceInfo.kind === 'videoinput') {
-	  console.log('Video device: ', deviceInfo);
       var option = document.createElement('option');
 	  option.value = deviceInfo.deviceId;
       option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
@@ -64,12 +60,40 @@ function connectStream() {
 			   width: {ideal: width}, height: {ideal: height}}};
 	navigator.mediaDevices.getUserMedia(constraints)
 		.then(function(mediaStream) {videoElement.srcObject = mediaStream;}).catch(handleError);
+	
+	videoSelect.addEventListener("change", connectStream, false);
 }
 
 function snapImage () {
 	
-	context.drawImage(videoElement, 0, 0, width, height);
-	videoElement.pause();
+	if (iOS()) {
+		document.getElementById('cameraInput').click();
+	} else {
+		context.drawImage(videoElement, 0, 0, width, height);
+		videoElement.pause();
+		fourierTransform();
+		videoElement.play();
+	}
+}
+
+function snapImageiOS () {
+	
+	var file    = document.querySelector('input[type=file]').files[0];
+    var reader  = new FileReader();
+
+    reader.onloadend = function () {
+			videoElement.src = reader.result;
+			setTimeout(function(){context.drawImage(videoElement,0,0);fourierTransform();},250);
+		}
+    if (file) {
+        reader.readAsDataURL(file); //reads the data as a URL
+    } else {
+        videoElement.src = "";
+    }
+}
+
+function fourierTransform () {
+	
 	var img = context.getImageData(0, 0, width, height);
 	var i;
 	var ampReal = [];
@@ -90,8 +114,12 @@ function snapImage () {
 	FFT.fft2d(ampReal, ampImag); 					// calculate the 2D FFT
     FrequencyFilter.swap(ampReal, ampImag); 		// origin in the middle
 	SpectrumViewer.render(ampReal, ampImag, true);	// render the result
-	context.drawImage(videoElement, 0, 0, width/4, height/4);
-	videoElement.play();
+	context.drawImage(videoElement, 0, 0, width/3, height/3);
+	
+	canvas.toBlob(function(blob) {
+		var url=URL.createObjectURL(blob);
+		saveImage.href=url;
+	}, "image/jpg");
 }
 
 function determineSizes () {
@@ -109,18 +137,7 @@ function determineSizes () {
 	canvas.style.width=newWidth + 'px';
 	canvas.style.height=newHeight + 'px';
 }
-
-function writeValues () {
 	
-	setCookie('videoSelect', videoSelect.selectedIndex);
-}
-
-function readValues () {
-
-    var val;
-	if (val=getCookie('videoSelect')) {videoSelect.selectedIndex = val}
-}
-
 function handleError(error) {
 	console.log('navigator.getUserMedia error: ', error);
 }
