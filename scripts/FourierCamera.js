@@ -120,7 +120,7 @@ function fourierTransform () {
 	canvas.toBlob(function(blob) {
 		var url=URL.createObjectURL(blob);
 		saveImage.innerHTML="<a href=\""+url+"\" target=\"_blank\">Download</a>";
-	}, "image/jpg");
+	}, "image/jpeg", 0.9);
 }
 
 function determineSizes () {
