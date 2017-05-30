@@ -2,6 +2,9 @@
 
 var snapButton = document.getElementById('snap');
 var saveLink = document.getElementById('saveImage');
+var videoSelect = document.getElementById('videoSource');
+var sourceSelect = document.getElementById('sourceSelect');
+var imagePreview = document.getElementById('imagePreview');	
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 
@@ -11,15 +14,12 @@ var width=512;
 var height=width;
 
 if (iOS()) {
-	var sourceSelect = document.getElementById('sourceSelect');
-	var imagePreview = document.getElementById('imagePreview');	
 	imagePreview.innerHTML="<img id=\"preview\" name=\"preview\" width=\"100\" height=\"100\">";
 	sourceSelect.innerHTML="<input type=\"file\" capture=\"camera\" accept=\"image/*\" id=\"cameraInput\" name=\"cameraInput\" onchange=\"snapImageiOS()\" style=\"display:none;\">";
 	var videoElement = document.getElementById('preview');
 	setup();
 } else {
 	var videoElement = document.getElementById('video');
-	var videoSelect = document.getElementById('videoSource');
 	navigator.mediaDevices.enumerateDevices().then(gotDevices).then(readValues).then(connectStream).then(setup).catch(handleError);	
 	videoSelect.addEventListener("change", connectStream, false);
 }
