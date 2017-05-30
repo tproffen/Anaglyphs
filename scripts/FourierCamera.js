@@ -1,7 +1,7 @@
 'use strict';
 
 var snapButton = document.getElementById('snap');
-var saveLink = document.getElementById('saveImage');
+var saveImage = document.getElementById('saveImage');
 var videoSelect = document.getElementById('videoSource');
 var sourceSelect = document.getElementById('sourceSelect');
 var imagePreview = document.getElementById('imagePreview');	
@@ -99,6 +99,7 @@ function fourierTransform () {
 	var ampReal = [];
 	var ampImag = [];
 	
+	saveImage.innerHTML="Wait ..";
 	FFT.init(width);
 	FrequencyFilter.init(width);
 	SpectrumViewer.init(context);
@@ -118,7 +119,7 @@ function fourierTransform () {
 	
 	canvas.toBlob(function(blob) {
 		var url=URL.createObjectURL(blob);
-		saveImage.href=url;
+		saveImage.innerHTML="<a href=\""+url+"\" target=\"_blank\">Download</a>";
 	}, "image/jpg");
 }
 
