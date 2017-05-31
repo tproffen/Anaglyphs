@@ -1,34 +1,26 @@
 body {
    	font-family: Arial, Helvetica, sans-serif;
 	font-size: 100%;
-   	background-color: #000000;
-   	color: #FFFFFF;
+   	background-color: #FFFFFF;
+   	color: #000000;
 	margin: 5px;
    	padding: 5px;
 }
 
-a:link {
-    color: #00CED1;
-    text-decoration: none;
-}
-
-a:visited {
-    color: #00CED1;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #00CED1;
+a:link a:visited a:active {
+    color: #222222;
     text-decoration: underline;
 }
 
-a:active {
-    color: #00CED1;
+a:hover {
+    color: #777777;
     text-decoration: underline;
 }
 
 .white {
 	background-color: #FFFFFF;
+	vertical-align: middle;
+	padding: 5px;
 }
 
 tr, td, th {
@@ -36,6 +28,7 @@ tr, td, th {
 	margin: 5px;
 	vertical-align: top;
 	border: 1px solid #999;
+	background-color: #EEEEEE;
 	font-size: 100%;
 }
 
@@ -58,8 +51,8 @@ h2 {
 	font-size: 125%;
 	text-align: center;
 	color: #FFFFFF;
-	background-color: #222222;
-	margin: 5px 1px 15px 1px;
+	background-color: #777777;
+	margin: 5px;
 	padding: 5px;
 }
 
@@ -68,7 +61,7 @@ h3 {
 	text-align: center;
 	color: #FFFFFF;
 	background-color: #888888;
-	margin: 5px 1px 15px 1px;
+	margin: 5px;
 	padding: 5px;
 }
 
@@ -106,14 +99,23 @@ select {
 	display: none;
 }
 
-.message {
-	font-size: 150%;
-	color: #ffffff;
-	vertical-align: middle;
+.header-img {
+	background-color: #FFFFFF;
+	margin: 5px;
 }
 
-.message a:link, a:visited, a:hover, a:active {
-	color: #ffffff;
+.text {
+	padding: 15px;
+}
+
+.footer {
+	padding: 0px 15px 0px 15px;
+}
+
+.message {
+	font-size: 150%;
+	color: #000000;
+	vertical-align: middle;
 }
 
 .canvas {
@@ -127,44 +129,4 @@ select {
 .small {
 	font-size: 10pt;
 	a:text-decoration: 'none';
-}
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-	text-decoration: none;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 240px;
-    background-color: #555;
-    color: #fff;
-    text-align: left;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
 }

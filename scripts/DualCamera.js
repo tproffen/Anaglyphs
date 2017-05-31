@@ -88,18 +88,18 @@ function updateMessage (what,par) {
 	
 	if (what=='Ready') {
 		download.innerHTML="<b>READY</b>";
-		message.style.backgroundColor="green";
+		message.style.backgroundColor="#98ff9d";
 	}
 
 	if (what=='Updating') {
 		download.innerHTML="<b>Updating ..</b>";
-		message.style.backgroundColor="red";
+		message.style.backgroundColor="#ff9898";
 	}
 	
 	if (what=='Download') {
 		var name="Anaglyph"+Date.now()+".jpg";		
 		download.innerHTML="<a href=\""+par+"\" download=\""+name+"\" onclick=\"updateMessage('Ready');\">Download image</a>";
-		message.style.backgroundColor="red";
+		message.style.backgroundColor="#ff9898";
 	}
 }
 
@@ -205,7 +205,7 @@ function doComposeImage() {
  		imageRight.data[i+2] = brightRight + caddRight;
     }	
 	
-	context.fillStyle = '#000000';
+	context.fillStyle = '#FFFFFF';
 	context.fillRect(0, 0, width, height);
 	context.putImageData(imageRight,-offX/2, 0, offX, 0, width, height);
 	
@@ -232,7 +232,7 @@ function addTitle() {
 
 function determineSizes () {
 	
-	var padW=550;
+	var padW=450;
 	var padH=125;
 	
 	var newWidth=window.innerWidth-padW;

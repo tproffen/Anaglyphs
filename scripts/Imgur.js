@@ -37,6 +37,12 @@ function imgurGallery() {
 var tag=document.getElementById('gallery');
 var head=document.getElementById('header');
 
+var startIndex = getUrlParameter('startIndex');
+if (!startIndex) {startIndex=0;}
+
+var number = getUrlParameter('number');
+if (!number) {number=5;}
+
 var imageWidth=0.9*window.innerWidth;
 
 $.ajax({
@@ -48,21 +54,34 @@ $.ajax({
     dataType: 'json',
     success: function(response) {
         if(response.success) {
-			head.innerHTML="Number of drawings: <b>"+response.data.images_count+"</b>";
+			var start=response.data.images_count;
+			if (startIndex>0) {start=startIndex;}
+			var end=Math.max(start-number,0);
+			var lnext="";
+			if (end>0) {
+				lnext="<a href=\"DrawingGallery.html?startIndex="+end+"\">Next ></a>";				
+			}
+			
+			var header="";
+			header ="Drawings "+start+" to "+end+" of "+response.data.images_count ;
+			header+="<br>"+lnext;
+			head.innerHTML=header;
+			
 			var html=""; 
-			for(var i = response.data.images_count-1; i >=0 ; i--){		
+			for(var i = start-1; i >=end ; i--){		
 				var date= new Date(parseFloat(response.data.images[i].datetime)*1000);
 				var dateString=formatDate(date);
 				var link=response.data.images[i].link
 				var link= link.replace(/http/i, "https");
-				html+="<a href=\""+response.data.images[i].link+"\">";
-				html+="<img width=\""+imageWidth+"\" src=\""+link+"\"></a>";
-				html+="<h3><a href=\""+response.data.images[i].link+"\" download=\"Anaglyph3d.jpg\">Download</a>";
-				html+="	- Created "+dateString+"</h3>";	
+				html+="<img width=\""+imageWidth+"\" src=\""+link+"\"><br>";
+				html+="<p align=\"right\" class=\"small\">Created "+dateString+" -- ";
+				html+="<a href=\""+response.data.images[i].link+"\" ";
+				html+="download=\"Anaglyph3d.jpg\">Download</a></p><hr>";
 			}
+			html+=lnext;
 			tag.innerHTML=html;
         } else {
-			tag.innerHTML="<b>Error:"+response.error+"</b>";
+			tag.innerHTML="<tr><td align=\"center\"><b>Error:"+response.error+"</b></td></tr>";
 		}
     }
 });
