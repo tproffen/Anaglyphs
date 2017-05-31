@@ -104,6 +104,11 @@ select {
 	margin: 5px;
 }
 
+.header-img-blk {
+	background-color: #000000;
+	margin: 5px;
+}
+
 .text {
 	padding: 15px;
 }
