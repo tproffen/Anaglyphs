@@ -5,7 +5,7 @@ var albumHash="MESgLblEWhhUKeb";
 function imgurUpload() {
 
 try {
-    var img = document.getElementById('canvas').toDataURL('image/jpeg', 0.9).split(',')[1];
+    var img = document.getElementById('canvas').toDataURL('image/png').split(',')[1];
 } catch(e) {
     var img = document.getElementById('canvas').toDataURL().split(',')[1];
 }

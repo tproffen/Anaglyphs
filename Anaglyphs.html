@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>Anaglyph Fun</title>
+  <link href="styles/Anaglyphs.css" rel="stylesheet"  type="text/css">
+</head>
+
+<body>
+	<script type="text/javascript" src="scripts/google.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>
+	function cycleBox() {
+		var visibleBox = $('#container .boxes:visible');
+		visibleBox.hide();
+		var nextToShow = $(visibleBox).next('.boxes:hidden');
+		if (nextToShow.length > 0) {
+			nextToShow.show();
+		} else {
+			$('#container .boxes:hidden:first').show();
+		}
+		return false;
+	}
+	</script>
+	
+    <center><table width="100%">
+	<tr>
+	<td>
+		<h2>Anaglyphs</h2>
+		
+		<br><nbsp;<br>
+
+		<div id="container" class="white">
+			<div class="boxes" align="center">
+				<img src="images/Example-Red.png" height="400"></a>
+				<p align="center"><b>First image is red - check with your red-cyan glasses. Close each eye. What do you see?</b></p>
+			</div>
+		
+			<div class="boxes" align="center" style="display:none;">
+				<img src="images/Example-Cyan.png" height="400"></a>
+				<p align="center"><b>Second image is cyan - check with your red-cyan glasses, Close each eye. What changed?</b></p>
+			</div>
+			
+			<div class="boxes" align="center" style="display:none;">
+				<img src="images/Example.png" height="400"></a>
+				<p align="center"><b>Combining both images - do you see it in 3D?</b></p>
+			</div>
+		</div>
+		
+		<p align="center"><a href="#" onclick="cycleBox();"><b>Goto the next step ..</b></a></p>
+		
+		<h2>Try it</h2>
+		<p align="center"><a href="" onclick="window.open('DrawingPad.html');"><b>Anaglyph Drawing Pad</b></a> - Draw in 3D</p>
+		
+		<h2>&nbsp;</h2>
+		<p align="left" class="footer">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2017.
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
+			style="border-width:0" align="right" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
+		</p>
+
+		</td>
+	</td></tr>	
+	</table></center>
+
+  <script src="scripts/Anaglyphs.js"></script>
+</body>
+</html>

@@ -17,10 +17,15 @@ a:hover {
     text-decoration: underline;
 }
 
+hr {
+	margin: 5px;
+}
+
 .white {
 	background-color: #FFFFFF;
 	vertical-align: middle;
 	padding: 5px;
+	margin: 5px;
 }
 
 tr, td, th {
@@ -101,11 +106,13 @@ select {
 
 .header-img {
 	background-color: #FFFFFF;
+	vertical-align: middle;
 	margin: 5px;
 }
 
 .header-img-blk {
 	background-color: #000000;
+	vertical-align: middle;
 	margin: 5px;
 }
 
