@@ -273,7 +273,7 @@ var drawingApp = (function () {
 		memContext.drawImage(canvas, 0, 0);
 		
 		canvas.width  = 0.80*window.innerWidth;
-		canvas.height = 0.80*window.innerHeight;
+		canvas.height = 0.70*window.innerHeight;
 		context.clearRect(0, 0, context.canvas.width, context.canvas.height);		
 		context.fillStyle=colorWhite;
 		context.fillRect(0, 0, context.canvas.width, context.canvas.height);

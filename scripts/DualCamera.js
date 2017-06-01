@@ -233,7 +233,7 @@ function addTitle() {
 function determineSizes () {
 	
 	var padW=450;
-	var padH=125;
+	var padH=180;
 	
 	var newWidth=window.innerWidth-padW;
 	var newHeight=height*(newWidth/width)+1;
