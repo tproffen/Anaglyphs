@@ -66,7 +66,7 @@ $.ajax({
 				html+="<img width=\""+imageWidth+"\" src=\""+link+"\"><br>";
 				html+="<p align=\"right\" class=\"small\">Created "+dateString+" -- ";
 				html+="<a href=\""+response.data.images[i].link+"\" ";
-				html+="download=\"Anaglyph3d.jpg\">Download</a></p><hr>";
+				html+="download=\"Anaglyph3d.jpg\">Download</a>&nbsp;</p><hr>";
 			}
 			html+=header;
 			tag.innerHTML=html;
