@@ -63,6 +63,7 @@ $.ajax({
 				var dateString=formatDate(date);
 				var link=response.data.images[i].link
 				var link= link.replace(/http:/i, "https:");
+				
 				html+="<img width=\""+imageWidth+"\" src=\""+link+"\"><br>";
 				html+="<p align=\"right\" class=\"small\">Created "+dateString+" -- ";
 				html+="<a href=\""+response.data.images[i].link+"\" ";
