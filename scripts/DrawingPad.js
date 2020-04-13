@@ -6,9 +6,10 @@ var drawingApp = (function () {
 	var canvas,
 		memCanvas,
 		oldCanvas,
-		tmpCanvas,
 		rect,
 		clearButton,
+		undoButton,
+		redoButton,
 		eraserButton,
 		downloadButton,
 		textButton,
@@ -36,6 +37,8 @@ var drawingApp = (function () {
 		offset, 
 		width,
 		oldX, oldY,
+		cPushArray,
+		cStep,
 	   
 	// Add mouse and touch event listeners to the canvas
 	createUserEvents = function () {
@@ -107,6 +110,7 @@ var drawingApp = (function () {
 				document.getElementById("stringValue").value='';
 				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 				context.drawImage(oldCanvas, 0, 0); 
+				cPush();
 			} else {
 				drawText=true;
 				textButton.style.backgroundColor=colorBlack;
@@ -114,8 +118,7 @@ var drawingApp = (function () {
 				oldCanvas.width = canvas.width;
 				oldCanvas.height = canvas.height;
 				oldContext.drawImage(canvas, 0, 0);
-			}
-			
+			}			
 		},
 		
 		placeStamp = function () {
@@ -125,6 +128,7 @@ var drawingApp = (function () {
 				stampButton.style.color=colorBlack;	
 				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 				context.drawImage(oldCanvas, 0, 0); 
+				cPush();
 			} else {
 				drawStamp=true;
 				stampButton.style.backgroundColor=colorBlack;
@@ -144,12 +148,14 @@ var drawingApp = (function () {
 		
 		release = function () {
 			paint = false;
+			cPush();
 		},
 		
 		clear = function () {
 			context.clearRect(0, 0, context.canvas.width, context.canvas.height);		
 			context.fillStyle=colorWhite;
 			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+			cPush();
 		},
 
 		toggleErase = function () {
@@ -189,6 +195,8 @@ var drawingApp = (function () {
 		
 		// Add events to UI
 		clearButton.addEventListener("click", clear, false);
+		undoButton.addEventListener("click", cUndo, false);
+		redoButton.addEventListener("click", cRedo, false);
 		eraserButton.addEventListener("click", toggleErase, false);
 		textButton.addEventListener("click", placeText, false);
 		gallery.addEventListener("click", uploadCanvas, false);
@@ -323,11 +331,46 @@ var drawingApp = (function () {
 		}
 	},
 	
+	// Save current canvas for undo/redo
+	cPush = function () {
+		if (cStep > 5) { cPushArray.shift(); cPushArray.length = cStep; cStep = 5; }
+		cStep++;
+		if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+		cPushArray.push(document.getElementById('canvas').toDataURL());
+	},
+
+	// Undo Function
+	cUndo = function () {
+		if (cStep > 0) {
+			cStep--;
+			var canvasPic = new Image();
+			canvasPic.src = cPushArray[cStep];
+			canvasPic.onload = function () { 
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(canvasPic, 0, 0); 
+			}
+		}
+	},
+	
+	// Redo Function
+	cRedo = function () {
+		if (cStep < cPushArray.length-1) {
+			cStep++;
+			var canvasPic = new Image();
+			canvasPic.src = cPushArray[cStep];
+			canvasPic.onload = function () { 
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(canvasPic, 0, 0); 
+			}
+		}
+	},
 	
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 						
 		clearButton = document.getElementById('clearCanvas');
+		undoButton = document.getElementById('Undo');
+		redoButton = document.getElementById('Redo');
 		eraserButton = document.getElementById('eraser');
 		textButton = document.getElementById('placeText');
 		gallery = document.getElementById('gallery');
@@ -345,8 +388,6 @@ var drawingApp = (function () {
 		memContext = memCanvas.getContext('2d');
 		oldCanvas = document.createElement('canvas');
 		oldContext = oldCanvas.getContext('2d');
-		tmpCanvas = document.createElement('canvas');
-		tmpContext = tmpCanvas.getContext('2d');
 
 		colorNormal = eraserButton.style.backgroundColor;
 		
@@ -356,6 +397,10 @@ var drawingApp = (function () {
 		
 		offset=offsetInput.valueAsNumber;
 		width=widthInput.valueAsNumber;
+		
+		cPushArray = new Array();
+        cStep = -1;
+		cPush();
 	};
 	
 	return {
