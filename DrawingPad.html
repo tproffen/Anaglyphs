@@ -31,9 +31,11 @@
 		<br>&nbsp;<br>
 		
 			Depth: <output name="offsetOutput" id="offsetOutputId">5</output>
-	        <input type="range" value="3" min="-10" max="10" id="offset" oninput="offsetOutputId.value = offset.value">
+	        <input type="range" value="3" min="-10" max="10" step="0.5" id="offset" 
+			       oninput="offsetOutputId.value = offset.value">
 	        Size: <output name="lineWidthOutput" id="lineWidthOutputId">5</output>
-	        <input type="range" value="5" min="1" max="20" id="lineWidth" oninput="lineWidthOutputId.value = lineWidth.value">
+	        <input type="range" value="5" min="1" max="20" step="0.5" id="lineWidth" 
+			       oninput="lineWidthOutputId.value = lineWidth.value">
 
 		<br>&nbsp;<br>
 			Text:<br>
