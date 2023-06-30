@@ -1,7 +1,7 @@
 var clientID="Client-ID 8d48f783ed457e5";
 
-var albumID="eztlTZU";
-var albumHash="4lBxvE6KNu7XwH5";
+var albumID="fpeWTjq";
+var albumHash="ykUuQ4WiB9eRX6e";
 
 function imgurUpload() {
 
