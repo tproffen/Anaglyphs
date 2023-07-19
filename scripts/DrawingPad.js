@@ -16,7 +16,6 @@ var drawingApp = (function () {
 		offsetInput,
 		widthInput,
 		message,
-		gallery,
 		context,
 		memContext,
 		oldContext,
@@ -199,7 +198,6 @@ var drawingApp = (function () {
 		redoButton.addEventListener("click", cRedo, false);
 		eraserButton.addEventListener("click", toggleErase, false);
 		textButton.addEventListener("click", placeText, false);
-		gallery.addEventListener("click", uploadCanvas, false);
 		stampButton.addEventListener("click", placeStamp, false);
 		
 		
@@ -373,7 +371,6 @@ var drawingApp = (function () {
 		redoButton = document.getElementById('Redo');
 		eraserButton = document.getElementById('eraser');
 		textButton = document.getElementById('placeText');
-		gallery = document.getElementById('gallery');
 		message = document.getElementById('message');
 		offsetInput = document.getElementById('offset');
 		widthInput = document.getElementById('lineWidth');

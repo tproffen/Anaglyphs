@@ -14,7 +14,7 @@
   	<tr><th colspan="2">
 	  <div id="warning" name="warning"></div>
 	  <h1>Anaglyph Drawing Pad</h1></th></tr>
-	<tr><td id="canvasArea" rowspan="2" class="white">
+	<tr><td id="canvasArea" class="white">
 	    <canvas id="canvas">Your browser does not support the HTML 5 Canvas.</canvas></td>
 	
 	<td><input type="button" value="Clear" id="clearCanvas">
@@ -43,19 +43,32 @@
 			Stamp:<br>
     		<select id="stamps"></select><br>
 			<input type="button" value="Place stamp" id="placeStamp">
-			
-	</td></tr>
-	<tr><td height="15%">
-			-
+		<br>&nbsp;<br>
+		<hr>
+		<br>&nbsp;<br>		
+			<input type="button" value="Download image" onclick="download()">
 	</td></tr>
 	<tr><td colspan="2">
-		<p align="left" class="footer">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2020.
+		<p align="left" class="footer">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, <span id="year"></span>.
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
 		   style="border-width:0" align="right" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
 		</p>
 	</td></tr>	
   </table>
 	<center><font size="-1">Use red-cyan glasses to see your drawing in 3D.</font></center>
-    	<script type="text/javascript">drawingApp.init();</script>
+    
+	<script type="text/javascript">drawingApp.init();</script>
+	<script>
+	document.getElementById("year").innerHTML = new Date().getFullYear();
+	
+	function download() {
+		var canvas = document.getElementById("canvas");
+		var dataURL = canvas.toDataURL("image/png");
+		var link = document.createElement("a");
+		link.href = dataURL;
+		link.download = "AnaglyphDrawing.png";
+		link.click(); 
+	}
+  </script>
 </body>
 </html>

@@ -54,7 +54,7 @@
     </tr>
 	
 	<tr><td colspan="3">
-		<p align="left" class="footer">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2017.
+		<p align="left" class="footer">&copy; <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, <span id="year"></span>.
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
 		   style="border-width:0" align="right" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
 		</p>
@@ -62,5 +62,8 @@
   </table>  
   
   <script src="scripts/DualCamera.js"></script>
+  <script>
+	document.getElementById("year").innerHTML = new Date().getFullYear();
+  </script>
 </body>
 </html>

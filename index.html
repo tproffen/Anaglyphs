@@ -22,14 +22,13 @@
 		</p>
 		
 		<h2>Tools and code</h2>
-		<p align="center"><a href="" onclick="window.open('DrawingPad.html');">Anaglyph Drawing Pad</a> - Draw in 3D, 
-		<a href="" onclick="window.open('DrawingGallery.html');">Gallery</a></p>
+		<p align="center"><a href="" onclick="window.open('DrawingPad.html');">Anaglyph Drawing Pad</a> - Draw in 3D</p>
 		<p align="center"><a href="" onclick="window.open('DualCamera.html');">Anaglyph Camera</a> - 3D Pictures from two cameras</p>
 		<p align="center"><a href="" onclick="window.open('FourierCamera.html');">Fourier Camera</a> - Explore Fourier Transforms</p>
 		<p align="center"><a href="" onclick="window.open('https://github.com/tproffen/Anaglyphs');">Code on Github</a></p>
 
 		<hr>
-		<p align="left" class="footer">(c) <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, 2017.
+		<p align="left" class="footer">&copy; <a href="mailto:thomasproffen@gmail.com">Thomas Proffen</a>, <span id="year"></span>.
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
 			style="border-width:0" align="right" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
 		</p>
@@ -37,5 +36,8 @@
 	</table></center>
 
   <script src="scripts/Anaglyphs.js"></script>
+  <script>
+	document.getElementById("year").innerHTML = new Date().getFullYear();
+  </script>
 </body>
 </html>

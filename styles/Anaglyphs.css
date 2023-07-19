@@ -28,12 +28,20 @@ hr {
 	margin: 5px;
 }
 
+.large {
+	background-color: #EEEEFF;
+	vertical-align: middle;
+	font-size: 150%;
+	padding: 15px;
+	margin: 5px;
+}
+
 tr, td, th {
 	padding: 5px;
 	margin: 5px;
 	vertical-align: top;
 	border: 1px solid #999;
-	background-color: #EEEEEE;
+	background-color: #FFFFFF;
 	font-size: 100%;
 }
 
@@ -55,8 +63,7 @@ h1 {
 h2 {
 	font-size: 125%;
 	text-align: center;
-	color: #FFFFFF;
-	background-color: #777777;
+	background-color: #EEEEFF;
 	margin: 5px;
 	padding: 5px;
 }
@@ -65,7 +72,7 @@ h3 {
 	font-size: 100%;
 	text-align: center;
 	color: #FFFFFF;
-	background-color: #888888;
+	background-color: #EEEEFF;
 	margin: 5px;
 	padding: 5px;
 }
@@ -74,23 +81,24 @@ h4 {
 	font-size: 100%;
 	text-align: center;
 	color: #000000;
-	background-color: #EEEEEE;
+	background-color: #EEEEFF;
 	margin: 5px;
 	padding: 5px;
 }
 
 input {
 	padding: 1px;
-	margin: 1px;
+	margin: 2px;
 	font-size: 100%;	
 }
 input[type=range] {
-  width: 100%;
+    width: 100%;
 }
 
 input[type=button] {
-	padding: 1px;
-	margin: 1px;
+	background-color: #EEEEFF;
+	padding: 5px;
+	border: 1px solid #999;
 	width: 100%;
 	font-size: 100%;
 }
@@ -121,6 +129,13 @@ select {
 
 .header-img-blk {
 	background-color: #000000;
+	vertical-align: middle;
+	color: #000000;
+	margin: 5px;
+}
+
+.header-img-blue {
+	background-color: #EEEEFF;
 	vertical-align: middle;
 	color: #000000;
 	margin: 5px;
