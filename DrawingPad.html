@@ -61,12 +61,18 @@
 	<script>
 	document.getElementById("year").innerHTML = new Date().getFullYear();
 	
+	function getRandomFileName() {
+		var timestamp = new Date().toISOString().replace(/[-:.]/g,"");  
+		var random = ("" + Math.random()).substring(2, 8); 
+		var random_number = timestamp+random;  
+		return "Anaglyph-"+random_number+".png";
+	}
 	function download() {
 		var canvas = document.getElementById("canvas");
 		var dataURL = canvas.toDataURL("image/png");
 		var link = document.createElement("a");
 		link.href = dataURL;
-		link.download = "AnaglyphDrawing.png";
+		link.download = getRandomFileName();
 		link.click(); 
 	}
   </script>
