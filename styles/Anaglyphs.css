@@ -36,6 +36,15 @@ hr {
 	margin: 5px;
 }
 
+.notice {
+	background-color: #FFEEEE;
+	vertical-align: middle;
+	font-size: 150%;
+	padding: 25px;
+	margin: 5px;
+	margin-top: 20px;
+}
+
 tr, td, th {
 	padding: 5px;
 	margin: 5px;
