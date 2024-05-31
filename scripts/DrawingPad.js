@@ -13,6 +13,7 @@ var drawingApp = (function () {
 		eraserButton,
 		downloadButton,
 		textButton,
+		fontSelect,
 		offsetInput,
 		widthInput,
 		message,
@@ -263,7 +264,7 @@ var drawingApp = (function () {
 	drawString = function (toX,toY,Color) {
 		
 		context.fillStyle = Color;
-		context.font = width*6+"px sans";
+		context.font = width*6+"px "+fontSelect.value;
 		context.fillText(document.getElementById("stringValue").value, toX, toY);
 		context.stroke();
 	},
@@ -376,6 +377,7 @@ var drawingApp = (function () {
 		widthInput = document.getElementById('lineWidth');
 		stamps = document.getElementById('stamps');
 		stampButton = document.getElementById('placeStamp');
+		fontSelect = document.getElementById('textfont');
 		
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext("2d");

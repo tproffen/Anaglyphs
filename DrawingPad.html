@@ -31,12 +31,24 @@
 	        <input type="range" value="3" min="-10" max="10" step="0.5" id="offset" 
 			       oninput="offsetOutputId.value = offset.value">
 	        Size: <output name="lineWidthOutput" id="lineWidthOutputId">5</output>
-	        <input type="range" value="5" min="1" max="20" step="0.5" id="lineWidth" 
+	        <input type="range" value="5" min="1" max="40" step="0.5" id="lineWidth" 
 			       oninput="lineWidthOutputId.value = lineWidth.value">
 
 		<br>&nbsp;<br>
 			Text:<br>
 			<input type="text" id="stringValue"><br>
+			Font:<br>
+    		<select id="textfont">
+			<option value="arial">Arial</option>
+			<option value="veranda">Verdana</option>
+			<option value="tahoma">Tahoma</option>
+			<option value="trebuchet ms">Trebuchet MS</option>
+			<option value="times new roman">Times New Roman</option>
+			<option value="georgia">Georgia</option>
+			<option value="Garamond">Garamond</option>
+			<option value="courier new">Courier New</option>
+			<option value="brush script mt">Brush Script MT</option>
+			</select><br>
 	        <input type="button" value="Place text" id="placeText">
 		
 		<br>&nbsp;<br>
