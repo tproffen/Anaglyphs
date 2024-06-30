@@ -179,6 +179,18 @@ select {
 	padding: 10px;
 }
 
+.padheader {
+	padding: 6px; 
+	margin: 0px;
+	font-size: 100%;
+	font-weight: bold;
+	text-align: center;
+}
+
+.padcontrol {
+	background-color: #FAFAFA;
+}
+
 .small {
 	font-size: 10pt;
 	a:text-decoration: 'none';

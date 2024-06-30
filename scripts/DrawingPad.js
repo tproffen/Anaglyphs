@@ -326,7 +326,7 @@ var drawingApp = (function () {
 		memContext.drawImage(canvas, 0, 0);
 		
 		var padW=275;
-		var padH=120;
+		var padH=70;
 		
 		canvas.width  = window.innerWidth-padW;
 		canvas.height = window.innerHeight-padH;
