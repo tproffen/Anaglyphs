@@ -56,6 +56,7 @@ tr, td, th {
 
 th {
 	height: 5%;
+	background-color: #EEEEFF;
 }
 
 canvas {
@@ -106,7 +107,7 @@ input[type=range] {
 
 input[type=button] {
 	background-color: #EEEEFF;
-	padding: 5px;
+	padding: 3px;
 	border: 1px solid #999;
 	width: 100%;
 	font-size: 100%;
@@ -116,6 +117,12 @@ input[type=text] {
 	width: 97%;
 	height: 1.5em;
 }
+
+input[type=file] {
+	width: 97%;
+	height: 1.5em;
+}
+
 select {
 	width: 100%;
 	height: 1.5em;

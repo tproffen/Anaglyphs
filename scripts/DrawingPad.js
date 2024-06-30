@@ -16,6 +16,7 @@ var drawingApp = (function () {
 		fontSelect,
 		offsetInput,
 		widthInput,
+		upload,
 		message,
 		context,
 		memContext,
@@ -140,7 +141,6 @@ var drawingApp = (function () {
 		},
 
 		uploadCanvas = function() {
-			
 			message.innerHTML="Uploading ..";
 			setTimeout(imgurUpload(),500);
 		},
@@ -180,7 +180,7 @@ var drawingApp = (function () {
 		cancel = function () {
 			paint = false;
 		};
-
+		
 		// Add mouse event listeners to canvas element
 		canvas.addEventListener("mousedown", press, false);
 		canvas.addEventListener("mousemove", drag, false);
@@ -200,13 +200,45 @@ var drawingApp = (function () {
 		eraserButton.addEventListener("click", toggleErase, false);
 		textButton.addEventListener("click", placeText, false);
 		stampButton.addEventListener("click", placeStamp, false);
+		upload.addEventListener("click", uploadImage, false);
 		
 		
 		offsetInput.addEventListener("change", offsetValue, false);
 		widthInput.addEventListener("change", widthValue, false);
 		window.addEventListener("resize", resizeCanvas, false);
+		window.addEventListener("keypress", keyCommands, false);
 	},
 	
+	// Processing keystrokes
+	keyCommands = function(e) {
+		if (e.key === "f" && offset < 10) {
+			offset = offset + 1;
+			offsetInput.value = offset;
+			document.getElementById("offsetOutputId").value = offset;
+		}
+		else if (e.key === "b" && offset > -10) {
+			offset = offset - 1;
+			offsetInput.value = offset;
+			document.getElementById("offsetOutputId").value = offset;
+		}
+		else if (e.key === "s" && width > 1.0) {
+			width = width - 0.5;
+			widthInput.value = width;
+			document.getElementById("lineWidthOutputId").value = width;
+		}
+		else if (e.key === "l" && width < 40.0) {
+			width = width + 0.5;
+			widthInput.value = width;
+			document.getElementById("lineWidthOutputId").value = width;
+		}
+		else if (e.key === "u") {
+			cUndo();
+		}
+		else if (e.key === "r") {
+			cRedo();
+		}
+	},
+
 	// Drawing both lines for anaglyph
 	drawAnaglyphLine = function (fromX,fromY,toX,toY) {
 		
@@ -364,6 +396,30 @@ var drawingApp = (function () {
 		}
 	},
 	
+	// Draws image on current context
+	
+	uploadImage = function() {
+		var fileinput = document.getElementById('upload'); 
+		var img = new Image();
+
+		fileinput.onchange = function(evt) {
+			var files = evt.target.files;
+			var file = files[0];
+			if(file.type.match('image.*')) {
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(evt){
+					if (evt.target.readyState == FileReader.DONE) {
+						img.src = evt.target.result;
+						context.drawImage(img,0,0);
+					}
+				}
+			} else {
+				alert("Not an image");
+			}
+		}
+	},
+	
 	// Creates a canvas element and draws the canvas for the first time.
 	init = function () {
 						
@@ -378,7 +434,7 @@ var drawingApp = (function () {
 		stamps = document.getElementById('stamps');
 		stampButton = document.getElementById('placeStamp');
 		fontSelect = document.getElementById('textfont');
-		
+		upload = document.getElementById('upload');
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext("2d");
 		context.opacity = 1.0;
