@@ -35,11 +35,13 @@ var drawingApp = (function () {
 		erase = false,
 		drawText = false,
 		drawStamp = false,
+		drawImage = false,
 		offset, 
 		width,
 		oldX, oldY,
 		cPushArray,
 		cStep,
+		img = new Image,
 	   
 	// Add mouse and touch event listeners to the canvas
 	createUserEvents = function () {
@@ -69,7 +71,14 @@ var drawingApp = (function () {
 				
 				drawStamp=false;
 				stampButton.style.backgroundColor=colorNormal;
-				stampButton.style.color=colorBlack;	} 
+				stampButton.style.color=colorBlack;	
+			} 
+			else if (drawImage) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawUserImage(mouseX,mouseY);	
+				drawImage=false;
+			} 
 			else {
 				paint = true;
 				oldX=mouseX; oldY=mouseY;
@@ -97,6 +106,12 @@ var drawingApp = (function () {
 				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 				context.drawImage(oldCanvas, 0, 0); 
 				drawAnaglyphStamp(mouseX,mouseY);
+			}
+			
+			if (drawImage) {
+				context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+				context.drawImage(oldCanvas, 0, 0); 
+				drawUserImage(mouseX,mouseY);
 			}
 			
 			// Prevent the whole page from dragging if on mobile
@@ -139,7 +154,7 @@ var drawingApp = (function () {
 				oldContext.drawImage(canvas, 0, 0);
 			}
 		},
-
+		
 		uploadCanvas = function() {
 			message.innerHTML="Uploading ..";
 			setTimeout(imgurUpload(),500);
@@ -259,7 +274,6 @@ var drawingApp = (function () {
  
  	// Drawing both strings for anaglyph
 	drawAnaglyphText = function (toX,toY) {
-		
 
 		context.lineWidth = width;		
 		context.globalCompositeOperation = "multiply";
@@ -311,8 +325,8 @@ var drawingApp = (function () {
 		memCanvas.height = canvas.height;
 		memContext.drawImage(canvas, 0, 0);
 		
-		var padW=300;
-		var padH=180;
+		var padW=275;
+		var padH=120;
 		
 		canvas.width  = window.innerWidth-padW;
 		canvas.height = window.innerHeight-padH;
@@ -398,10 +412,29 @@ var drawingApp = (function () {
 	
 	// Draws image on current context
 	
+	placeImage = function () {
+		if (drawImage) {
+			drawImage=false;
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+			context.drawImage(oldCanvas, 0, 0); 
+			cPush();
+		} else {
+			drawImage=true;
+			oldCanvas.width = canvas.width;
+			oldCanvas.height = canvas.height;
+			oldContext.drawImage(canvas, 0, 0);
+		}
+	},
+	
+	drawUserImage = function(x,y) {
+		var ratio = Math.min(1, canvas.width / img.width, canvas.height / img.height);
+		var w = Math.floor(ratio*img.width);
+		var h = Math.floor(ratio*img.height);
+		context.drawImage(img,x,y,w,h);
+	},
+	
 	uploadImage = function() {
 		var fileinput = document.getElementById('upload'); 
-		var img = new Image();
-
 		fileinput.onchange = function(evt) {
 			var files = evt.target.files;
 			var file = files[0];
@@ -411,7 +444,9 @@ var drawingApp = (function () {
 				reader.onload = function(evt){
 					if (evt.target.readyState == FileReader.DONE) {
 						img.src = evt.target.result;
-						context.drawImage(img,0,0);
+						img.onload = function () {
+							placeImage();
+						}
 					}
 				}
 			} else {
