@@ -227,12 +227,12 @@ var drawingApp = (function () {
 	// Processing keystrokes
 	keyCommands = function(e) {
 		if (e.key === "f" && offset < 10) {
-			offset = offset + 1;
+			offset = offset + 0.5;
 			offsetInput.value = offset;
 			document.getElementById("offsetOutputId").value = offset;
 		}
 		else if (e.key === "b" && offset > -10) {
-			offset = offset - 1;
+			offset = offset - 0.5;
 			offsetInput.value = offset;
 			document.getElementById("offsetOutputId").value = offset;
 		}
